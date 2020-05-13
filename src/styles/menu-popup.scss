@@ -1,5 +1,22 @@
+@keyframes menu-popup {
+    from {top:-640px;}
+    50% {top:300px;}
+    to {top:150px;}
+}
+
 .menu-popup {
     position: fixed;
+    top: 0px;
+    left: 0px;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(53, 53, 53, 0.3);
+}
+
+.menu-popup__nav {
+    position: absolute;
     top: 150px;
     left: 50%;
     width: 672px;
@@ -9,6 +26,7 @@
     transform: translateX(-50%);
 
     background-color: #FFF6F3;
+    animation: menu-popup 1.3s ease-in-out;
 }
 
 .menu-popup__nav-list {
