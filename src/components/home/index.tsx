@@ -1,9 +1,17 @@
 import React from 'react';
 
-export default function Home (): React.ReactElement {
-    return (
-        <h1>
-            Home page
-        </h1>
-    )
+import LeftBlock from './left-block'
+import RightBlock from './right-block'
+
+const Home: React.FunctionComponent = () => {
+  return (
+    <header className="page-header page-header--fon">
+      <section className="header-block header-block--index-page container">
+        <LeftBlock />
+        <RightBlock />
+      </section>
+    </header>
+  )
 }
+
+export default Home;
