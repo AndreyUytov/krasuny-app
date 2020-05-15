@@ -1,3 +1,8 @@
+@keyframes search-form-animation {
+    from {width:100px;}
+    to {width: 445px;}
+}
+
 .z-index {
     z-index: 100;
 }
@@ -107,8 +112,6 @@
 }
 
 .header-right-block__site-nav {
-    //  инлайном стилей на всех страницах, кроме главной
-    // position: fixed;
     @include display-flex();
 }
 
@@ -153,7 +156,10 @@
     width: 445px;
     height: 46px;
 
-    @include display-flex();    
+    @include display-flex(); 
+    overflow: hidden;
+    
+    animation: search-form-animation 0.3s ease-in-out;
 }
 
 .search-form__inner-wrapper {

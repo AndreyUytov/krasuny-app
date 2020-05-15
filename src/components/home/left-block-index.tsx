@@ -4,7 +4,7 @@ import MenuPopup from './../popups/menu'
 import SearchForm from './search-form'
 import logo from './../../images/content/KRASUNYA.png'
 
-const LeftBlock: React.FC = () => {
+const LeftBlockIndex: React.FC = () => {
 
   const [visibleForm, setVisibleForm] = useState(false)
   const [visibleMenuPopup, setVisibleMenuPopup] = useState(false)
@@ -55,4 +55,4 @@ const LeftBlock: React.FC = () => {
   )
 }
 
-export default LeftBlock;
+export default LeftBlockIndex;

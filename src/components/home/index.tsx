@@ -1,13 +1,13 @@
 import React from 'react';
 
-import LeftBlock from './left-block'
+import LeftBlockIndex from './left-block-index'
 import RightBlock from './right-block'
 
 const Home: React.FunctionComponent = () => {
   return (
     <header className="page-header page-header--fon">
       <section className="header-block header-block--index-page container">
-        <LeftBlock />
+        <LeftBlockIndex />
         <RightBlock />
       </section>
     </header>
