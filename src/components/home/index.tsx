@@ -1,14 +1,21 @@
 import React from 'react';
+import {useRouteMatch} from 'react-router-dom'
 
-import LeftBlockIndex from './left-block-index'
+import LeftBlock from './left-block'
+import LeftBlockPoll from './left-block-poll'
 import RightBlock from './right-block'
+import RightBLockPoll from './right-block-poll';
 
 const Home: React.FunctionComponent = () => {
+  let {path} = useRouteMatch();
+
   return (
     <header className="page-header page-header--fon">
       <section className="header-block header-block--index-page container">
-        <LeftBlockIndex />
-        <RightBlock />
+        {/poll/i.test(path) 
+          ? <> <LeftBlockPoll /> <RightBLockPoll /> </>
+          : <> <LeftBlock /> <RightBlock /> </>
+        }
       </section>
     </header>
   )

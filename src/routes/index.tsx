@@ -13,5 +13,9 @@ export default (
       <Home />
       <Footer />
     </Route>
+    <Route path = '/poll'>
+      <Home />
+      <Footer />
+    </Route>
   </Switch>
 )

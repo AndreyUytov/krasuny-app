@@ -4,7 +4,7 @@ import MenuPopup from './../popups/menu'
 import SearchForm from './search-form'
 import logo from './../../images/content/KRASUNYA.png'
 
-const LeftBlockIndex: React.FC = () => {
+const LeftBlock: React.FC = () => {
 
   const [visibleForm, setVisibleForm] = useState(false)
   const [visibleMenuPopup, setVisibleMenuPopup] = useState(false)
@@ -38,12 +38,7 @@ const LeftBlockIndex: React.FC = () => {
                       <span className="visually-hidden">Открыть форму поиска</span>
                     </button>
                   </>
-            }         
-            <div className="header-left-block__progress-bar visually-hidden">
-              <span className="bar">
-                <span className="scale"></span>
-              </span>
-            </div>
+            }
           </div>
         </div>
       </div>
@@ -55,4 +50,4 @@ const LeftBlockIndex: React.FC = () => {
   )
 }
 
-export default LeftBlockIndex;
+export default LeftBlock;

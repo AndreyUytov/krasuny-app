@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const SelectionPopup: React.FC<{hiddenSelectionPopup: () => void}> = ({hiddenSelectionPopup}) => {
   return (
@@ -22,9 +23,9 @@ const SelectionPopup: React.FC<{hiddenSelectionPopup: () => void}> = ({hiddenSel
           <p className = 'selection-popup__description'>
             Мы можем помочь вам выбрать из нашего каталога именно то, что вам нужно
           </p>
-          <button type = 'button' className = 'btn-fon'>
+          <Link to='/poll' className = 'btn-fon'>
             Пройти подбор
-          </button>
+          </Link>
         </div>
       </div>
     </div>
