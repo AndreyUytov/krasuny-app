@@ -10,7 +10,11 @@ const Home: React.FunctionComponent = () => {
   let {path} = useRouteMatch();
 
   return (
-    <header className="page-header page-header--fon">
+    <header className={
+      /\/$/.test(path) 
+      ? "page-header page-header--fon"
+      : "page-header"
+    }>
       <section className="header-block header-block--index-page container">
         {/poll/i.test(path) 
           ? <> <LeftBlockPoll /> <RightBLockPoll /> </>
