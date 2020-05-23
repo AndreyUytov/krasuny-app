@@ -4,24 +4,36 @@ import {
     Route
 } from 'react-router-dom'
 
-import Home from './../components/home'
+import Header from './../components/header'
 import Footer from './../components/footer'
 import CatalogMain from './../components/catalog'
+
+const Layout: React.FC = ({children}) => {
+  return (
+    <>
+      <Header />
+      {children}
+      <Footer />
+    </>
+  )
+}
 
 export default (
   <Switch>
     <Route exact path = '/'>
-      <Home />
-      <Footer />
+      <Layout>
+        Главная страница
+      </Layout>
     </Route>
     <Route path = '/poll'>
-      <Home />
-      <Footer />
+      <Layout>
+        Страница подбора товаров
+      </Layout>
     </Route>
-    <Route path = '/catalog'>
-      <Home />
-      <CatalogMain />
-      <Footer />
+    <Route path = '/catalog/:product_type'>
+      <Layout>
+        <CatalogMain />
+      </Layout>
     </Route>
     
   </Switch>

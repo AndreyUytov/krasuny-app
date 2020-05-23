@@ -6,7 +6,7 @@ import LeftBlockPoll from './left-block-poll'
 import RightBlock from './right-block'
 import RightBLockPoll from './right-block-poll';
 
-const Home: React.FunctionComponent = () => {
+const Header: React.FunctionComponent = () => {
   let {path} = useRouteMatch();
 
   return (
@@ -25,4 +25,4 @@ const Home: React.FunctionComponent = () => {
   )
 }
 
-export default Home;
+export default Header;

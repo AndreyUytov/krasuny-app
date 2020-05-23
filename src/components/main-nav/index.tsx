@@ -1,10 +1,12 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 
+import {PAGEMAP} from './../../types'
+
 interface Props {
   links: string[],
   to: string[],
-  activelink: string
+  activelink: PAGEMAP
 }
 
 const MainNav: React.FC<Props> = ({links, to, activelink}) => {

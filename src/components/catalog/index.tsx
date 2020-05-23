@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
 import MainNav from './../main-nav'
 
@@ -9,6 +10,12 @@ const CatalogMain: React.FC = () => {
       CATALOG
     </main>
   )
+}
+
+const mapStateToProps = (store:{selectedPage: string}): {} => {
+  return {
+    activelink: store.selectedPage
+  }
 }
 
 export default CatalogMain
