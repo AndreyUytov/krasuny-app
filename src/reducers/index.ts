@@ -1,21 +1,25 @@
 import { combineReducers } from 'redux'
 
-import {SELECT_PAGE} from './../action'
+import {SELECT_PRODUCT_TYPE, SelectPageAction} from './../types'
 
 function store (state: string = 'this is store'): string {
   return state
 }
 
-function selectedPage (state: string = '/', action: {type: string, page: string}): string {
-  switch (action.type) {
-    case SELECT_PAGE:
-      return action.page
+function selectedProductType (state: string, {type, page}: SelectPageAction): string {
+  switch (type) {
+    case SELECT_PRODUCT_TYPE:
+      return page
     default:
      return state
   }
 }
 
-export default combineReducers({
+const rootReducer = combineReducers({
   store,
-  selectedPage
+  selectedProductType
 })
+
+export type RootState = ReturnType<typeof rootReducer>
+
+export {rootReducer}

@@ -1,10 +1,10 @@
-import {PRODUCT_TYPE} from './../types/index'
+import {PRODUCT_TYPE, SELECT_PRODUCT_TYPE, SelectProductTypeAction} from './../types'
 
-export const SELECT_PAGE = 'SELECT_PAGE'
 
-export function selectProductType (page: PRODUCT_TYPE): {type: string, page: PRODUCT_TYPE} {
+
+export function selectProductType (page: PRODUCT_TYPE): SelectProductTypeAction {
   return {
-    type: SELECT_PAGE,
+    type: SELECT_PRODUCT_TYPE,
     page
   }
 }

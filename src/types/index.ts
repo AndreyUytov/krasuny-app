@@ -1,3 +1,10 @@
+export const SELECT_PRODUCT_TYPE = 'SELECT_PRODUCT_TYPE'
+
+export interface SelectProductTypeAction {
+  type: typeof SELECT_PRODUCT_TYPE,
+  page: string
+}
+
 export enum PAGEMAP {
   blush = 'Румянец',
   bronzer = 'Тональное средство',

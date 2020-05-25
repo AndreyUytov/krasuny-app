@@ -1,29 +1,19 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
 
-import {selectProductType} from './../../action'
-import {PAGEMAP, PRODUCT_TYPE} from './../../types'
+import {PAGEMAP} from './../../types'
 
 type Props = {
   hiddenMenuPopup: () => void,
-  props: {
-    dispatch: (func: ()=>void) => void
-  }
 }
 
-const MenuPopup = ({hiddenMenuPopup, ...props}: Props) => {
-  
-  const onTypeProductClick = function (productPage: PRODUCT_TYPE) {
-    props.dispatch()
-  }
-
+const MenuPopup = ({hiddenMenuPopup}: Props) => {
   return (
     <div className="menu-popup" onClick = {hiddenMenuPopup}>
       <nav className="menu-popup__nav">
         <ul className="menu-popup__nav-list">
           <li className="menu-popup__nav-item">
-            <Link to='/catalog/blush' onClick={() => onTypeProductClick(PRODUCT_TYPE.blush)} >
+            <Link to='/catalog/blush' >
               {PAGEMAP.blush}
             </Link>
           </li>
@@ -78,4 +68,4 @@ const MenuPopup = ({hiddenMenuPopup, ...props}: Props) => {
   )
 }
 
-export default connect()(MenuPopup)
+export default MenuPopup
