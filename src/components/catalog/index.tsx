@@ -28,7 +28,7 @@ const mapState = (state: RootState) => ({
 })
 
 const mapDispatch = {
-  selectProductType: selectProductType
+  selectProductType
 }
 
 const connector = connect(mapState, mapDispatch)
