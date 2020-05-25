@@ -32,7 +32,7 @@ export default (
     </Route>
     <Route path = '/catalog/:product_type'>
       <Layout>
-        <CatalogMain />
+        <CatalogMain links = {['Главная']} to = {['/']} />
       </Layout>
     </Route>
     

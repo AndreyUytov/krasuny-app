@@ -6,14 +6,14 @@ import {RootState} from './../../reducers'
 import {selectProductType} from './../../action'
 import MainNav from './../main-nav'
 
-const CatalogMain: React.FC<Props> = ({links, to, activelink}) => {
+const CatalogMain: React.FC<Props> = ({links, to, activelink, selectProductType}) => {
 
   let {product_type} = useParams()  
   useEffect(() => {
     if (activelink !== product_type) {
-
+      selectProductType(product_type)
     }
-  })
+  }, [product_type, activelink, selectProductType])
 
   return (
     <main className="page-main--catalog container">
@@ -28,10 +28,10 @@ const mapState = (state: RootState) => ({
 })
 
 const mapDispatch = {
-  productTypeChange: (product_type: string) => selectProductType(product_type)
+  selectProductType: selectProductType
 }
 
-const connector = connect(mapState)
+const connector = connect(mapState, mapDispatch)
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & {

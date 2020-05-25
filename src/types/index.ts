@@ -2,7 +2,7 @@ export const SELECT_PRODUCT_TYPE = 'SELECT_PRODUCT_TYPE'
 
 export interface SelectProductTypeAction {
   type: typeof SELECT_PRODUCT_TYPE,
-  page: string
+  page: PRODUCT_TYPE
 }
 
 export enum PAGEMAP {
