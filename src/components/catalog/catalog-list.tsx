@@ -13,6 +13,16 @@ const ListBlock: React.FC<Props> = ({activelink}) => {
       <h2 className = "production-list-block__title">
         {PAGEMAP[activelink]}
       </h2>
+      <div className="production-list-block__tags">
+        <div className="tags-wrapper">
+          <button type='button'>
+            Add tag
+          </button>
+          <ul className="production-list-block__tags-list">
+
+          </ul>
+        </div>
+      </div>
     </section>
   )
 }

@@ -7,8 +7,8 @@ import {selectProductType} from './../../action'
 import MainNav from './../main-nav'
 import ListBlock from './catalog-list'
 
-const CatalogMain: React.FC<Props> = ({links, to, activelink, selectProductType}) => {
-
+const CatalogMain: React.FC<Props> = (props) => {
+  const {activelink, selectProductType} = props
   let {product_type} = useParams()  
   useEffect(() => {
     if (activelink !== product_type) {
@@ -18,8 +18,8 @@ const CatalogMain: React.FC<Props> = ({links, to, activelink, selectProductType}
 
   return (
     <main className="page-main--catalog container">
-      <MainNav links={links} activelink={activelink} to={to}/>
-      <ListBlock activelink = {activelink} />
+      <MainNav {...props}/>
+      <ListBlock {...props} />
       CATALOG
     </main>
   )
