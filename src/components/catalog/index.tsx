@@ -5,6 +5,7 @@ import {useParams} from 'react-router-dom'
 import {RootState} from './../../reducers'
 import {selectProductType} from './../../action'
 import MainNav from './../main-nav'
+import ListBlock from './catalog-list'
 
 const CatalogMain: React.FC<Props> = ({links, to, activelink, selectProductType}) => {
 
@@ -18,6 +19,7 @@ const CatalogMain: React.FC<Props> = ({links, to, activelink, selectProductType}
   return (
     <main className="page-main--catalog container">
       <MainNav links={links} activelink={activelink} to={to}/>
+      <ListBlock activelink = {activelink} />
       CATALOG
     </main>
   )
