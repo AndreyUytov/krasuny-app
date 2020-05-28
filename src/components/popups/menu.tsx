@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 import {PAGEMAP, PRODUCT_TYPE} from './../../types'
 
-type Props = {
+interface Props {
   hiddenMenuPopup: () => void
 }
 
