@@ -11,7 +11,7 @@ const Listrender: React.FC<PropsForList> = ({tags}) => {
       {
         tags.map((elem, i) => {
           return (
-            <li key={i} className='tag-search__item'>
+            <li key={i} className='tag-popup__item'>
               <button type='button' className='snap tag-search__snap'>{elem}</button>
             </li>
           )
@@ -29,7 +29,7 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
   return (
     <div className='tag-popup'>
       <div className='tag-popup__wrapper'>
-        <button type='button' className='snap tag-close__snap' onClick={hideTagPopup}>CLOSE
+        <button type='button' className='snap tag-close__snap' onClick={hideTagPopup}>
           <span className='visually-hidden'>Закрыть попап</span>
         </button>
         <h2 className='tag-popup__title'>
@@ -39,7 +39,12 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
           <label>
             Название компонента
           </label>
-          <input id='tag-search' type='text' className='tag-search' placeholder='Введите название компонента' />
+          <input id='tag-search' type='search' className='tag-search filter-form__text-input' placeholder='Введите название компонента' />
+          <button type='submit' className='tag-search__submit-snap snap'>
+            <span className='visually-hidden'>
+              Выполнить поиск
+            </span>
+          </button>
         </form>
         <Listrender tags={tags} />
         <div className='tag-button-wrapper'>
