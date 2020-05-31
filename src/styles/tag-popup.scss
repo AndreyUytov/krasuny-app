@@ -99,7 +99,7 @@
 
 .tag-popup__list {
     @include ul-reset();
-    margin-bottom: 40px;
+    margin-bottom: auto;
 
     width: 100%;
 
@@ -137,4 +137,13 @@
         border: 1px solid #EC966D;
         background-color: #F8DBCD;
     }
+}
+
+.tag-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tag-button {
+    margin-left: 20px;
 }

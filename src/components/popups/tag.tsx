@@ -1,18 +1,26 @@
-import React, {useState} from 'react'
-import { PRODUCT_TYPE, mapTagListToProductType } from '../../types'
+import React, {useState, useEffect, SyntheticEvent} from 'react'
+import { PRODUCT_TYPE, mapTagListToProductType, TAG_LIST } from '../../types'
 
 interface PropsForList {
-  tags: string[]
+  tags: TAG_LIST[],
+  selectTags: (tag: TAG_LIST) => void
 }
 
-const Listrender: React.FC<PropsForList> = ({tags}) => {
+const Listrender: React.FC<PropsForList> = ({tags, selectTags}) => {
+  const onBtnToggle = (evt:SyntheticEvent, tag: TAG_LIST):void => {
+    evt.currentTarget.classList.toggle('tag-search__snap--active')
+    selectTags(tag)
+  }
   return (
     <ul className='tag-popup__list'>
       {
         tags.map((elem, i) => {
           return (
             <li key={i} className='tag-popup__item'>
-              <button type='button' className='snap tag-search__snap'>{elem}</button>
+              <button type='button' className='snap tag-search__snap'
+               onClick={(evt) => onBtnToggle(evt, elem)}>
+                {elem}
+              </button>
             </li>
           )
         })
@@ -32,26 +40,32 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
 
   const [searchValue, setSearchValue] = useState('')
 
-  const filterTags = (arr: string[], reg: string) => {
-    const regexp = new RegExp(reg, 'i')
-    const result: string[] = []
-    const anotherArr: string[] = []
-    return arr.reduce((initial, item) => {
+  const [selectedTags, setSelectedTags] = useState<TAG_LIST[] | string[]>([])
+
+  const filterTags = () => {
+    const regexp = new RegExp(searchValue, 'i')
+    const result: TAG_LIST[] = []
+    const anotherArr: TAG_LIST[] = []
+    sortTags.map((item) => {
       if (regexp.test(item)) {
-        initial.push(item)
+        result.push(item)
       } else {
         anotherArr.push(item)
-      }
-      return [...result, ...anotherArr]
-    }, result)
+      }  
+      return result
+    })
+    const resultArray = [...result, ...anotherArr]
+    setSortTags(resultArray)
+    setSearchValue('')
   }
 
-  const onSearchChange = (value: string): string[] => {
-    // Исправить! здесь не тот код!
-    let delay = 300
-    let timerId = setTimeout (function () {
-      filterTags(sortTags, searchValue)
-    })
+  const onSearchChange = (text: string): void => {
+    setSearchValue(text)
+  }
+
+  const selectTags = (tag: TAG_LIST): void => {
+    setSelectedTags([tag, ...selectedTags])
+    console.log(selectedTags)
   }
 
   return (
@@ -67,16 +81,15 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
           <label>
             Название компонента
           </label>
-          <input id='tag-search' type='search' className='tag-search filter-form__text-input'
-           placeholder='Введите название компонента' 
-            value={searchValue} onChange = {onSearchChange} />
-          <button type='button' className='tag-search__submit-snap snap'>
+          <input id='tag-search' type='search' className='tag-search filter-form__text-input' 
+            value={searchValue} onChange = {(evt)=> onSearchChange(evt.target.value)} />
+          <button type='button' className='tag-search__submit-snap snap'onClick={filterTags}>
             <span className='visually-hidden'>
               Выполнить поиск
             </span>
           </button>
         </form>
-        <Listrender tags={tags} />
+        <Listrender tags={sortTags} selectTags = {selectTags} />
         <div className='tag-button-wrapper'>
           <button type='button' className='btn tag-button'>Отмена</button>
           <button type='button' className='btn-fon tag-button'>Применить</button>
