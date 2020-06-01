@@ -3,12 +3,20 @@ import { PRODUCT_TYPE, mapTagListToProductType, TAG_LIST } from '../../types'
 
 interface PropsForList {
   tags: TAG_LIST[],
-  selectTags: (tag: TAG_LIST) => void
+  selectTags: (tag: TAG_LIST) => void,
+  selectedTags: TAG_LIST[] | string[]
 }
 
-const Listrender: React.FC<PropsForList> = ({tags, selectTags}) => {
+const Listrender: React.FC<PropsForList> = ({tags, selectTags, selectedTags}) => {
   const onBtnToggle = (evt:SyntheticEvent, tag: TAG_LIST):void => {
     evt.currentTarget.classList.toggle('tag-search__snap--active')
+    const result: TAG_LIST[] | string[] = []
+    const res = selectedTags.reduce((result: TAG_LIST[] | string[], currentElem: TAG_LIST): TAG_LIST[] | string[] => {
+      if (currentElem !== tag) {
+        result.push(currentElem)
+      }
+      return result
+    }, result)
     selectTags(tag)
   }
   return (
@@ -65,11 +73,11 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
 
   const selectTags = (tag: TAG_LIST): void => {
     setSelectedTags([tag, ...selectedTags])
-    console.log(selectedTags)
   }
 
   return (
     <div className='tag-popup'>
+      {console.log(selectedTags)}
       <div className='tag-popup__wrapper'>
         <button type='button' className='snap tag-close__snap' onClick={hideTagPopup}>
           <span className='visually-hidden'>Закрыть попап</span>
@@ -89,7 +97,7 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
             </span>
           </button>
         </form>
-        <Listrender tags={sortTags} selectTags = {selectTags} />
+        <Listrender tags={sortTags} selectTags = {selectTags} selectedTags = {selectedTags} />
         <div className='tag-button-wrapper'>
           <button type='button' className='btn tag-button'>Отмена</button>
           <button type='button' className='btn-fon tag-button'>Применить</button>
