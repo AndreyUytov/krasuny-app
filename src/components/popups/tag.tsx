@@ -25,8 +25,10 @@ const Listrender: React.FC<PropsForList> = ({tags, selectTags}) => {
           )
         })
       }
-    </ul>)
+    </ul>
+  )
 }
+
 interface Props {
   hideTagPopup: ()=>void,
   activelink: PRODUCT_TYPE

@@ -4,6 +4,38 @@ import {Link} from 'react-router-dom'
 import {PAGEMAP, PRODUCT_TYPE} from './../../types'
 import TagPopup from './../popups/tag'
 
+interface PropsForList {
+  items: any[]
+}
+
+const ListRender: React.FC<PropsForList> = ({items}) => {
+  return (
+    <>
+      {items.map((elem) => {
+          return (
+            <li>
+              <a className="production-list-block-card card card--hit">
+                <img className="card__img"
+                  src="./../images/content/popular-product-card4.png" 
+                  width="185" height="185"
+                  alt="card pictur" />
+                <div className="card-description__wrapper">
+                  <h3 className="card__title">
+                    ТСА 10% DAY Peel 10% ТСА Dermagenetic
+                  </h3>
+                  <p className="card__price price">
+                    12 250 грн.
+                  </p>
+                </div>
+              </a>
+            </li>
+          )}
+      )
+      }
+    </>
+  )
+}
+
 interface Props {
   activelink: PRODUCT_TYPE
 }
