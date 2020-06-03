@@ -5,7 +5,7 @@ import {PAGEMAP, PRODUCT_TYPE} from './../../types'
 import TagPopup from './../popups/tag'
 
 interface PropsForList {
-  items: any[]
+  items: {[propName:string]: string}[]
 }
 
 const ListRender: React.FC<PropsForList> = ({items}) => {
@@ -21,7 +21,7 @@ const ListRender: React.FC<PropsForList> = ({items}) => {
                   alt="card pictur" />
                 <div className="card-description__wrapper">
                   <h3 className="card__title">
-                    ТСА 10% DAY Peel 10% ТСА Dermagenetic
+                    {elem.name}
                   </h3>
                   <p className="card__price price">
                     12 250 грн.
