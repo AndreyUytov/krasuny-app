@@ -1,11 +1,13 @@
 import {AppThunk, PRODUCT_TYPE, TAG_LIST} from './../types'
+import {getItemsByProductType} from './../action'
 
-interface Query {
-  product_type: PRODUCT_TYPE,
-  product_tags?: TAG_LIST
-}
-
-export const getItems = (query: Query) : AppThunk => async dispatch => {
-  const items = await fetch(`http://makeup-api.herokuapp.com/api/v1/products.json?brand=${query.product_type}`)
-  dispatch()
+export const getItems = (page: PRODUCT_TYPE) : AppThunk => async dispatch => {
+  const httpAdress = 'http://makeup-api.herokuapp.com/api/v1/products.json?'
+  let response = await fetch(
+    `${httpAdress}brand=${page}`
+    )
+  let items = await response.json()
+  dispatch(
+    getItemsByProductType(page, items)
+  )
 }

@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import {PAGEMAP, PRODUCT_TYPE} from './../../types'
+import {PAGEMAP, PRODUCT_TYPE, Items} from './../../types'
 import TagPopup from './../popups/tag'
 
 interface PropsForList {
-  items: {[propName:string]: string}[]
+  items: Items[]
 }
 
 const ListRender: React.FC<PropsForList> = ({items}) => {
@@ -13,7 +13,7 @@ const ListRender: React.FC<PropsForList> = ({items}) => {
     <>
       {items.map((elem) => {
           return (
-            <li>
+            <li key = {elem.id}>
               <a className="production-list-block-card card card--hit">
                 <img className="card__img"
                   src="./../images/content/popular-product-card4.png" 
@@ -37,10 +37,11 @@ const ListRender: React.FC<PropsForList> = ({items}) => {
 }
 
 interface Props {
-  activelink: PRODUCT_TYPE
+  activelink: PRODUCT_TYPE,
+  items: Items[]
 }
 
-const ListBlock: React.FC<Props> = ({activelink}) => {
+const ListBlock: React.FC<Props> = ({activelink, items}) => {
 
   const [isTagPopupVisible, setIsTagPopupVisible] = useState(false)
   const showTagPopup = ():void => {
@@ -61,7 +62,9 @@ const ListBlock: React.FC<Props> = ({activelink}) => {
             Add tag
           </button>
           <ul className="production-list-block__tags-list">
-
+            {
+              items ? <ListRender items = {items}/> : <div>Loading</div>
+            }
           </ul>
         </div>
       </div>

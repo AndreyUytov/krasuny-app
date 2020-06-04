@@ -9,11 +9,22 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >
 
+export interface Items {
+  [propName:string]: string
+}
+
 export const SELECT_PRODUCT_TYPE = 'SELECT_PRODUCT_TYPE'
+export const GET_ITEMS_BY_PRODUCT_TYPE = 'GET_ITEMS_BY_PRODUCT_TYPE'
 
 export interface SelectProductTypeAction {
   type: typeof SELECT_PRODUCT_TYPE,
   page: PRODUCT_TYPE
+}
+
+export interface GetItemsByProductTypeAction {
+  type: typeof GET_ITEMS_BY_PRODUCT_TYPE,
+  page: PRODUCT_TYPE,
+  items: Items[]
 }
 
 export enum PAGEMAP {

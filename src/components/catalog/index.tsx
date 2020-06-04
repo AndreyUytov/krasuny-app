@@ -4,17 +4,19 @@ import {useParams} from 'react-router-dom'
 
 import {RootState} from './../../reducers'
 import {selectProductType} from './../../action'
+import {getItems} from './../../action/thunk-action'
 import MainNav from './../main-nav'
 import ListBlock from './catalog-list'
 
 const CatalogMain: React.FC<Props> = (props) => {
-  const {activelink, selectProductType} = props
+  const {activelink, items, selectProductType, getItems} = props
   let {product_type} = useParams()  
   useEffect(() => {
     if (activelink !== product_type) {
       selectProductType(product_type)
+      getItems(product_type)
     }
-  }, [product_type, activelink, selectProductType])
+  }, [product_type, activelink, selectProductType, getItems])
 
   return (
     <main className="page-main--catalog container">
@@ -26,11 +28,13 @@ const CatalogMain: React.FC<Props> = (props) => {
 }
 
 const mapState = (state: RootState) => ({
-  activelink: state.selectedProductType
+  activelink: state.selectedProductType,
+  items: state.allItemsByProductType[state.selectedProductType]
 })
 
 const mapDispatch = {
-  selectProductType
+  selectProductType,
+  getItems
 }
 
 const connector = connect(mapState, mapDispatch)
