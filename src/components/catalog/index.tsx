@@ -9,7 +9,7 @@ import MainNav from './../main-nav'
 import ListBlock from './catalog-list'
 
 const CatalogMain: React.FC<Props> = (props) => {
-  const {activelink, items, selectProductType, getItems} = props
+  const {activelink, selectProductType, getItems} = props
   let {product_type} = useParams()  
   useEffect(() => {
     if (activelink !== product_type) {
@@ -29,7 +29,7 @@ const CatalogMain: React.FC<Props> = (props) => {
 
 const mapState = (state: RootState) => ({
   activelink: state.selectedProductType,
-  items: state.allItemsByProductType[state.selectedProductType]
+  items: state.allItemsByProductType[state.selectedProductType] || []
 })
 
 const mapDispatch = {
