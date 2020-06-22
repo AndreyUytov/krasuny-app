@@ -26,7 +26,7 @@ interface allItemsInterface {
 }
 
 const initialItems: allItemsInterface = {
-  'bluch': []
+  
 }
 
 function allItemsByProductType (

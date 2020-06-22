@@ -28,7 +28,7 @@
 .production-list-block__tags-list {
     @include ul-reset();
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
 .tags-list__item {

@@ -61,13 +61,13 @@ const ListBlock: React.FC<Props> = ({activelink, items}) => {
           <button type='button' onClick={showTagPopup}>
             Add tag
           </button>
-          <ul className="production-list-block__tags-list">
-            {
-              items ? <ListRender items = {items}/> : <div>Loading</div>
-            }
-          </ul>
         </div>
       </div>
+      <ul className="production-list-block__catalog-list">
+        {
+          items.length ? <ListRender items = {items}/> : <div>Loading</div>
+        }
+      </ul>
       {isTagPopupVisible 
         ? <TagPopup hideTagPopup={hideTagPopup} activelink={activelink}/>
         : null
