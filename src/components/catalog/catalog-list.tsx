@@ -5,13 +5,13 @@ import {PAGEMAP, PRODUCT_TYPE, Items} from './../../types'
 import TagPopup from './../popups/tag'
 
 interface PropsForList {
-  items: Items[]
+  currentItems: Items[]
 }
 
-const ListRender: React.FC<PropsForList> = ({items}) => {
+const ListRender: React.FC<PropsForList> = ({currentItems}) => {
   return (
     <>
-      {items.map((elem) => {
+      {currentItems.map((elem) => {
           return (
             <li key = {elem.id}>
               <a className="production-list-block-card card card--hit">
@@ -38,10 +38,10 @@ const ListRender: React.FC<PropsForList> = ({items}) => {
 
 interface Props {
   activelink: PRODUCT_TYPE,
-  items: Items[]
+  currentItems: Items[] | null
 }
 
-const ListBlock: React.FC<Props> = ({activelink, items}) => {
+const ListBlock: React.FC<Props> = ({activelink, currentItems}) => {
 
   const [isTagPopupVisible, setIsTagPopupVisible] = useState(false)
   const showTagPopup = ():void => {
@@ -65,7 +65,7 @@ const ListBlock: React.FC<Props> = ({activelink, items}) => {
       </div>
       <ul className="production-list-block__catalog-list">
         {
-          items.length ? <ListRender items = {items}/> : <div>Loading</div>
+          currentItems && currentItems.length ? <ListRender currentItems = {currentItems}/> : <div>Loading</div>
         }
       </ul>
       {isTagPopupVisible 

@@ -25,9 +25,7 @@ interface allItemsInterface {
   [propname: string]: Items[]
 }
 
-const initialItems: allItemsInterface = {
-  
-}
+const initialItems: allItemsInterface = {}
 
 function allItemsByProductType (
   state = initialItems, {type, page, items}: GetItemsByProductTypeAction
