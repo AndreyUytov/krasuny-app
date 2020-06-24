@@ -5,9 +5,11 @@ import {useParams} from 'react-router-dom'
 import {RootState} from './../../reducers'
 import {selectProductType} from './../../action'
 import {getItems} from './../../action/thunk-action'
+import {Items} from './../../types'
 import MainNav from './../main-nav'
 import ListBlock from './catalog-list'
-import {Items} from './../../types'
+import PaginationBlock from './pagination'
+
 
 const CatalogMain: React.FC<Props> = (props) => {
   const {activelink, selectProductType, getItems, items} = props
@@ -34,8 +36,9 @@ const CatalogMain: React.FC<Props> = (props) => {
   return (
     <main className="page-main--catalog container">
       <MainNav {...props}/>
+      <section className="filter-block">FILTER</section>
       <ListBlock {...props} currentItems = {currentItems}/>
-      CATALOG
+      {maxPage === 0 ? null : <PaginationBlock maxPage = {maxPage} currentPage = {currentPage} setCurrentPage = {setCurrentPage} /> }
     </main>
   )
 }

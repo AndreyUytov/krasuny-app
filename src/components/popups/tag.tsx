@@ -1,4 +1,4 @@
-import React, {useState, useEffect, SyntheticEvent} from 'react'
+import React, {useState, SyntheticEvent} from 'react'
 import { PRODUCT_TYPE, mapTagListToProductType, TAG_LIST } from '../../types'
 
 interface PropsForList {
