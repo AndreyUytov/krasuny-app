@@ -1,7 +1,5 @@
 import React, {useState} from 'react'
 
-import {Items} from './../../types'
-
 interface PropsForPagination {
   maxPage: number,
   currentPage: number,

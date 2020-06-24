@@ -5,7 +5,7 @@ import {useParams} from 'react-router-dom'
 import {RootState} from './../../reducers'
 import {selectProductType} from './../../action'
 import {getItems} from './../../action/thunk-action'
-import {Items} from './../../types'
+import {Items, MAX_ITEMS_PER_PAGE} from './../../types'
 import MainNav from './../main-nav'
 import ListBlock from './catalog-list'
 import PaginationBlock from './pagination'
@@ -24,11 +24,11 @@ const CatalogMain: React.FC<Props> = (props) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [currentItems, setCurrentItems] = useState<Items[] | null>(null)
 
-  let maxPage = Math.ceil(items.length / 12)
+  let maxPage = Math.ceil(items.length / MAX_ITEMS_PER_PAGE)
   
   useEffect(() => {
-    let startIndex = (currentPage - 1) * 12
-    let endIndex = currentPage * 12
+    let startIndex = (currentPage - 1) * MAX_ITEMS_PER_PAGE
+    let endIndex = currentPage * MAX_ITEMS_PER_PAGE
     let itemsByPage = items.slice(startIndex, endIndex)
     setCurrentItems(itemsByPage)
   }, [items, currentPage])

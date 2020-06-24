@@ -13,6 +13,7 @@ export interface Items {
   [propName:string]: string
 }
 
+export const MAX_ITEMS_PER_PAGE = 16
 export const SELECT_PRODUCT_TYPE = 'SELECT_PRODUCT_TYPE'
 export const GET_ITEMS_BY_PRODUCT_TYPE = 'GET_ITEMS_BY_PRODUCT_TYPE'
 

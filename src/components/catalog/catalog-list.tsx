@@ -16,15 +16,15 @@ const ListRender: React.FC<PropsForList> = ({currentItems}) => {
             <li key = {elem.id}>
               <a className="production-list-block-card card card--hit">
                 <img className="card__img"
-                  src="./../images/content/popular-product-card4.png" 
+                  src={elem.image_link}
                   width="185" height="185"
                   alt="card pictur" />
                 <div className="card-description__wrapper">
                   <h3 className="card__title">
-                    {elem.name}
+                    {elem.name.length > 25 ? `${elem.name.slice(0, 25)} ...` : elem.name}
                   </h3>
                   <p className="card__price price">
-                    12 250 грн.
+                    {elem.price} {elem.price_sign}
                   </p>
                 </div>
               </a>
