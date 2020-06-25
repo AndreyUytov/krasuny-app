@@ -58,8 +58,9 @@ const ListBlock: React.FC<Props> = ({activelink, currentItems}) => {
       </h2>
       <div className="production-list-block__tags">
         <div className="tags-wrapper">
-          <button type='button' onClick={showTagPopup}>
-            Add tag
+          
+          <button className="production-list-block__add-snap snap" type="button" onClick={showTagPopup}>
+            <span className="visually-hidden">Добавить тэг</span>
           </button>
         </div>
       </div>

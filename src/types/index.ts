@@ -16,7 +16,12 @@ export interface Items {
 export const MAX_ITEMS_PER_PAGE = 16
 export const SELECT_PRODUCT_TYPE = 'SELECT_PRODUCT_TYPE'
 export const GET_ITEMS_BY_PRODUCT_TYPE = 'GET_ITEMS_BY_PRODUCT_TYPE'
+export const SET_FILTER_BY_TAGS = 'SET_FILTER_BY_TAGS'
 
+export interface SelectFilterByTagsAction {
+  type: typeof SET_FILTER_BY_TAGS,
+  tags: TAG_LIST[] | string[]
+}
 export interface SelectProductTypeAction {
   type: typeof SELECT_PRODUCT_TYPE,
   page: PRODUCT_TYPE

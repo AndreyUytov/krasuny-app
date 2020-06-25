@@ -4,10 +4,18 @@ import {
   GET_ITEMS_BY_PRODUCT_TYPE,
   Items,
   SelectProductTypeAction,
-  GetItemsByProductTypeAction
+  GetItemsByProductTypeAction,
+  TAG_LIST,
+  SelectFilterByTagsAction,
+  SET_FILTER_BY_TAGS
 } from './../types'
 
-
+export function selectFilterByTags (tags: TAG_LIST[]): SelectFilterByTagsAction {
+  return {
+    type: SET_FILTER_BY_TAGS,
+    tags
+  }
+}
 
 export function selectProductType (page: PRODUCT_TYPE): SelectProductTypeAction {
   return {

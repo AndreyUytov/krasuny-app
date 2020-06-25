@@ -1,15 +1,19 @@
-import React, {useState, SyntheticEvent} from 'react'
+import React, {useState} from 'react'
 import { PRODUCT_TYPE, mapTagListToProductType, TAG_LIST } from '../../types'
 
 interface PropsForList {
   tags: TAG_LIST[],
-  selectTags: (tag: TAG_LIST) => void
+  selectTags: (tag: TAG_LIST) => void,
+  selectedTags: TAG_LIST[] | string[]
 }
 
-const Listrender: React.FC<PropsForList> = ({tags, selectTags}) => {
-  const onBtnToggle = (evt:SyntheticEvent, tag: TAG_LIST):void => {
-    evt.currentTarget.classList.toggle('tag-search__snap--active')
-    selectTags(tag)
+const Listrender: React.FC<PropsForList> = ({tags, selectTags, selectedTags}) => {
+  const onBtnToggle = (tag: TAG_LIST):void => {
+    if (selectedTags.length === 3 && !selectedTags.includes(tag)) {
+      alert('Выберите не более 3-х тэгов!!!')
+    } else {
+      selectTags(tag)
+    }
   }
   return (
     <ul className='tag-popup__list'>
@@ -17,8 +21,8 @@ const Listrender: React.FC<PropsForList> = ({tags, selectTags}) => {
         tags.map((elem, i) => {
           return (
             <li key={i} className='tag-popup__item'>
-              <button type='button' className='snap tag-search__snap'
-               onClick={(evt) => onBtnToggle(evt, elem)}>
+              <button type='button' className = {selectedTags.includes(elem) ? 'snap tag-search__snap tag-search__snap--active' : 'snap tag-search__snap'}
+               onClick={() => onBtnToggle(elem)}>
                 {elem}
               </button>
             </li>
@@ -78,7 +82,6 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
 
   return (
     <div className='tag-popup'>
-      {console.log(selectedTags)}
       <div className='tag-popup__wrapper'>
         <button type='button' className='snap tag-close__snap' onClick={hideTagPopup}>
           <span className='visually-hidden'>Закрыть попап</span>
@@ -98,9 +101,12 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
             </span>
           </button>
         </form>
-        <Listrender tags={sortTags} selectTags = {selectTags}/>
+        <Listrender tags={sortTags} selectTags = {selectTags} selectedTags = {selectedTags} />
         <div className='tag-button-wrapper'>
-          <button type='button' className='btn tag-button'>Отмена</button>
+          <button type='button' className='btn tag-button' 
+            onClick = {() => setSelectedTags([])}  >
+            Отмена
+          </button>
           <button type='button' className='btn-fon tag-button'>Применить</button>
         </div>
       </div>

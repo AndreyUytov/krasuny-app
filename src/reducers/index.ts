@@ -5,12 +5,11 @@ import {SELECT_PRODUCT_TYPE,
   GetItemsByProductTypeAction,
   PRODUCT_TYPE,
   GET_ITEMS_BY_PRODUCT_TYPE,
-  Items
+  Items,
+  TAG_LIST,
+  SelectFilterByTagsAction,
+  SET_FILTER_BY_TAGS
   } from './../types'
-
-function store (state: string = 'this is store'): string {
-  return state
-}
 
 function selectedProductType (state: PRODUCT_TYPE = PRODUCT_TYPE.blush, {type, page}: SelectProductTypeAction): PRODUCT_TYPE {
   switch (type) {
@@ -25,10 +24,8 @@ interface allItemsInterface {
   [propname: string]: Items[]
 }
 
-const initialItems: allItemsInterface = {}
-
 function allItemsByProductType (
-  state = initialItems, {type, page, items}: GetItemsByProductTypeAction
+  state:allItemsInterface = {}, {type, page, items}: GetItemsByProductTypeAction
   ) {
     switch (type) {
       case GET_ITEMS_BY_PRODUCT_TYPE:
@@ -41,10 +38,28 @@ function allItemsByProductType (
     }
   }
 
+interface FilterInterface {
+  tags: TAG_LIST[] | string[]
+}
+
+function filters (state:FilterInterface = {tags: []},
+  {type, tags}: SelectFilterByTagsAction
+  ) {
+    switch (type) {
+      case SET_FILTER_BY_TAGS:
+        return {
+          ...state,
+          tags: tags
+        }
+      default:
+        return state
+    }
+}
+
 const rootReducer = combineReducers({
-  store,
   selectedProductType,
-  allItemsByProductType
+  allItemsByProductType,
+  filters
 })
 
 export type RootState = ReturnType<typeof rootReducer>
