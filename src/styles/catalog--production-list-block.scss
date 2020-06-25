@@ -90,13 +90,12 @@
    width: 100%;
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-between;
 }
 
 .production-list-block-card {
   width: 185px;
   height: 285px;
-  margin-left: 0px;
+  margin-left: 15px;
 
   & .card-description__wrapper {
     padding: 8px 16px;
