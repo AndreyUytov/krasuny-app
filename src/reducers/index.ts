@@ -7,8 +7,9 @@ import {SELECT_PRODUCT_TYPE,
   GET_ITEMS_BY_PRODUCT_TYPE,
   Items,
   TAG_LIST,
-  SelectFilterByTagsAction,
-  SET_FILTER_BY_TAGS
+  FilterByTagsActionType,
+  SET_FILTER_BY_TAGS,
+  RESET_FILTER_BY_TAGS
   } from './../types'
 
 function selectedProductType (state: PRODUCT_TYPE = PRODUCT_TYPE.blush, {type, page}: SelectProductTypeAction): PRODUCT_TYPE {
@@ -39,17 +40,22 @@ function allItemsByProductType (
   }
 
 interface FilterInterface {
-  tags: TAG_LIST[] | string[]
+  selectedTags: TAG_LIST[]
 }
 
-function filters (state:FilterInterface = {tags: []},
-  {type, tags}: SelectFilterByTagsAction
+function filters (state:FilterInterface = {selectedTags: []},
+  action: FilterByTagsActionType
   ) {
-    switch (type) {
+    switch (action.type) {
       case SET_FILTER_BY_TAGS:
         return {
           ...state,
-          tags: tags
+          selectedTags: action.selectedTags
+        }
+      case RESET_FILTER_BY_TAGS:
+        return {
+          ...state,
+          selectedTags: []
         }
       default:
         return state

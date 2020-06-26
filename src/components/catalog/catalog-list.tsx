@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import {PAGEMAP, PRODUCT_TYPE, Items} from './../../types'
+import {PAGEMAP, PRODUCT_TYPE, Items, TAG_LIST} from './../../types'
 import TagPopup from './../popups/tag'
+import TagsList from './tags-list'
 
 interface PropsForList {
   currentItems: Items[]
@@ -38,10 +39,16 @@ const ListRender: React.FC<PropsForList> = ({currentItems}) => {
 
 interface Props {
   activelink: PRODUCT_TYPE,
-  currentItems: Items[] | null
+  currentItems: Items[] | null,
+  selectedTags: TAG_LIST [],
+  deleteTag: (elem: TAG_LIST) => void,
+  setSelectedTags: (selectedTags: TAG_LIST[]) => void,
+  resetFilterByTags: () => void
 }
 
-const ListBlock: React.FC<Props> = ({activelink, currentItems}) => {
+const ListBlock: React.FC<Props> = (props) => {
+
+  const {activelink, currentItems, selectedTags, deleteTag} = props
 
   const [isTagPopupVisible, setIsTagPopupVisible] = useState(false)
   const showTagPopup = ():void => {
@@ -58,7 +65,10 @@ const ListBlock: React.FC<Props> = ({activelink, currentItems}) => {
       </h2>
       <div className="production-list-block__tags">
         <div className="tags-wrapper">
-          
+          {
+           selectedTags?.length ? <TagsList selectedTags = {selectedTags} deleteTag = {deleteTag} /> 
+            : (<ul className="production-list-block__tags-list"></ul>)
+          }
           <button className="production-list-block__add-snap snap" type="button" onClick={showTagPopup}>
             <span className="visually-hidden">Добавить тэг</span>
           </button>
@@ -70,7 +80,7 @@ const ListBlock: React.FC<Props> = ({activelink, currentItems}) => {
         }
       </ul>
       {isTagPopupVisible 
-        ? <TagPopup hideTagPopup={hideTagPopup} activelink={activelink}/>
+        ? <TagPopup {...props} hideTagPopup={hideTagPopup} activelink={activelink}/>
         : null
 
       }

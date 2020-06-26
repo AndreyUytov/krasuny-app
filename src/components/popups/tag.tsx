@@ -4,7 +4,7 @@ import { PRODUCT_TYPE, mapTagListToProductType, TAG_LIST } from '../../types'
 interface PropsForList {
   tags: TAG_LIST[],
   selectTags: (tag: TAG_LIST) => void,
-  selectedTags: TAG_LIST[] | string[]
+  selectedTags: TAG_LIST[],
 }
 
 const Listrender: React.FC<PropsForList> = ({tags, selectTags, selectedTags}) => {
@@ -35,10 +35,15 @@ const Listrender: React.FC<PropsForList> = ({tags, selectTags, selectedTags}) =>
 
 interface Props {
   hideTagPopup: ()=>void,
-  activelink: PRODUCT_TYPE
+  activelink: PRODUCT_TYPE,
+  selectedTags: TAG_LIST[],
+  setSelectedTags: (selectedTags: TAG_LIST[]) => void,
+  resetFilterByTags: () => void
 }
 
-const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
+const TagPopup: React.FC<Props> = (props) => {
+
+  const {hideTagPopup, activelink} = props
 
   const tags = mapTagListToProductType[activelink]
 
@@ -46,7 +51,7 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
 
   const [searchValue, setSearchValue] = useState('')
 
-  const [selectedTags, setSelectedTags] = useState<TAG_LIST[] | string[]>([])
+  const [selectedTags, setSelectedTags] = useState<TAG_LIST[]>(props.selectedTags)
 
   const filterTags = () => {
     const regexp = new RegExp(searchValue, 'i')
@@ -101,13 +106,15 @@ const TagPopup: React.FC<Props> = ({hideTagPopup, activelink}) => {
             </span>
           </button>
         </form>
-        <Listrender tags={sortTags} selectTags = {selectTags} selectedTags = {selectedTags} />
+        <Listrender {...props} tags={sortTags} selectTags = {selectTags} selectedTags = {selectedTags} />
         <div className='tag-button-wrapper'>
           <button type='button' className='btn tag-button' 
-            onClick = {() => setSelectedTags([])}  >
+            onClick = {() => {setSelectedTags([]); props.resetFilterByTags()}}  >
             Отмена
           </button>
-          <button type='button' className='btn-fon tag-button'>Применить</button>
+          <button type='button' className='btn-fon tag-button' onClick = {() => {props.setSelectedTags(selectedTags); hideTagPopup()}} >
+            Применить
+          </button>
         </div>
       </div>
     </div>

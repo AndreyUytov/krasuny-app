@@ -3,16 +3,20 @@ import {connect, ConnectedProps} from 'react-redux'
 import {useParams} from 'react-router-dom'
 
 import {RootState} from './../../reducers'
-import {selectProductType} from './../../action'
+import { selectProductType,
+          deleteFilterByTags,
+          setFilterByTags,
+          resetFilterByTags
+} from './../../action'
 import {getItems} from './../../action/thunk-action'
-import {Items, MAX_ITEMS_PER_PAGE} from './../../types'
+import {Items, MAX_ITEMS_PER_PAGE, TAG_LIST} from './../../types'
 import MainNav from './../main-nav'
 import ListBlock from './catalog-list'
 import PaginationBlock from './pagination'
 
 
 const CatalogMain: React.FC<Props> = (props) => {
-  const {activelink, selectProductType, getItems, items} = props
+  const {activelink, selectProductType, getItems, items, deleteFilterByTags, setFilterByTags} = props
   let {product_type} = useParams()  
   useEffect(() => {
     if (activelink !== product_type) {
@@ -33,11 +37,21 @@ const CatalogMain: React.FC<Props> = (props) => {
     setCurrentItems(itemsByPage)
   }, [items, currentPage])
 
+  const deleteTag = (elem: TAG_LIST) => {
+    deleteFilterByTags(elem)
+  }
+
+  const setSelectedTags = (selectedTags: TAG_LIST []) => {
+    if (selectedTags?.length) {
+      setFilterByTags(selectedTags)
+    }
+  }
+
   return (
     <main className="page-main--catalog container">
       <MainNav {...props}/>
       <section className="filter-block">FILTER</section>
-      <ListBlock {...props} currentItems = {currentItems}/>
+      <ListBlock {...props} currentItems = {currentItems} deleteTag = {deleteTag} setSelectedTags = {setSelectedTags} />
       {maxPage === 0 ? null : <PaginationBlock maxPage = {maxPage} currentPage = {currentPage} setCurrentPage = {setCurrentPage} /> }
     </main>
   )
@@ -45,12 +59,16 @@ const CatalogMain: React.FC<Props> = (props) => {
 
 const mapState = (state: RootState) => ({
   activelink: state.selectedProductType,
-  items: state.allItemsByProductType[state.selectedProductType] || []
+  items: state.allItemsByProductType[state.selectedProductType] || [],
+  selectedTags: state.filters.selectedTags
 })
 
 const mapDispatch = {
   selectProductType,
-  getItems
+  getItems,
+  setFilterByTags,
+  deleteFilterByTags,
+  resetFilterByTags
 }
 
 const connector = connect(mapState, mapDispatch)

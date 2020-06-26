@@ -6,14 +6,31 @@ import {
   SelectProductTypeAction,
   GetItemsByProductTypeAction,
   TAG_LIST,
-  SelectFilterByTagsAction,
-  SET_FILTER_BY_TAGS
+  SetFilterByTagsAction,
+  SET_FILTER_BY_TAGS,
+  DeleteFilterByTagsAction,
+  DELETE_FILTER_BY_TAGS,
+  RESET_FILTER_BY_TAGS,
+  ResetFIlterByTagsAction
 } from './../types'
 
-export function selectFilterByTags (tags: TAG_LIST[]): SelectFilterByTagsAction {
+export function resetFilterByTags (): ResetFIlterByTagsAction {
+  return {
+    type:RESET_FILTER_BY_TAGS
+  }
+}
+
+export function setFilterByTags (selectedTags: TAG_LIST[]): SetFilterByTagsAction {
   return {
     type: SET_FILTER_BY_TAGS,
-    tags
+    selectedTags
+  }
+}
+
+export function deleteFilterByTags (removedTag: TAG_LIST): DeleteFilterByTagsAction {
+  return {
+    type: DELETE_FILTER_BY_TAGS,
+    removedTag
   }
 }
 
