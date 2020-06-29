@@ -9,7 +9,10 @@ import {SELECT_PRODUCT_TYPE,
   TAG_LIST,
   FilterByTagsActionType,
   SET_FILTER_BY_TAGS,
-  RESET_FILTER_BY_TAGS
+  RESET_FILTER_BY_TAGS,
+  PaginationPageActionType,
+  SET_PAGINATION_PAGE,
+  RESET_PAGINATION_PAGE
   } from './../types'
 
 function selectedProductType (state: PRODUCT_TYPE = PRODUCT_TYPE.blush, {type, page}: SelectProductTypeAction): PRODUCT_TYPE {
@@ -62,10 +65,32 @@ function filters (state:FilterInterface = {selectedTags: []},
     }
 }
 
+interface PaginationPage {
+  page: number
+}
+
+function pagination (state: PaginationPage = {page: 1}, action: PaginationPageActionType) {
+  switch (action.type) {
+    case SET_PAGINATION_PAGE:
+      return {
+        ...state,
+        page: action.page
+      }
+    case RESET_PAGINATION_PAGE:
+      return {
+        ...state,
+        page: 1
+      }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   selectedProductType,
   allItemsByProductType,
-  filters
+  filters,
+  pagination
 })
 
 export type RootState = ReturnType<typeof rootReducer>

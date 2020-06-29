@@ -6,7 +6,9 @@ import {RootState} from './../../reducers'
 import { selectProductType,
           deleteFilterByTags,
           setFilterByTags,
-          resetFilterByTags
+          resetFilterByTags,
+          resetPaginationPage,
+          setPaginationPage
 } from './../../action'
 import {getItems} from './../../action/thunk-action'
 import {Items, MAX_ITEMS_PER_PAGE, TAG_LIST} from './../../types'
@@ -26,7 +28,7 @@ const CatalogMain: React.FC<Props> = (props) => {
   }, [product_type, activelink, selectProductType, getItems])
 
   const [currentPage, setCurrentPage] = useState(1)
-  const [currentItems, setCurrentItems] = useState<Items[] | null>(null)
+  const [currentItems, setCurrentItems] = useState<Items[]>([])
 
   let maxPage = Math.ceil(items.length / MAX_ITEMS_PER_PAGE)
   
@@ -52,7 +54,7 @@ const CatalogMain: React.FC<Props> = (props) => {
       <MainNav {...props}/>
       <section className="filter-block">FILTER</section>
       <ListBlock {...props} currentItems = {currentItems} deleteTag = {deleteTag} setSelectedTags = {setSelectedTags} />
-      {maxPage === 0 ? null : <PaginationBlock maxPage = {maxPage} currentPage = {currentPage} setCurrentPage = {setCurrentPage} /> }
+      {maxPage === 0 ? null : <PaginationBlock {...props} currentPage = {currentPage} setCurrentPage = {setCurrentPage} /> }
     </main>
   )
 }
@@ -60,7 +62,8 @@ const CatalogMain: React.FC<Props> = (props) => {
 const mapState = (state: RootState) => ({
   activelink: state.selectedProductType,
   items: state.allItemsByProductType[state.selectedProductType] || [],
-  selectedTags: state.filters.selectedTags
+  selectedTags: state.filters.selectedTags,
+  page: state.pagination.page
 })
 
 const mapDispatch = {
@@ -68,7 +71,9 @@ const mapDispatch = {
   getItems,
   setFilterByTags,
   deleteFilterByTags,
-  resetFilterByTags
+  resetFilterByTags,
+  resetPaginationPage,
+  setPaginationPage
 }
 
 const connector = connect(mapState, mapDispatch)

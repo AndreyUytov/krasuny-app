@@ -13,12 +13,28 @@ export interface Items {
   [propName:string]: string
 }
 
-export const MAX_ITEMS_PER_PAGE = 16
 export const SELECT_PRODUCT_TYPE = 'SELECT_PRODUCT_TYPE'
+
 export const GET_ITEMS_BY_PRODUCT_TYPE = 'GET_ITEMS_BY_PRODUCT_TYPE'
+
 export const SET_FILTER_BY_TAGS = 'SET_FILTER_BY_TAGS'
 export const DELETE_FILTER_BY_TAGS = 'DELETE_FILTER_BY_TAGS'
 export const RESET_FILTER_BY_TAGS = 'RESET_FILTER_BY_TAGS'
+
+export const MAX_ITEMS_PER_PAGE = 16
+export const SET_PAGINATION_PAGE = 'SET_PAGINATION_PAGE'
+export const RESET_PAGINATION_PAGE = 'RESET_PAGINATION_PAGE'
+
+export interface SetPaginationPageAction {
+  type: typeof SET_PAGINATION_PAGE,
+  page: number
+}
+
+export interface ResetPaginationPageAction {
+  type: typeof RESET_PAGINATION_PAGE
+}
+
+export type PaginationPageActionType = ResetPaginationPageAction | SetPaginationPageAction
 
 export interface DeleteFilterByTagsAction {
   type: typeof DELETE_FILTER_BY_TAGS,

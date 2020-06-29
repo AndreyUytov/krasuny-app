@@ -11,12 +11,29 @@ import {
   DeleteFilterByTagsAction,
   DELETE_FILTER_BY_TAGS,
   RESET_FILTER_BY_TAGS,
-  ResetFIlterByTagsAction
+  ResetFIlterByTagsAction,
+  SET_PAGINATION_PAGE,
+  RESET_PAGINATION_PAGE,
+  ResetPaginationPageAction,
+  SetPaginationPageAction
 } from './../types'
+
+export function setPaginationPage (page: number): SetPaginationPageAction {
+  return {
+    type: SET_PAGINATION_PAGE,
+    page
+  }
+}
+
+export function resetPaginationPage (): ResetPaginationPageAction {
+  return {
+    type: RESET_PAGINATION_PAGE
+  }
+}
 
 export function resetFilterByTags (): ResetFIlterByTagsAction {
   return {
-    type:RESET_FILTER_BY_TAGS
+    type: RESET_FILTER_BY_TAGS
   }
 }
 

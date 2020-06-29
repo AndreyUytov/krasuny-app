@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import {Items, MAX_ITEMS_PER_PAGE, TAG_LIST} from './../../types'
 
 interface PropsForPagination {
-  maxPage: number,
+  items: Items[]
   currentPage: number,
   setCurrentPage: (page: number) => void
 }
@@ -28,8 +29,10 @@ const paginationLink = (arrPages: number[], currentPage: number, setCurrentPage:
   })
 }
 
-const PaginationBlock: React.FC<PropsForPagination> = ({currentPage, maxPage, setCurrentPage}) => {
+const PaginationBlock: React.FC<PropsForPagination> = ({currentPage, setCurrentPage}) => {
 
+
+  const [maxPage, setMaxPage] = useState(1)
   const [arrPages, setArrPages] = useState(createPageArr(currentPage, maxPage))
 
   return (
