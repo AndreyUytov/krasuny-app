@@ -39,7 +39,7 @@ const ListRender: React.FC<PropsForList> = ({currentItems}) => {
 
 interface Props {
   activelink: PRODUCT_TYPE,
-  currentItems: Items[] | null,
+  currentItems: Items[],
   selectedTags: TAG_LIST [],
   deleteTag: (elem: TAG_LIST) => void,
   setSelectedTags: (selectedTags: TAG_LIST[]) => void,

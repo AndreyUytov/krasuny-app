@@ -18,7 +18,7 @@ import PaginationBlock from './pagination'
 
 
 const CatalogMain: React.FC<Props> = (props) => {
-  const {activelink, selectProductType, getItems, items, deleteFilterByTags, setFilterByTags} = props
+  const {activelink, selectProductType, getItems, items, deleteFilterByTags, setFilterByTags, currentPage} = props
   let {product_type} = useParams()  
   useEffect(() => {
     if (activelink !== product_type) {
@@ -26,9 +26,6 @@ const CatalogMain: React.FC<Props> = (props) => {
       getItems(product_type)
     }
   }, [product_type, activelink, selectProductType, getItems])
-
-  const [currentPage, setCurrentPage] = useState(1)
-  const [currentItems, setCurrentItems] = useState<Items[]>([])
 
   let maxPage = Math.ceil(items.length / MAX_ITEMS_PER_PAGE)
   
@@ -53,17 +50,17 @@ const CatalogMain: React.FC<Props> = (props) => {
     <main className="page-main--catalog container">
       <MainNav {...props}/>
       <section className="filter-block">FILTER</section>
-      <ListBlock {...props} currentItems = {currentItems} deleteTag = {deleteTag} setSelectedTags = {setSelectedTags} />
-      {maxPage === 0 ? null : <PaginationBlock {...props} currentPage = {currentPage} setCurrentPage = {setCurrentPage} /> }
+      <ListBlock {...props} deleteTag = {deleteTag} setSelectedTags = {setSelectedTags} />
+      {maxPage === 0 ? null : <PaginationBlock {...props}  /> }
     </main>
   )
 }
 
 const mapState = (state: RootState) => ({
   activelink: state.selectedProductType,
-  items: state.allItemsByProductType[state.selectedProductType] || [],
+  items: state.allItemsByProductType[state.selectedProductType],
   selectedTags: state.filters.selectedTags,
-  page: state.pagination.page
+  currentPage: state.pagination.page
 })
 
 const mapDispatch = {
@@ -73,7 +70,7 @@ const mapDispatch = {
   deleteFilterByTags,
   resetFilterByTags,
   resetPaginationPage,
-  setPaginationPage
+  setCurrentPage: setPaginationPage
 }
 
 const connector = connect(mapState, mapDispatch)

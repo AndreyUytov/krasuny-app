@@ -32,7 +32,7 @@ const paginationLink = (arrPages: number[], currentPage: number, setCurrentPage:
 const PaginationBlock: React.FC<PropsForPagination> = ({currentPage, setCurrentPage}) => {
 
 
-  const [maxPage, setMaxPage] = useState(1)
+  const [maxPage, setMaxPage] = useState(Math.ceil(items.length / MAX_ITEMS_PER_PAGE))
   const [arrPages, setArrPages] = useState(createPageArr(currentPage, maxPage))
 
   return (
