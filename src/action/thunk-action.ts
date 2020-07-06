@@ -9,3 +9,4 @@ export const getItems = (page: PRODUCT_TYPE) : AppThunk => async dispatch => {
     getItemsByProductType(page, items)
   )
 }
+

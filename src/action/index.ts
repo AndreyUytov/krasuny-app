@@ -15,8 +15,16 @@ import {
   SET_PAGINATION_PAGE,
   RESET_PAGINATION_PAGE,
   ResetPaginationPageAction,
-  SetPaginationPageAction
+  SetPaginationPageAction,
+  RequestItemsAction,
+  REQUEST_ITEMS,
+  SuccessItemsAction,
+  SUCCESS_ITEMS,
+  AppThunk
 } from './../types'
+
+import {itemsApi} from './../api/api'
+import { RootState } from '../reducers'
 
 export function setPaginationPage (page: number): SetPaginationPageAction {
   return {
@@ -64,4 +72,22 @@ export function getItemsByProductType (page: PRODUCT_TYPE, items: Items[]): GetI
     page,
     items
   }
+}
+
+export function requestItems (query?: string): RequestItemsAction {
+  return {
+    type: REQUEST_ITEMS,
+    query
+  }
+}
+
+export function successItems (items: Items[]): SuccessItemsAction {
+  return {
+    type: SUCCESS_ITEMS,
+    items
+  }
+}
+
+const fetchItems = (query?: string, state: RootState): AppThunk => async dispatch => {
+  const http = itemsApi(state.selectedProductType, query)
 }
