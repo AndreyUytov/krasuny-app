@@ -10,7 +10,25 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 >
 
 export interface Items {
-  [propName:string]: string
+  [propName:string]: string 
+}
+
+export interface Item {
+  id: number,
+  brand: string,
+  name: string,
+  price: string,
+  price_sign: string | number | null,
+  currency: string | number | null,
+  image_link: string,
+  product_link: string | number | null,
+  website_link: string | number | null,
+  description: string,
+  rating: string | number | null,
+  category: any,
+  product_type: PRODUCT_TYPE,
+  tag_list: TAG_LIST [],
+  [propName: string]: any
 }
 
 export const SELECT_PRODUCT_TYPE = 'SELECT_PRODUCT_TYPE'
@@ -56,7 +74,7 @@ export interface SetFilterByTagsAction {
 export type FilterByTagsActionType = DeleteFilterByTagsAction | ResetFIlterByTagsAction | SetFilterByTagsAction
 export interface SelectProductTypeAction {
   type: typeof SELECT_PRODUCT_TYPE,
-  page: PRODUCT_TYPE
+  productType: PRODUCT_TYPE
 }
 
 export interface GetItemsByProductTypeAction {
@@ -67,18 +85,20 @@ export interface GetItemsByProductTypeAction {
 
 export interface RequestItemsAction {
   type: typeof REQUEST_ITEMS,
-  query?: string
+  query: string
 }
 
 export interface SuccessItemsAction {
   type: typeof SUCCESS_ITEMS,
-  items: Items []
+  items: Item []
 }
 
-export interface FailureItems {
+export interface FailureItemsAction {
   type: typeof FAILURE_ITEMS,
   error: typeof Error
 }
+
+export type ItemsActionType = FailureItemsAction | SuccessItemsAction | RequestItemsAction
 
 export enum PAGEMAP {
   blush = 'Румянец',

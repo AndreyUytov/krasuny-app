@@ -5,27 +5,31 @@ import {SELECT_PRODUCT_TYPE,
   GetItemsByProductTypeAction,
   PRODUCT_TYPE,
   GET_ITEMS_BY_PRODUCT_TYPE,
-  Items,
   TAG_LIST,
   FilterByTagsActionType,
   SET_FILTER_BY_TAGS,
   RESET_FILTER_BY_TAGS,
   PaginationPageActionType,
   SET_PAGINATION_PAGE,
-  RESET_PAGINATION_PAGE
+  RESET_PAGINATION_PAGE,
+  REQUEST_ITEMS,
+  SUCCESS_ITEMS,
+  ItemsActionType,
+  FAILURE_ITEMS,
+  Item
   } from './../types'
 
-function selectedProductType (state: PRODUCT_TYPE = PRODUCT_TYPE.blush, {type, page}: SelectProductTypeAction): PRODUCT_TYPE {
+function selectedProductType (state: PRODUCT_TYPE = PRODUCT_TYPE.blush, {type, productType}: SelectProductTypeAction): PRODUCT_TYPE {
   switch (type) {
     case SELECT_PRODUCT_TYPE:
-      return page
+      return productType
     default:
      return state
   }
 }
 
 interface allItemsInterface {
-  [propname: string]: Items[]
+  [propname: string]: Item []
 }
 
 function allItemsByProductType (
@@ -42,11 +46,55 @@ function allItemsByProductType (
     }
   }
 
-interface FilterInterface {
-  selectedTags: TAG_LIST[]
+function itemsByFilters (
+  state: allItemsInterface = {}, action: any
+  ) {
+    switch (action.type) {
+      
+    }
+  }
+
+interface ItemsIdInterface {
+  isFetching: boolean,
+  isFailure: boolean,
+  itemsId: number []
 }
 
-function filters (state:FilterInterface = {selectedTags: []},
+function itemsId (
+  state:ItemsIdInterface = {
+    isFetching: false,
+    isFailure: false,
+    itemsId: []
+  }, action: ItemsActionType
+  ): ItemsIdInterface {
+    switch (action.type) {
+      case REQUEST_ITEMS:
+        return {
+          ...state, isFetching: true
+        }
+      case SUCCESS_ITEMS:
+        return {
+          ...state, isFetching: false, 
+          itemsId: action.items.map(elem => elem.id)
+        }
+      case FAILURE_ITEMS:
+        return {
+          ...state, isFetching: false,
+          isFailure: true
+        }
+      default: 
+        return state
+    }
+  }
+
+
+
+interface FilterInterface {
+  selectedTags: TAG_LIST[],
+  selectedProductType: PRODUCT_TYPE
+}
+
+function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush},
   action: FilterByTagsActionType
   ) {
     switch (action.type) {

@@ -20,7 +20,10 @@ import {
   REQUEST_ITEMS,
   SuccessItemsAction,
   SUCCESS_ITEMS,
-  AppThunk
+  AppThunk,
+  FailureItemsAction,
+  FAILURE_ITEMS,
+  Item
 } from './../types'
 
 import {itemsApi} from './../api/api'
@@ -59,10 +62,10 @@ export function deleteFilterByTags (removedTag: TAG_LIST): DeleteFilterByTagsAct
   }
 }
 
-export function selectProductType (page: PRODUCT_TYPE): SelectProductTypeAction {
+export function selectProductType (productType: PRODUCT_TYPE): SelectProductTypeAction {
   return {
     type: SELECT_PRODUCT_TYPE,
-    page
+    productType
   }
 }
 
@@ -74,20 +77,39 @@ export function getItemsByProductType (page: PRODUCT_TYPE, items: Items[]): GetI
   }
 }
 
-export function requestItems (query?: string): RequestItemsAction {
+export function requestItems (query: string): RequestItemsAction {
   return {
     type: REQUEST_ITEMS,
     query
   }
 }
 
-export function successItems (items: Items[]): SuccessItemsAction {
+export function successItems (items: Item[]): SuccessItemsAction {
   return {
     type: SUCCESS_ITEMS,
     items
   }
 }
 
-const fetchItems = (query?: string, state: RootState): AppThunk => async dispatch => {
-  const http = itemsApi(state.selectedProductType, query)
+export function failureItems (error: typeof Error): FailureItemsAction {
+  return {
+    type: FAILURE_ITEMS,
+    error
+  }
+}
+
+const fetchItems = (state: RootState, query: string): AppThunk => async dispatch => {
+  dispatch(requestItems(query))
+  try {
+    const response = await fetch(itemsApi(state.selectedProductType, query))
+    const json = await response.json()
+    return dispatch(successItems(json))
+  }
+  catch (err) {
+    return dispatch(failureItems(err))
+  }
+}
+
+const shouldFetchItems = (state: RootState) => {
+
 }
