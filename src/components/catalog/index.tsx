@@ -3,15 +3,13 @@ import {connect, ConnectedProps} from 'react-redux'
 import {useParams} from 'react-router-dom'
 
 import {RootState} from './../../reducers'
-import { selectProductType,
-          deleteFilterByTags,
-          setFilterByTags,
-          resetFilterByTags,
-          resetPaginationPage,
-          setPaginationPage
+import { deleteFilterByTags,
+        setFilterByTags,
+        resetFilterByTags,
+        resetPaginationPage,
+        setPaginationPage
 } from './../../action'
-import {getItems} from './../../action/thunk-action'
-import {Items, MAX_ITEMS_PER_PAGE, TAG_LIST} from './../../types'
+import {MAX_ITEMS_PER_PAGE, TAG_LIST} from './../../types'
 import MainNav from './../main-nav'
 import ListBlock from './catalog-list'
 import PaginationBlock from './pagination'
@@ -56,16 +54,15 @@ const CatalogMain: React.FC<Props> = (props) => {
   )
 }
 
-const mapState = (state: RootState) => ({
-  activelink: state.selectedProductType,
-  items: state.allItemsByProductType[state.selectedProductType],
+const mapState = (state: RootState, ownProps) => ({
+  product_type: state.filters.selectedProductType,
+  items: state.itemsByFilters[query],
   selectedTags: state.filters.selectedTags,
   currentPage: state.pagination.page
 })
 
 const mapDispatch = {
-  selectProductType,
-  getItems,
+
   setFilterByTags,
   deleteFilterByTags,
   resetFilterByTags,

@@ -1,10 +1,5 @@
 import {
   PRODUCT_TYPE,
-  SELECT_PRODUCT_TYPE,
-  GET_ITEMS_BY_PRODUCT_TYPE,
-  Items,
-  SelectProductTypeAction,
-  GetItemsByProductTypeAction,
   TAG_LIST,
   SetFilterByTagsAction,
   SET_FILTER_BY_TAGS,
@@ -23,7 +18,9 @@ import {
   AppThunk,
   FailureItemsAction,
   FAILURE_ITEMS,
-  Item
+  Item,
+  SET_FILTER_BY_PRODUCT_TYPE,
+  SetFilterByProductTypeAction
 } from './../types'
 
 import {itemsApi} from './../api/api'
@@ -39,6 +36,13 @@ export function setPaginationPage (page: number): SetPaginationPageAction {
 export function resetPaginationPage (): ResetPaginationPageAction {
   return {
     type: RESET_PAGINATION_PAGE
+  }
+}
+
+export function setFilterByProductType (product_type: PRODUCT_TYPE): SetFilterByProductTypeAction {
+  return {
+    type: SET_FILTER_BY_PRODUCT_TYPE,
+    product_type
   }
 }
 
@@ -62,21 +66,6 @@ export function deleteFilterByTags (removedTag: TAG_LIST): DeleteFilterByTagsAct
   }
 }
 
-export function selectProductType (productType: PRODUCT_TYPE): SelectProductTypeAction {
-  return {
-    type: SELECT_PRODUCT_TYPE,
-    productType
-  }
-}
-
-export function getItemsByProductType (page: PRODUCT_TYPE, items: Items[]): GetItemsByProductTypeAction {
-  return {
-    type: GET_ITEMS_BY_PRODUCT_TYPE,
-    page,
-    items
-  }
-}
-
 export function requestItems (query: string): RequestItemsAction {
   return {
     type: REQUEST_ITEMS,
@@ -84,32 +73,45 @@ export function requestItems (query: string): RequestItemsAction {
   }
 }
 
-export function successItems (items: Item[]): SuccessItemsAction {
+export function successItems (items: Item[], query: string): SuccessItemsAction {
   return {
     type: SUCCESS_ITEMS,
-    items
+    items,
+    query
   }
 }
 
-export function failureItems (error: typeof Error): FailureItemsAction {
+export function failureItems (error: typeof Error, query: string): FailureItemsAction {
   return {
     type: FAILURE_ITEMS,
-    error
+    error,
+    query
   }
 }
 
 const fetchItems = (state: RootState, query: string): AppThunk => async dispatch => {
   dispatch(requestItems(query))
   try {
-    const response = await fetch(itemsApi(state.selectedProductType, query))
+    const response = await fetch(itemsApi(query))
     const json = await response.json()
-    return dispatch(successItems(json))
+    return dispatch(successItems(json, query))
   }
   catch (err) {
-    return dispatch(failureItems(err))
+    return dispatch(failureItems(err, query))
   }
 }
 
-const shouldFetchItems = (state: RootState) => {
+const shouldFetchItems = (state: RootState, query: string) => {
+  const items = state.itemsByFilters[query]
+   if(!items) {
+    return true
+  } else if (items.isFetching) {
+    return false
+  }
+}
 
+export const fetchItemsIfNeeded = (state: RootState, query: string): AppThunk => (dispatch, getState) => {
+  if (shouldFetchItems(getState(), query)) {
+    return dispatch(fetchItems(state, query))
+  }
 }

@@ -9,10 +9,6 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >
 
-export interface Items {
-  [propName:string]: string 
-}
-
 export interface Item {
   id: number,
   brand: string,
@@ -31,9 +27,6 @@ export interface Item {
   [propName: string]: any
 }
 
-export const SELECT_PRODUCT_TYPE = 'SELECT_PRODUCT_TYPE'
-
-export const GET_ITEMS_BY_PRODUCT_TYPE = 'GET_ITEMS_BY_PRODUCT_TYPE'
 export const REQUEST_ITEMS = 'REQUEST_ITEMS'
 export const SUCCESS_ITEMS = 'SUCCESS_ITEMS'
 export const FAILURE_ITEMS = 'FAILURE_ITEMS'
@@ -41,6 +34,7 @@ export const FAILURE_ITEMS = 'FAILURE_ITEMS'
 export const SET_FILTER_BY_TAGS = 'SET_FILTER_BY_TAGS'
 export const DELETE_FILTER_BY_TAGS = 'DELETE_FILTER_BY_TAGS'
 export const RESET_FILTER_BY_TAGS = 'RESET_FILTER_BY_TAGS'
+export const SET_FILTER_BY_PRODUCT_TYPE = 'SET_FILTER_BY_PRODUCT_TYPE'
 
 export const MAX_ITEMS_PER_PAGE = 16
 export const SET_PAGINATION_PAGE = 'SET_PAGINATION_PAGE'
@@ -57,6 +51,11 @@ export interface ResetPaginationPageAction {
 
 export type PaginationPageActionType = ResetPaginationPageAction | SetPaginationPageAction
 
+export interface SetFilterByProductTypeAction {
+  type: typeof SET_FILTER_BY_PRODUCT_TYPE,
+  product_type: PRODUCT_TYPE
+}
+
 export interface DeleteFilterByTagsAction {
   type: typeof DELETE_FILTER_BY_TAGS,
   removedTag: TAG_LIST
@@ -71,17 +70,7 @@ export interface SetFilterByTagsAction {
   selectedTags: TAG_LIST[]
 }
 
-export type FilterByTagsActionType = DeleteFilterByTagsAction | ResetFIlterByTagsAction | SetFilterByTagsAction
-export interface SelectProductTypeAction {
-  type: typeof SELECT_PRODUCT_TYPE,
-  productType: PRODUCT_TYPE
-}
-
-export interface GetItemsByProductTypeAction {
-  type: typeof GET_ITEMS_BY_PRODUCT_TYPE,
-  page: PRODUCT_TYPE,
-  items: Items[]
-}
+export type FilterActionType = DeleteFilterByTagsAction | ResetFIlterByTagsAction | SetFilterByTagsAction | SetFilterByProductTypeAction
 
 export interface RequestItemsAction {
   type: typeof REQUEST_ITEMS,
@@ -90,12 +79,14 @@ export interface RequestItemsAction {
 
 export interface SuccessItemsAction {
   type: typeof SUCCESS_ITEMS,
-  items: Item []
+  items: Item [],
+  query: string
 }
 
 export interface FailureItemsAction {
   type: typeof FAILURE_ITEMS,
-  error: typeof Error
+  error: typeof Error,
+  query: string
 }
 
 export type ItemsActionType = FailureItemsAction | SuccessItemsAction | RequestItemsAction

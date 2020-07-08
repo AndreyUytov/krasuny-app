@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 
-import {PAGEMAP, PRODUCT_TYPE, Items, TAG_LIST} from './../../types'
+import {PAGEMAP, PRODUCT_TYPE, TAG_LIST, Item} from './../../types'
 import TagPopup from './../popups/tag'
 import TagsList from './tags-list'
 
 interface PropsForList {
-  currentItems: Items[]
+  currentItems: Item[]
 }
 
 const ListRender: React.FC<PropsForList> = ({currentItems}) => {
@@ -39,7 +39,7 @@ const ListRender: React.FC<PropsForList> = ({currentItems}) => {
 
 interface Props {
   activelink: PRODUCT_TYPE,
-  currentItems: Items[],
+  currentItems: Item[],
   selectedTags: TAG_LIST [],
   deleteTag: (elem: TAG_LIST) => void,
   setSelectedTags: (selectedTags: TAG_LIST[]) => void,

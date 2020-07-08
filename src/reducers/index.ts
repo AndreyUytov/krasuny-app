@@ -1,12 +1,9 @@
 import { combineReducers } from 'redux'
 
-import {SELECT_PRODUCT_TYPE,
-  SelectProductTypeAction,
-  GetItemsByProductTypeAction,
+import {
   PRODUCT_TYPE,
-  GET_ITEMS_BY_PRODUCT_TYPE,
   TAG_LIST,
-  FilterByTagsActionType,
+  FilterActionType,
   SET_FILTER_BY_TAGS,
   RESET_FILTER_BY_TAGS,
   PaginationPageActionType,
@@ -16,43 +13,48 @@ import {SELECT_PRODUCT_TYPE,
   SUCCESS_ITEMS,
   ItemsActionType,
   FAILURE_ITEMS,
-  Item
+  Item,
+  SuccessItemsAction,
+  SET_FILTER_BY_PRODUCT_TYPE
   } from './../types'
-
-function selectedProductType (state: PRODUCT_TYPE = PRODUCT_TYPE.blush, {type, productType}: SelectProductTypeAction): PRODUCT_TYPE {
-  switch (type) {
-    case SELECT_PRODUCT_TYPE:
-      return productType
-    default:
-     return state
-  }
-}
+import { indexById } from '../selectors'
 
 interface allItemsInterface {
   [propname: string]: Item []
 }
 
-function allItemsByProductType (
-  state:allItemsInterface = {}, {type, page, items}: GetItemsByProductTypeAction
+interface ItemsByFiltersInterface {
+  [propName: string]: ItemsIdInterface
+}
+
+function itemsByFilters (
+  state: ItemsByFiltersInterface = {}, action: ItemsActionType
   ) {
-    switch (type) {
-      case GET_ITEMS_BY_PRODUCT_TYPE:
+    switch (action.type) {
+      case REQUEST_ITEMS:
+      case SUCCESS_ITEMS:
+      case FAILURE_ITEMS: 
         return {
           ...state,
-          [page]: items
+          [action.query]: itemsId(state[action.query], action)  
         }
       default:
         return state
     }
   }
 
-function itemsByFilters (
-  state: allItemsInterface = {}, action: any
-  ) {
-    switch (action.type) {
-      
-    }
+interface AllItemsState {
+  [propName: number]: Item
+}
+
+function allItems (state:AllItemsState, action: SuccessItemsAction) {
+  switch (action.type) {
+    case SUCCESS_ITEMS:
+      return {
+        ...state, ...indexById(action.items)
+      }
   }
+}
 
 interface ItemsIdInterface {
   isFetching: boolean,
@@ -95,7 +97,7 @@ interface FilterInterface {
 }
 
 function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush},
-  action: FilterByTagsActionType
+  action: FilterActionType
   ) {
     switch (action.type) {
       case SET_FILTER_BY_TAGS:
@@ -107,6 +109,11 @@ function filters (state:FilterInterface = {selectedTags: [], selectedProductType
         return {
           ...state,
           selectedTags: []
+        }
+      case SET_FILTER_BY_PRODUCT_TYPE:
+        return {
+          ...state,
+          selectedProductType: action.product_type
         }
       default:
         return state
@@ -135,10 +142,10 @@ function pagination (state: PaginationPage = {page: 1}, action: PaginationPageAc
 }
 
 const rootReducer = combineReducers({
-  selectedProductType,
-  allItemsByProductType,
   filters,
-  pagination
+  pagination,
+  allItems,
+  itemsByFilters
 })
 
 export type RootState = ReturnType<typeof rootReducer>
