@@ -6,12 +6,12 @@ import {PAGEMAP, PRODUCT_TYPE} from './../../types'
 interface Props {
   links: string[],
   to: string[],
-  activelink: PRODUCT_TYPE
+  product_type: PRODUCT_TYPE
 }
 
-const MainNav: React.FC<Props> = ({links, to, activelink}) => {
+const MainNav: React.FC<Props> = ({links, to, product_type}) => {
 
-  const convertLink = PAGEMAP[activelink]
+  const convertLink = PAGEMAP[product_type]
 
   return (
     <nav className="breadcrumbs-nav">

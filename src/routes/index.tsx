@@ -6,7 +6,7 @@ import {
 
 import Header from './../components/header'
 import Footer from './../components/footer'
-import CatalogMain from './../components/catalog'
+import CatalogPage from './../components/catalog-page'
 
 const Layout: React.FC = ({children}) => {
   return (
@@ -32,7 +32,7 @@ export default (
     </Route>
     <Route path = '/catalog/:product_type'>
       <Layout>
-        <CatalogMain links = {['Главная']} to = {['/']} />
+        
       </Layout>
     </Route>
     

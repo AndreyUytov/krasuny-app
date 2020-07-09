@@ -7,7 +7,9 @@ import { deleteFilterByTags,
         setFilterByTags,
         resetFilterByTags,
         resetPaginationPage,
-        setPaginationPage
+        setPaginationPage,
+        setFilterByProductType,
+        fetchItemsIfNeeded
 } from './../../action'
 import {MAX_ITEMS_PER_PAGE, TAG_LIST} from './../../types'
 import MainNav from './../main-nav'
@@ -16,14 +18,14 @@ import PaginationBlock from './pagination'
 
 
 const CatalogMain: React.FC<Props> = (props) => {
-  const {activelink, selectProductType, getItems, items, deleteFilterByTags, setFilterByTags, currentPage} = props
-  let {product_type} = useParams()  
+  const {items, deleteFilterByTags, setFilterByTags, currentPage, product_type, state} = props
+  let {product_type: activelink} = useParams() 
   useEffect(() => {
     if (activelink !== product_type) {
-      selectProductType(product_type)
-      getItems(product_type)
+      setFilterByProductType(activelink)
+      fetchItemsIfNeeded(state, activelink)
     }
-  }, [product_type, activelink, selectProductType, getItems])
+  }, [product_type, activelink, state])
 
   let maxPage = Math.ceil(items.length / MAX_ITEMS_PER_PAGE)
   
@@ -31,7 +33,7 @@ const CatalogMain: React.FC<Props> = (props) => {
     let startIndex = (currentPage - 1) * MAX_ITEMS_PER_PAGE
     let endIndex = currentPage * MAX_ITEMS_PER_PAGE
     let itemsByPage = items.slice(startIndex, endIndex)
-    setCurrentItems(itemsByPage)
+    setCurrentItems(itemsByPage)                  
   }, [items, currentPage])
 
   const deleteTag = (elem: TAG_LIST) => {
@@ -54,9 +56,10 @@ const CatalogMain: React.FC<Props> = (props) => {
   )
 }
 
-const mapState = (state: RootState, ownProps) => ({
+const mapState = (state: RootState, ownProps:{query: string}) => ({
+  state,
   product_type: state.filters.selectedProductType,
-  items: state.itemsByFilters[query],
+  items: state.itemsByFilters[ownProps.query],
   selectedTags: state.filters.selectedTags,
   currentPage: state.pagination.page
 })
