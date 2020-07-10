@@ -37,19 +37,19 @@ export const RESET_FILTER_BY_TAGS = 'RESET_FILTER_BY_TAGS'
 export const SET_FILTER_BY_PRODUCT_TYPE = 'SET_FILTER_BY_PRODUCT_TYPE'
 
 export const MAX_ITEMS_PER_PAGE = 16
-export const SET_PAGINATION_PAGE = 'SET_PAGINATION_PAGE'
-export const RESET_PAGINATION_PAGE = 'RESET_PAGINATION_PAGE'
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+export const RESET_CURRENT_PAGE = 'RESET_CURRENT_PAGE'
 
-export interface SetPaginationPageAction {
-  type: typeof SET_PAGINATION_PAGE,
+export interface SetCurrentPageAction {
+  type: typeof SET_CURRENT_PAGE,
   page: number
 }
 
-export interface ResetPaginationPageAction {
-  type: typeof RESET_PAGINATION_PAGE
+export interface ResetCurrentPageAction {
+  type: typeof RESET_CURRENT_PAGE
 }
 
-export type PaginationPageActionType = ResetPaginationPageAction | SetPaginationPageAction
+export type NumberPageActionType = ResetCurrentPageAction | SetCurrentPageAction
 
 export interface SetFilterByProductTypeAction {
   type: typeof SET_FILTER_BY_PRODUCT_TYPE,

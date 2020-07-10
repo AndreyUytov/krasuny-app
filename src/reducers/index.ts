@@ -6,9 +6,9 @@ import {
   FilterActionType,
   SET_FILTER_BY_TAGS,
   RESET_FILTER_BY_TAGS,
-  PaginationPageActionType,
-  SET_PAGINATION_PAGE,
-  RESET_PAGINATION_PAGE,
+  NumberPageActionType,
+  SET_CURRENT_PAGE,
+  RESET_CURRENT_PAGE,
   REQUEST_ITEMS,
   SUCCESS_ITEMS,
   ItemsActionType,
@@ -120,18 +120,18 @@ function filters (state:FilterInterface = {selectedTags: [], selectedProductType
     }
 }
 
-interface PaginationPage {
+interface NumberPage {
   page: number
 }
 
-function pagination (state: PaginationPage = {page: 1}, action: PaginationPageActionType) {
+function pagination (state: NumberPage = {page: 1}, action: NumberPageActionType) {
   switch (action.type) {
-    case SET_PAGINATION_PAGE:
+    case SET_CURRENT_PAGE:
       return {
         ...state,
         page: action.page
       }
-    case RESET_PAGINATION_PAGE:
+    case RESET_CURRENT_PAGE:
       return {
         ...state,
         page: 1

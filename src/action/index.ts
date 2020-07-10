@@ -7,10 +7,10 @@ import {
   DELETE_FILTER_BY_TAGS,
   RESET_FILTER_BY_TAGS,
   ResetFIlterByTagsAction,
-  SET_PAGINATION_PAGE,
-  RESET_PAGINATION_PAGE,
-  ResetPaginationPageAction,
-  SetPaginationPageAction,
+  SET_CURRENT_PAGE,
+  RESET_CURRENT_PAGE,
+  ResetCurrentPageAction,
+  SetCurrentPageAction,
   RequestItemsAction,
   REQUEST_ITEMS,
   SuccessItemsAction,
@@ -26,16 +26,16 @@ import {
 import {itemsApi} from './../api/api'
 import { RootState } from '../reducers'
 
-export function setPaginationPage (page: number): SetPaginationPageAction {
+export function setCurrentPage (page: number): SetCurrentPageAction {
   return {
-    type: SET_PAGINATION_PAGE,
+    type: SET_CURRENT_PAGE,
     page
   }
 }
 
-export function resetPaginationPage (): ResetPaginationPageAction {
+export function resetPaginationPage (): ResetCurrentPageAction {
   return {
-    type: RESET_PAGINATION_PAGE
+    type: RESET_CURRENT_PAGE
   }
 }
 
