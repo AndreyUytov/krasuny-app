@@ -23,6 +23,8 @@ import {
   SetFilterByProductTypeAction
 } from './../types'
 
+import { ItemsByFiltersInterface } from './../reducers'
+
 import {itemsApi} from './../api/api'
 import { RootState } from '../reducers'
 
@@ -89,7 +91,7 @@ export function failureItems (error: typeof Error, query: string): FailureItemsA
   }
 }
 
-const fetchItems = (state: RootState, query: string): AppThunk => async dispatch => {
+const fetchItems = (query: string): AppThunk => async dispatch => {
   dispatch(requestItems(query))
   try {
     const response = await fetch(itemsApi(query))
@@ -101,8 +103,8 @@ const fetchItems = (state: RootState, query: string): AppThunk => async dispatch
   }
 }
 
-const shouldFetchItems = (state: RootState, query: string) => {
-  const items = state.itemsByFilters[query]
+const shouldFetchItems = (itemsByFilters: ItemsByFiltersInterface, query: string) => {
+  const items = itemsByFilters[query]
    if(!items) {
     return true
   } else if (items.isFetching) {
@@ -110,8 +112,8 @@ const shouldFetchItems = (state: RootState, query: string) => {
   }
 }
 
-export const fetchItemsIfNeeded = (state: RootState, query: string): AppThunk => (dispatch, getState) => {
-  if (shouldFetchItems(getState(), query)) {
-    return dispatch(fetchItems(state, query))
+export const fetchItemsIfNeeded = (query: string): AppThunk => (dispatch, getState) => {
+  if (shouldFetchItems(getState().itemsByFilters, query)) {
+    return dispatch(fetchItems(query))
   }
 }

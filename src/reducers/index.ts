@@ -19,11 +19,7 @@ import {
   } from './../types'
 import { indexById } from '../selectors'
 
-interface allItemsInterface {
-  [propname: string]: Item []
-}
-
-interface ItemsByFiltersInterface {
+export interface ItemsByFiltersInterface {
   [propName: string]: ItemsIdInterface
 }
 
