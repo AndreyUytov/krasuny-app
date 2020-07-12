@@ -43,12 +43,14 @@ interface AllItemsState {
   [propName: number]: Item
 }
 
-function allItems (state:AllItemsState, action: SuccessItemsAction) {
+function allItems (state:AllItemsState = {}, action: SuccessItemsAction) {
   switch (action.type) {
     case SUCCESS_ITEMS:
       return {
         ...state, ...indexById(action.items)
       }
+    default:
+      return state
   }
 }
 

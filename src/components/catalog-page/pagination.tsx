@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import {Item, MAX_ITEMS_PER_PAGE} from './../../types'
+import {resetCurrentPage, setCurrentPage} from './../../action'
 
 interface PropsForPagination {
   items: Item []
   page: number,
-  setCurrentPage: (page: number) => void,
-  resetCurrentPage: () => void
+  setCurrentPage: typeof setCurrentPage,
+  resetCurrentPage: typeof resetCurrentPage
 }
 
 function createPageArr (currentPage:number, maxPage: number): number[] {

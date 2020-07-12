@@ -77,7 +77,7 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
            tags ? <TagList {...props} /> 
             : (<ul className="production-list-block__tags-list"></ul>)
           }
-            <button className="production-list-block__add-snap snap" type="button" onClick={()=> setTagsPopupVisible(true)}>
+            <button className="production-list-block__add-snap snap" type="button" onClick={() => setTagsPopupVisible(true)}>
               <span className="visually-hidden">Добавить тэг</span>
             </button>
           </div>

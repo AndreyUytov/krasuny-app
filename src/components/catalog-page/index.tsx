@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {connect, ConnectedProps} from 'react-redux'
 
 import MainNav from './../main-nav/'
@@ -14,32 +14,37 @@ import { fetchItemsIfNeeded,
          resetFilterByTags,
          deleteFilterByTags,
          resetCurrentPage,
-         setCurrentPage
+         setCurrentPage,
+         setFilterByProductType
       } from './../../action'
+import { useParams } from 'react-router-dom'
 
 interface ICatalogPage {
   product_type: PRODUCT_TYPE,
   tags: TAG_LIST[],
-  items: Item[],
   page: number,
   fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
   setFilterByTags: typeof setFilterByTags,
   resetFilterByTags: typeof resetFilterByTags,
   deleteFilterByTags: typeof deleteFilterByTags,
   resetCurrentPage: typeof resetCurrentPage,
-  setCurrentPage: typeof setCurrentPage
+  setCurrentPage: typeof setCurrentPage,
+  setFilterByProductType: typeof setFilterByProductType
 }
 
 const mapStateToProps = (state: RootState) => {
   let product_type_query = `product_type=${state.filters.selectedProductType}`
-  let product_tags_query = state.filters.selectedTags ? `&product_tags=${state.filters.selectedTags.join(',')}` : ''
+  let product_tags_query = state.filters.selectedTags.length ? `&product_tags=${state.filters.selectedTags.join(',')}` : ''
   let query = product_type_query + product_tags_query
-
+  const {itemsId, isFetching, isFailure} = state.itemsByFilters[query] || {itemsId: [], isFetching: true}
   return {
     query,
     product_type: state.filters.selectedProductType,
     tags: state.filters.selectedTags,
-    items: getAllItems(state.itemsByFilters[query].itemsId, state.allItems),
+    itemsIsFetching: isFetching,
+    itemsIsFailure: isFailure,
+    itemsId,
+    allItems: state.allItems,
     page: state.pagination.page
   }
 }
@@ -50,7 +55,8 @@ const mapDispatchToProps = {
   setFilterByTags,
   deleteFilterByTags,
   setCurrentPage,
-  resetCurrentPage
+  resetCurrentPage,
+  setFilterByProductType
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -60,12 +66,23 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type CatalogPageType = PropsFromRedux & ICatalogPage
 
 const CatalogPage:React.FC<CatalogPageType> = (props) => {
+  const {product_type} = useParams()
+  const items = getAllItems(props.itemsId, props.allItems)
+
+  useEffect (() => {
+    if(props.product_type !== product_type) {
+      setFilterByProductType(product_type)
+      fetchItemsIfNeeded(props.query)
+    }
+  }, [product_type, props.product_type, props.query])
+
   return (
     <main className = "page-main--catalog container">
       <MainNav links = {['Главная']} to = {['/']} {...props} />
       <FilterCatalogPage {...props}/>
-      <ListItemsSection {...props} />
-      <PaginationBlock {...props} />
+      {
+        items.length ? (<><ListItemsSection {...props} items={items} /><PaginationBlock {...props} items={items} /></>) : <div>Страница загружается</div>
+      }
     </main>
   )
 }

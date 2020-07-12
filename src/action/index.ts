@@ -112,7 +112,7 @@ const shouldFetchItems = (itemsByFilters: ItemsByFiltersInterface, query: string
   return true
 }
 
-export const fetchItemsIfNeeded = (query: string): AppThunk => (dispatch, getState) => {
+export const fetchItemsIfNeeded = (query: string): AppThunk | void => (dispatch, getState) => {
   if (shouldFetchItems(getState().itemsByFilters, query)) {
     return dispatch(fetchItems(query))
   }
