@@ -7,14 +7,19 @@ import ListItemsSection from './list-items'
 import { RootState } from '../../reducers'
 import { PRODUCT_TYPE, TAG_LIST, Item } from '../../types'
 import {getAllItems} from './../../selectors'
-import { fetchItemsIfNeeded } from './../../action'
+import { fetchItemsIfNeeded, 
+         setFilterByTags,
+         resetFilterByTags
+      } from './../../action'
 
 interface ICatalogPage {
   product_type: PRODUCT_TYPE,
   tags: TAG_LIST[],
   items: Item[],
   page: number,
-  fetchItemsIfNeeded: typeof fetchItemsIfNeeded
+  fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
+  setFilterByTags: typeof setFilterByTags,
+  resetFilterByTags: typeof resetFilterByTags
 }
 
 const mapStateToProps = (state: RootState) => {
@@ -32,7 +37,9 @@ const mapStateToProps = (state: RootState) => {
 }
 
 const mapDispatchToProps = {
-  fetchItemsIfNeeded
+  fetchItemsIfNeeded,
+  resetFilterByTags,
+  setFilterByTags
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

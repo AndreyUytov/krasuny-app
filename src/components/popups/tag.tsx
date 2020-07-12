@@ -1,13 +1,18 @@
 import React, {useState} from 'react'
 import { PRODUCT_TYPE, mapTagListToProductType, TAG_LIST } from '../../types'
 
+import {
+  setFilterByTags,
+  resetFilterByTags
+} from './../../action'
+
 interface PropsForList {
-  tags: TAG_LIST[],
+  tagsForCurrentProductType: TAG_LIST[],
   selectTags: (tag: TAG_LIST) => void,
   selectedTags: TAG_LIST[],
 }
 
-const Listrender: React.FC<PropsForList> = ({tags, selectTags, selectedTags}) => {
+const Listrender: React.FC<PropsForList> = ({tagsForCurrentProductType, selectTags, selectedTags}) => {
   const onBtnToggle = (tag: TAG_LIST):void => {
     if (selectedTags.length === 3 && !selectedTags.includes(tag)) {
       alert('Выберите не более 3-х тэгов!!!')
@@ -18,7 +23,7 @@ const Listrender: React.FC<PropsForList> = ({tags, selectTags, selectedTags}) =>
   return (
     <ul className='tag-popup__list'>
       {
-        tags.map((elem, i) => {
+        tagsForCurrentProductType.map((elem, i) => {
           return (
             <li key={i} className='tag-popup__item'>
               <button type='button' className = {selectedTags.includes(elem) ? 'snap tag-search__snap tag-search__snap--active' : 'snap tag-search__snap'}
@@ -34,24 +39,24 @@ const Listrender: React.FC<PropsForList> = ({tags, selectTags, selectedTags}) =>
 }
 
 interface Props {
-  hideTagPopup: ()=>void,
-  activelink: PRODUCT_TYPE,
-  selectedTags: TAG_LIST[],
-  setSelectedTags: (selectedTags: TAG_LIST[]) => void,
-  resetFilterByTags: () => void
+  hideTagPopup: (bool: boolean) => void,
+  product_type: PRODUCT_TYPE,
+  tags: TAG_LIST[],
+  setFilterByTags: typeof setFilterByTags,
+  resetFilterByTags: typeof resetFilterByTags
 }
 
 const TagPopup: React.FC<Props> = (props) => {
 
-  const {hideTagPopup, activelink} = props
+  const {hideTagPopup, product_type, tags: tagsFromStore, resetFilterByTags, setFilterByTags} = props
 
-  const tags = mapTagListToProductType[activelink]
+  const tagsForCurrentProductType = mapTagListToProductType[product_type]
 
-  const [sortTags, setSortTags] = useState(tags)
+  const [sortTags, setSortTags] = useState(tagsForCurrentProductType)
 
   const [searchValue, setSearchValue] = useState('')
 
-  const [selectedTags, setSelectedTags] = useState<TAG_LIST[]>(props.selectedTags)
+  const [selectedTags, setSelectedTags] = useState<TAG_LIST[]>(tagsFromStore)
 
   const filterTags = () => {
     const regexp = new RegExp(searchValue, 'i')
@@ -88,7 +93,7 @@ const TagPopup: React.FC<Props> = (props) => {
   return (
     <div className='tag-popup'>
       <div className='tag-popup__wrapper'>
-        <button type='button' className='snap tag-close__snap' onClick={hideTagPopup}>
+        <button type='button' className='snap tag-close__snap' onClick={() => hideTagPopup(false)}>
           <span className='visually-hidden'>Закрыть попап</span>
         </button>
         <h2 className='tag-popup__title'>
@@ -106,13 +111,13 @@ const TagPopup: React.FC<Props> = (props) => {
             </span>
           </button>
         </form>
-        <Listrender {...props} tags={sortTags} selectTags = {selectTags} selectedTags = {selectedTags} />
+        <Listrender {...props} tagsForCurrentProductType={sortTags} selectTags = {selectTags} selectedTags = {selectedTags} />
         <div className='tag-button-wrapper'>
           <button type='button' className='btn tag-button' 
-            onClick = {() => {setSelectedTags([]); props.resetFilterByTags()}}  >
+            onClick = {() => {setSelectedTags([]); resetFilterByTags()}}  >
             Отмена
           </button>
-          <button type='button' className='btn-fon tag-button' onClick = {() => {props.setSelectedTags(selectedTags); hideTagPopup()}} >
+          <button type='button' className='btn-fon tag-button' onClick = {() => {setSelectedTags(selectedTags); hideTagPopup(false)}} >
             Применить
           </button>
         </div>

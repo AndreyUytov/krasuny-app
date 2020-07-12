@@ -3,10 +3,15 @@ import {
   Item,
   PAGEMAP,
   MAX_ITEMS_PER_PAGE,
-  PRODUCT_TYPE
+  PRODUCT_TYPE,
+  TAG_LIST
 } from './../../types'
 
-import { fetchItemsIfNeeded } from './../../action'
+import { fetchItemsIfNeeded,
+  setFilterByTags,
+  resetFilterByTags
+ } from './../../action'
+import TagPopup from './../popups/tag'
 
 function renderItems (items: Item[]) {
   return items.map((elem) => {
@@ -36,20 +41,27 @@ interface IListItemsSection {
   page: number,
   product_type: PRODUCT_TYPE,
   query: string,
-  fetchItemsIfNeeded: typeof fetchItemsIfNeeded
+  tags: TAG_LIST[],
+  fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
+  setFilterByTags: typeof setFilterByTags,
+  resetFilterByTags: typeof resetFilterByTags
 }
 
-const ListItemsSection: React.FC<IListItemsSection> = ({items, page, product_type, query, fetchItemsIfNeeded}) => {
+const ListItemsSection: React.FC<IListItemsSection> = (props) => {
+  const {items, page, product_type, query, fetchItemsIfNeeded} = props
   const [currentItems, setCurrentItems] = useState<Item[]>([])
   const [tagsPopupVisible, setTagsPopupVisible] = useState(false)
 
-  useEffect (() => {
+  useEffect(() => {
     fetchItemsIfNeeded(query)
+  }, [query, fetchItemsIfNeeded])
+
+  useEffect (() => {
     let startIndex = (page - 1) * MAX_ITEMS_PER_PAGE
     let endIndex = page * MAX_ITEMS_PER_PAGE
     let itemsByPage = items.slice(startIndex, endIndex)
     setCurrentItems(itemsByPage)
-  }, [page, items, query, fetchItemsIfNeeded])
+  }, [page, items])
 
     return (
       <section className = "production-list-block">
@@ -71,7 +83,7 @@ const ListItemsSection: React.FC<IListItemsSection> = ({items, page, product_typ
         </ul>
         {
           tagsPopupVisible 
-            ? <TagPopup {...props} hideTagPopup={hideTagPopup} activelink={activelink}/>
+            ? <TagPopup {...props} hideTagPopup={setTagsPopupVisible} />
             : null
         }
       </section>
