@@ -117,7 +117,7 @@ const TagPopup: React.FC<Props> = (props) => {
             onClick = {() => {setSelectedTags([]); resetFilterByTags()}}  >
             Отмена
           </button>
-          <button type='button' className='btn-fon tag-button' onClick = {() => {setSelectedTags(selectedTags); hideTagPopup(false)}} >
+          <button type='button' className='btn-fon tag-button' onClick = {() => {setSelectedTags(selectedTags); hideTagPopup(false); setFilterByTags(selectedTags)}} >
             Применить
           </button>
         </div>
