@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {Items, MAX_ITEMS_PER_PAGE, TAG_LIST} from './../../types'
+import {Item, MAX_ITEMS_PER_PAGE} from './../../types'
 
 interface PropsForPagination {
-  items: Items[]
-  currentPage: number,
-  setCurrentPage: (page: number) => void
+  items: Item []
+  page: number,
+  setCurrentPage: (page: number) => void,
+  resetCurrentPage: () => void
 }
 
 function createPageArr (currentPage:number, maxPage: number): number[] {
@@ -29,11 +30,16 @@ const paginationLink = (arrPages: number[], currentPage: number, setCurrentPage:
   })
 }
 
-const PaginationBlock: React.FC<PropsForPagination> = ({currentPage, setCurrentPage}) => {
+const PaginationBlock: React.FC<PropsForPagination> = ({page: currentPage, items, setCurrentPage, resetCurrentPage}) => {
 
 
-  const [maxPage, setMaxPage] = useState(Math.ceil(items.length / MAX_ITEMS_PER_PAGE))
+  const [maxPage, setMaxPage] = useState<number>(Math.ceil(items.length / MAX_ITEMS_PER_PAGE))
   const [arrPages, setArrPages] = useState(createPageArr(currentPage, maxPage))
+
+  useEffect(() => {
+    setMaxPage(Math.ceil(items.length / MAX_ITEMS_PER_PAGE))
+    resetCurrentPage()
+  }, [items, resetCurrentPage])
 
   return (
     <>

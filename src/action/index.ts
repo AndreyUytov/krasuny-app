@@ -26,7 +26,6 @@ import {
 import { ItemsByFiltersInterface } from './../reducers'
 
 import {itemsApi} from './../api/api'
-import { RootState } from '../reducers'
 
 export function setCurrentPage (page: number): SetCurrentPageAction {
   return {
@@ -35,7 +34,7 @@ export function setCurrentPage (page: number): SetCurrentPageAction {
   }
 }
 
-export function resetPaginationPage (): ResetCurrentPageAction {
+export function resetCurrentPage (): ResetCurrentPageAction {
   return {
     type: RESET_CURRENT_PAGE
   }
@@ -103,13 +102,14 @@ const fetchItems = (query: string): AppThunk => async dispatch => {
   }
 }
 
-const shouldFetchItems = (itemsByFilters: ItemsByFiltersInterface, query: string) => {
+const shouldFetchItems = (itemsByFilters: ItemsByFiltersInterface, query: string): boolean => {
   const items = itemsByFilters[query]
    if(!items) {
     return true
   } else if (items.isFetching) {
     return false
   }
+  return true
 }
 
 export const fetchItemsIfNeeded = (query: string): AppThunk => (dispatch, getState) => {

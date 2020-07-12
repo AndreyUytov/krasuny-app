@@ -4,12 +4,17 @@ import {connect, ConnectedProps} from 'react-redux'
 import MainNav from './../main-nav/'
 import FilterCatalogPage from './filter'
 import ListItemsSection from './list-items'
+import PaginationBlock from './pagination'
+
 import { RootState } from '../../reducers'
 import { PRODUCT_TYPE, TAG_LIST, Item } from '../../types'
 import {getAllItems} from './../../selectors'
 import { fetchItemsIfNeeded, 
          setFilterByTags,
-         resetFilterByTags
+         resetFilterByTags,
+         deleteFilterByTags,
+         resetCurrentPage,
+         setCurrentPage
       } from './../../action'
 
 interface ICatalogPage {
@@ -19,7 +24,10 @@ interface ICatalogPage {
   page: number,
   fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
   setFilterByTags: typeof setFilterByTags,
-  resetFilterByTags: typeof resetFilterByTags
+  resetFilterByTags: typeof resetFilterByTags,
+  deleteFilterByTags: typeof deleteFilterByTags,
+  resetCurrentPage: typeof resetCurrentPage,
+  setCurrentPage: typeof setCurrentPage
 }
 
 const mapStateToProps = (state: RootState) => {
@@ -39,7 +47,10 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = {
   fetchItemsIfNeeded,
   resetFilterByTags,
-  setFilterByTags
+  setFilterByTags,
+  deleteFilterByTags,
+  setCurrentPage,
+  resetCurrentPage
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -54,13 +65,9 @@ const CatalogPage:React.FC<CatalogPageType> = (props) => {
       <MainNav links = {['Главная']} to = {['/']} {...props} />
       <FilterCatalogPage {...props}/>
       <ListItemsSection {...props} />
+      <PaginationBlock {...props} />
     </main>
   )
 }
 
-
-
-
-
-
-export default connect (mapStateToProps) (CatalogPage)
+export default connector(CatalogPage)

@@ -9,9 +9,11 @@ import {
 
 import { fetchItemsIfNeeded,
   setFilterByTags,
-  resetFilterByTags
+  resetFilterByTags,
+  deleteFilterByTags
  } from './../../action'
 import TagPopup from './../popups/tag'
+import TagList from './tags-list'
 
 function renderItems (items: Item[]) {
   return items.map((elem) => {
@@ -44,11 +46,12 @@ interface IListItemsSection {
   tags: TAG_LIST[],
   fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
   setFilterByTags: typeof setFilterByTags,
-  resetFilterByTags: typeof resetFilterByTags
+  resetFilterByTags: typeof resetFilterByTags,
+  deleteFilterByTags: typeof deleteFilterByTags
 }
 
 const ListItemsSection: React.FC<IListItemsSection> = (props) => {
-  const {items, page, product_type, query, fetchItemsIfNeeded} = props
+  const {items, page, product_type, query, fetchItemsIfNeeded, tags} = props
   const [currentItems, setCurrentItems] = useState<Item[]>([])
   const [tagsPopupVisible, setTagsPopupVisible] = useState(false)
 
@@ -70,7 +73,10 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
         </h2>
         <div className="production-list-block__tags">
           <div className="tags-wrapper">
-            список с выбранными тэгами будет здесь
+          {
+           tags ? <TagList {...props} /> 
+            : (<ul className="production-list-block__tags-list"></ul>)
+          }
             <button className="production-list-block__add-snap snap" type="button" onClick={()=> setTagsPopupVisible(true)}>
               <span className="visually-hidden">Добавить тэг</span>
             </button>
