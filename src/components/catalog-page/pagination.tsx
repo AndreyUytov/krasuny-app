@@ -1,20 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import {Item, MAX_ITEMS_PER_PAGE} from './../../types'
-import {resetCurrentPage, setCurrentPage} from './../../action'
+import {setCurrentPage} from './../../action'
 
 interface PropsForPagination {
   items: Item []
   page: number,
-  setCurrentPage: typeof setCurrentPage,
-  resetCurrentPage: typeof resetCurrentPage
+  setCurrentPage: typeof setCurrentPage
 }
 
 function createPageArr (currentPage:number, maxPage: number): number[] {
-  if (currentPage <= 2 && currentPage < maxPage) {
+  if (currentPage <= 2) {
     return [1, 2, 3]
-  } else {
-    return [currentPage - 1, currentPage, currentPage + 1]
-  }
+  } else if (currentPage < maxPage) {
+    return [currentPage - 2, currentPage -1, currentPage]
+  } else return [currentPage - 1, currentPage, currentPage + 1]
 }
 
 const paginationLink = (arrPages: number[], currentPage: number, setCurrentPage: (page: number) => void) => {
@@ -31,7 +30,7 @@ const paginationLink = (arrPages: number[], currentPage: number, setCurrentPage:
   })
 }
 
-const PaginationBlock: React.FC<PropsForPagination> = ({page: currentPage, items, setCurrentPage, resetCurrentPage}) => {
+const PaginationBlock: React.FC<PropsForPagination> = ({page: currentPage, items, setCurrentPage}) => {
 
 
   const [maxPage, setMaxPage] = useState<number>(Math.ceil(items.length / MAX_ITEMS_PER_PAGE))
@@ -39,8 +38,7 @@ const PaginationBlock: React.FC<PropsForPagination> = ({page: currentPage, items
 
   useEffect(() => {
     setMaxPage(Math.ceil(items.length / MAX_ITEMS_PER_PAGE))
-    resetCurrentPage()
-  }, [items, resetCurrentPage])
+  }, [items.length])
 
   return (
     <>

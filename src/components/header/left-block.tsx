@@ -4,7 +4,9 @@ import MenuPopup from './../popups/menu'
 import SearchForm from './search-form'
 import logo from './../../images/content/KRASUNYA.png'
 
-const LeftBlock: React.FC = () => {
+import {resetCurrentPage} from './../../action'
+
+const LeftBlock: React.FC<{resetCurrentPage: typeof resetCurrentPage}> = (props) => {
 
   const [visibleForm, setVisibleForm] = useState(false)
   const [visibleMenuPopup, setVisibleMenuPopup] = useState(false)
@@ -43,7 +45,7 @@ const LeftBlock: React.FC = () => {
         </div>
       </div>
       {visibleMenuPopup
-        ? <MenuPopup hiddenMenuPopup = {hiddenMenuPopup}/>
+        ? <MenuPopup hiddenMenuPopup = {hiddenMenuPopup} {...props}/>
         : null
       }
     </>

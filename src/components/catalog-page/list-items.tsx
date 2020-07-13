@@ -10,10 +10,12 @@ import {
 import { fetchItemsIfNeeded,
   setFilterByTags,
   resetFilterByTags,
-  deleteFilterByTags
+  deleteFilterByTags,
+  setFilterByProductType
  } from './../../action'
 import TagPopup from './../popups/tag'
 import TagList from './tags-list'
+import { useParams } from 'react-router-dom'
 
 function renderItems (items: Item[]) {
   return items.map((elem) => {
@@ -55,9 +57,18 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
   const [currentItems, setCurrentItems] = useState<Item[]>([])
   const [tagsPopupVisible, setTagsPopupVisible] = useState(false)
 
+  const {product_type: product_type_from_params} = useParams()
+  console.log(product_type_from_params, product_type)
+    useEffect (() => {
+    if(product_type !== product_type_from_params) {
+      setFilterByProductType(product_type_from_params)
+      console.log('From index')
+    }
+  }, [product_type, product_type_from_params])
+
   useEffect(() => {
     fetchItemsIfNeeded(query)
-  }, [query, fetchItemsIfNeeded])
+  }, [fetchItemsIfNeeded, query])
 
   useEffect (() => {
     let startIndex = (page - 1) * MAX_ITEMS_PER_PAGE

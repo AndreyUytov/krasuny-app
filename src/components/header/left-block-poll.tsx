@@ -3,7 +3,9 @@ import React, {useState} from 'react'
 import MenuPopup from './../popups/menu'
 import logo from './../../images/content/KRASUNYA.png'
 
-const LeftBlockPoll: React.FC = () => {
+import {resetCurrentPage} from './../../action'
+
+const LeftBlockPoll: React.FC<{resetCurrentPage: typeof resetCurrentPage}> = (props) => {
 
   const [visibleMenuPopup, setVisibleMenuPopup] = useState(false)
   const hiddenMenuPopup = ():void => {
@@ -29,7 +31,7 @@ const LeftBlockPoll: React.FC = () => {
         </div>
       </div>
       {visibleMenuPopup
-        ? <MenuPopup hiddenMenuPopup = {hiddenMenuPopup}/>
+        ? <MenuPopup hiddenMenuPopup = {hiddenMenuPopup} {...props}/>
         : null
       }
     </>

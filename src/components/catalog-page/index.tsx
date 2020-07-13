@@ -7,7 +7,6 @@ import ListItemsSection from './list-items'
 import PaginationBlock from './pagination'
 
 import { RootState } from '../../reducers'
-import { PRODUCT_TYPE, TAG_LIST, Item } from '../../types'
 import {getAllItems} from './../../selectors'
 import { fetchItemsIfNeeded, 
          setFilterByTags,
@@ -19,24 +18,11 @@ import { fetchItemsIfNeeded,
       } from './../../action'
 import { useParams } from 'react-router-dom'
 
-interface ICatalogPage {
-  product_type: PRODUCT_TYPE,
-  tags: TAG_LIST[],
-  page: number,
-  fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
-  setFilterByTags: typeof setFilterByTags,
-  resetFilterByTags: typeof resetFilterByTags,
-  deleteFilterByTags: typeof deleteFilterByTags,
-  resetCurrentPage: typeof resetCurrentPage,
-  setCurrentPage: typeof setCurrentPage,
-  setFilterByProductType: typeof setFilterByProductType
-}
-
 const mapStateToProps = (state: RootState) => {
   let product_type_query = `product_type=${state.filters.selectedProductType}`
   let product_tags_query = state.filters.selectedTags.length ? `&product_tags=${state.filters.selectedTags.join(',')}` : ''
   let query = product_type_query + product_tags_query
-  const {itemsId, isFetching, isFailure} = state.itemsByFilters[query] || {itemsId: [], isFetching: true}
+  const {itemsId, isFetching, isFailure} = state.itemsByFilters[query] || {itemsId: []}
   return {
     query,
     product_type: state.filters.selectedProductType,
@@ -63,26 +49,24 @@ const connector = connect(mapStateToProps, mapDispatchToProps)
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-type CatalogPageType = PropsFromRedux & ICatalogPage
+type CatalogPageType = PropsFromRedux
 
 const CatalogPage:React.FC<CatalogPageType> = (props) => {
-  const {product_type} = useParams()
-  const items = getAllItems(props.itemsId, props.allItems)
+  const {product_type, query} = props
+ 
+  
 
-  useEffect (() => {
-    if(props.product_type !== product_type) {
-      setFilterByProductType(product_type)
-      fetchItemsIfNeeded(props.query)
-    }
-  }, [product_type, props.product_type, props.query])
+  const items = getAllItems(props.itemsId, props.allItems) 
 
   return (
     <main className = "page-main--catalog container">
       <MainNav links = {['Главная']} to = {['/']} {...props} />
       <FilterCatalogPage {...props}/>
-      {
-        items.length ? (<><ListItemsSection {...props} items={items} /><PaginationBlock {...props} items={items} /></>) : <div>Страница загружается</div>
-      }
+      <ListItemsSection {...props} items={items} />
+      {items.length ? <PaginationBlock {...props} items={items} /> : ''}
+      {/* {
+        items.length ? <><ListItemsSection {...props} items={items} /><PaginationBlock {...props} items={items} /></> : <div>Страница загружается</div>
+      } */}
     </main>
   )
 }
