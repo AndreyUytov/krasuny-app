@@ -117,7 +117,7 @@ function filters (state:FilterInterface = {selectedTags: [], selectedProductType
       case DELETE_FILTER_BY_TAGS:
         return {
           ...state,
-          selectedTags: state.selectedTags.reduce((result: TAG_LIST[], current): TAG_LIST[] => {
+          selectedTags: state.selectedTags.reduce((result: TAG_LIST[], current) => {
             if (current !== action.removedTag) {
                result.push(current)
             }
