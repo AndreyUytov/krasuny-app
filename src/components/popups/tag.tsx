@@ -3,13 +3,14 @@ import { PRODUCT_TYPE, mapTagListToProductType, TAG_LIST } from '../../types'
 
 import {
   setFilterByTags,
-  resetFilterByTags
+  resetFilterByTags,
+  resetCurrentPage
 } from './../../action'
 
 interface PropsForList {
   tagsForCurrentProductType: TAG_LIST[],
   selectTags: (tag: TAG_LIST) => void,
-  selectedTags: TAG_LIST[],
+  selectedTags: TAG_LIST[]
 }
 
 const Listrender: React.FC<PropsForList> = ({tagsForCurrentProductType, selectTags, selectedTags}) => {
@@ -43,12 +44,13 @@ interface Props {
   product_type: PRODUCT_TYPE,
   tags: TAG_LIST[],
   setFilterByTags: typeof setFilterByTags,
-  resetFilterByTags: typeof resetFilterByTags
+  resetFilterByTags: typeof resetFilterByTags,
+  resetCurrentPage: typeof resetCurrentPage
 }
 
 const TagPopup: React.FC<Props> = (props) => {
 
-  const {hideTagPopup, product_type, tags: tagsFromStore, resetFilterByTags, setFilterByTags} = props
+  const {hideTagPopup, product_type, tags: tagsFromStore, resetFilterByTags, setFilterByTags, resetCurrentPage} = props
 
   const tagsForCurrentProductType = mapTagListToProductType[product_type]
 
@@ -114,10 +116,10 @@ const TagPopup: React.FC<Props> = (props) => {
         <Listrender {...props} tagsForCurrentProductType={sortTags} selectTags = {selectTags} selectedTags = {selectedTags} />
         <div className='tag-button-wrapper'>
           <button type='button' className='btn tag-button' 
-            onClick = {() => {setSelectedTags([]); resetFilterByTags()}}  >
+            onClick = {() => {setSelectedTags([]); resetFilterByTags(); resetCurrentPage()}}  >
             Отмена
           </button>
-          <button type='button' className='btn-fon tag-button' onClick = {() => {setSelectedTags(selectedTags); hideTagPopup(false); setFilterByTags(selectedTags)}} >
+          <button type='button' className='btn-fon tag-button' onClick = {() => {setSelectedTags(selectedTags); hideTagPopup(false); setFilterByTags(selectedTags); resetCurrentPage()}} >
             Применить
           </button>
         </div>

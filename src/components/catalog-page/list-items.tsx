@@ -11,7 +11,8 @@ import { fetchItemsIfNeeded,
   setFilterByTags,
   resetFilterByTags,
   deleteFilterByTags,
-  setFilterByProductType
+  setFilterByProductType,
+  resetCurrentPage
  } from './../../action'
 import TagPopup from './../popups/tag'
 import TagList from './tags-list'
@@ -49,11 +50,13 @@ interface IListItemsSection {
   fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
   setFilterByTags: typeof setFilterByTags,
   resetFilterByTags: typeof resetFilterByTags,
-  deleteFilterByTags: typeof deleteFilterByTags
+  deleteFilterByTags: typeof deleteFilterByTags,
+  setFilterByProductType: typeof setFilterByProductType,
+  resetCurrentPage: typeof resetCurrentPage
 }
 
 const ListItemsSection: React.FC<IListItemsSection> = (props) => {
-  const {items, page, product_type, query, fetchItemsIfNeeded, tags} = props
+  const {items, page, product_type, query, fetchItemsIfNeeded, tags, setFilterByProductType} = props
   const [currentItems, setCurrentItems] = useState<Item[]>([])
   const [tagsPopupVisible, setTagsPopupVisible] = useState(false)
 
@@ -64,7 +67,7 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
       setFilterByProductType(product_type_from_params)
       console.log('From index')
     }
-  }, [product_type, product_type_from_params])
+  }, [product_type, product_type_from_params, setFilterByProductType])
 
   useEffect(() => {
     fetchItemsIfNeeded(query)
