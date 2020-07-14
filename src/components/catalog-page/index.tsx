@@ -16,7 +16,6 @@ import { fetchItemsIfNeeded,
          setCurrentPage,
          setFilterByProductType
       } from './../../action'
-import { useParams } from 'react-router-dom'
 
 const mapStateToProps = (state: RootState) => {
   let product_type_query = `product_type=${state.filters.selectedProductType}`
@@ -52,21 +51,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type CatalogPageType = PropsFromRedux
 
 const CatalogPage:React.FC<CatalogPageType> = (props) => {
-  const {product_type, query} = props
- 
-  
-
   const items = getAllItems(props.itemsId, props.allItems) 
-
   return (
     <main className = "page-main--catalog container">
       <MainNav links = {['Главная']} to = {['/']} {...props} />
       <FilterCatalogPage {...props}/>
       <ListItemsSection {...props} items={items} />
       {items.length ? <PaginationBlock {...props} items={items} /> : ''}
-      {/* {
-        items.length ? <><ListItemsSection {...props} items={items} /><PaginationBlock {...props} items={items} /></> : <div>Страница загружается</div>
-      } */}
     </main>
   )
 }

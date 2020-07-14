@@ -47,6 +47,8 @@ interface IListItemsSection {
   product_type: PRODUCT_TYPE,
   query: string,
   tags: TAG_LIST[],
+  itemsIsFetching: boolean,
+  itemsIsFailure: boolean,
   fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
   setFilterByTags: typeof setFilterByTags,
   resetFilterByTags: typeof resetFilterByTags,
@@ -56,7 +58,7 @@ interface IListItemsSection {
 }
 
 const ListItemsSection: React.FC<IListItemsSection> = (props) => {
-  const {items, page, product_type, query, fetchItemsIfNeeded, tags, setFilterByProductType} = props
+  const {items, page, product_type, query, fetchItemsIfNeeded, tags, setFilterByProductType, itemsIsFetching, itemsIsFailure} = props
   const [currentItems, setCurrentItems] = useState<Item[]>([])
   const [tagsPopupVisible, setTagsPopupVisible] = useState(false)
 
@@ -98,7 +100,10 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
         </div>
         <ul className="production-list-block__catalog-list">
           {
-            currentItems.length ? renderItems(currentItems) : <div>Loading</div>
+            itemsIsFetching ? <div>Данные загружаются ... </div> 
+            : items.length ? renderItems(currentItems) 
+          : itemsIsFailure ? <div>Произошла ошибка </div> 
+          : <div>По таким настройкам фильтра не найдено ни одного продукта</div>
           }
         </ul>
         {

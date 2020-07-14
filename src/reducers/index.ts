@@ -15,7 +15,8 @@ import {
   FAILURE_ITEMS,
   Item,
   SuccessItemsAction,
-  SET_FILTER_BY_PRODUCT_TYPE
+  SET_FILTER_BY_PRODUCT_TYPE,
+  DELETE_FILTER_BY_TAGS
   } from './../types'
 import { indexById } from '../selectors'
 
@@ -112,6 +113,16 @@ function filters (state:FilterInterface = {selectedTags: [], selectedProductType
         return {
           ...state,
           selectedProductType: action.product_type
+        }
+      case DELETE_FILTER_BY_TAGS:
+        return {
+          ...state,
+          selectedTags: state.selectedTags.reduce((result: TAG_LIST[], current): TAG_LIST[] => {
+            if (current !== action.removedTag) {
+               result.push(current)
+            }
+            return result
+          },[])
         }
       default:
         return state

@@ -102,14 +102,13 @@ const fetchItems = (query: string): AppThunk => async dispatch => {
   }
 }
 
-const shouldFetchItems = (itemsByFilters: ItemsByFiltersInterface, query: string): boolean => {
+const shouldFetchItems = (itemsByFilters: ItemsByFiltersInterface, query: string) => {
   const items = itemsByFilters[query]
    if(!items) {
     return true
   } else if (items.isFetching) {
     return false
   }
-  return true
 }
 
 export const fetchItemsIfNeeded = (query: string): AppThunk | void => (dispatch, getState) => {
