@@ -82,7 +82,7 @@ export function successItems (items: Item[], query: string): SuccessItemsAction 
   }
 }
 
-export function failureItems (error: typeof Error, query: string): FailureItemsAction {
+export function failureItems (error: TypeError, query: string): FailureItemsAction {
   return {
     type: FAILURE_ITEMS,
     error,
@@ -98,6 +98,7 @@ const fetchItems = (query: string): AppThunk => async dispatch => {
     return dispatch(successItems(json, query))
   }
   catch (err) {
+    console.log(err)
     return dispatch(failureItems(err, query))
   }
 }

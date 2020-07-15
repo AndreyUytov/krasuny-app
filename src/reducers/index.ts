@@ -16,7 +16,10 @@ import {
   Item,
   SuccessItemsAction,
   SET_FILTER_BY_PRODUCT_TYPE,
-  DELETE_FILTER_BY_TAGS
+  DELETE_FILTER_BY_TAGS,
+  SELECTION,
+  SET_FILTER_BY_SELECTION,
+  RESET_FILTER_BY_SELECTION
   } from './../types'
 import { indexById } from '../selectors'
 
@@ -58,14 +61,16 @@ function allItems (state:AllItemsState = {}, action: SuccessItemsAction) {
 interface ItemsIdInterface {
   isFetching: boolean,
   isFailure: boolean,
-  itemsId: number []
+  itemsId: number [],
+  err: TypeError | undefined
 }
 
 function itemsId (
   state:ItemsIdInterface = {
     isFetching: false,
     isFailure: false,
-    itemsId: []
+    itemsId: [],
+    err: undefined
   }, action: ItemsActionType
   ): ItemsIdInterface {
     switch (action.type) {
@@ -81,7 +86,8 @@ function itemsId (
       case FAILURE_ITEMS:
         return {
           ...state, isFetching: false,
-          isFailure: true
+          isFailure: true,
+          err: action.error
         }
       default: 
         return state
@@ -92,10 +98,11 @@ function itemsId (
 
 interface FilterInterface {
   selectedTags: TAG_LIST[],
-  selectedProductType: PRODUCT_TYPE
+  selectedProductType: PRODUCT_TYPE,
+  selectedSelection: SELECTION | undefined
 }
 
-function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush},
+function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush, selectedSelection: undefined},
   action: FilterActionType
   ) {
     switch (action.type) {
@@ -123,6 +130,16 @@ function filters (state:FilterInterface = {selectedTags: [], selectedProductType
             }
             return result
           },[])
+        }
+      case SET_FILTER_BY_SELECTION:
+        return {
+          ...state,
+          selectedSelection: action.selection
+        }
+      case RESET_FILTER_BY_SELECTION:
+        return {
+          ...state,
+          selectedSelection: undefined
         }
       default:
         return state

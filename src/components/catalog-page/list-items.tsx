@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom'
 import {
   Item,
   PAGEMAP,
@@ -16,7 +17,7 @@ import { fetchItemsIfNeeded,
  } from './../../action'
 import TagPopup from './../popups/tag'
 import TagList from './tags-list'
-import { useParams } from 'react-router-dom'
+import SelectFilterBlock from './filter-selection'
 
 function renderItems (items: Item[]) {
   return items.map((elem) => {
@@ -49,6 +50,7 @@ interface IListItemsSection {
   tags: TAG_LIST[],
   itemsIsFetching: boolean,
   itemsIsFailure: boolean,
+  err: TypeError | undefined,
   fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
   setFilterByTags: typeof setFilterByTags,
   resetFilterByTags: typeof resetFilterByTags,
@@ -58,12 +60,11 @@ interface IListItemsSection {
 }
 
 const ListItemsSection: React.FC<IListItemsSection> = (props) => {
-  const {items, page, product_type, query, fetchItemsIfNeeded, tags, setFilterByProductType, itemsIsFetching, itemsIsFailure} = props
+  const {items, page, product_type, query, fetchItemsIfNeeded, tags, setFilterByProductType, itemsIsFetching, itemsIsFailure, err} = props
   const [currentItems, setCurrentItems] = useState<Item[]>([])
   const [tagsPopupVisible, setTagsPopupVisible] = useState(false)
 
   const {product_type: product_type_from_params} = useParams()
-  console.log(product_type_from_params, product_type)
     useEffect (() => {
     if(product_type !== product_type_from_params) {
       setFilterByProductType(product_type_from_params)
@@ -97,12 +98,13 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
               <span className="visually-hidden">Добавить тэг</span>
             </button>
           </div>
+          <SelectFilterBlock />
         </div>
         <ul className="production-list-block__catalog-list">
           {
             itemsIsFetching ? <div>Данные загружаются ... </div> 
             : items.length ? renderItems(currentItems) 
-          : itemsIsFailure ? <div>Произошла ошибка </div> 
+          : itemsIsFailure ? <div>Произошла ошибка "{err ? err.message : ''}"</div> 
           : <div>По таким настройкам фильтра не найдено ни одного продукта</div>
           }
         </ul>

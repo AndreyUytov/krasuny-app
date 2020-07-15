@@ -21,16 +21,18 @@ const mapStateToProps = (state: RootState) => {
   let product_type_query = `product_type=${state.filters.selectedProductType}`
   let product_tags_query = state.filters.selectedTags.length ? `&product_tags=${state.filters.selectedTags.join(',')}` : ''
   let query = product_type_query + product_tags_query
-  const {itemsId, isFetching, isFailure} = state.itemsByFilters[query] || {itemsId: []}
+  const {itemsId, isFetching, isFailure, err} = state.itemsByFilters[query] || {itemsId: []}
   return {
     query,
     product_type: state.filters.selectedProductType,
     tags: state.filters.selectedTags,
     itemsIsFetching: isFetching,
     itemsIsFailure: isFailure,
+    err,
     itemsId,
     allItems: state.allItems,
-    page: state.pagination.page
+    page: state.pagination.page,
+    selection: state.filters.selectedSelection
   }
 }
 
@@ -51,13 +53,24 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type CatalogPageType = PropsFromRedux
 
 const CatalogPage:React.FC<CatalogPageType> = (props) => {
-  const items = getAllItems(props.itemsId, props.allItems) 
+  let defaultItems = getAllItems(props.itemsId, props.allItems)
+  // let items = defaultItems.map((elem) => {
+  //   if (elem.rating === null) {
+  //    elem.rating = 0
+  //   }
+  //   return elem
+  // })
+  // useEffect(() => {
+  //   if (props.selection === 'rating') {
+  //     items.sort( (a, b) => a.rating - b.rating)
+  //   }
+  // })
   return (
     <main className = "page-main--catalog container">
       <MainNav links = {['Главная']} to = {['/']} {...props} />
       <FilterCatalogPage {...props}/>
-      <ListItemsSection {...props} items={items} />
-      {items.length ? <PaginationBlock {...props} items={items} /> : ''}
+      <ListItemsSection {...props} items={defaultItems} />
+      {defaultItems.length ? <PaginationBlock {...props} items={defaultItems} /> : ''}
     </main>
   )
 }

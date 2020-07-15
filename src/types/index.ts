@@ -20,7 +20,7 @@ export interface Item {
   product_link: string | number | null,
   website_link: string | number | null,
   description: string,
-  rating: string | number | null,
+  rating: number,
   category: any,
   product_type: PRODUCT_TYPE,
   tag_list: TAG_LIST [],
@@ -35,6 +35,9 @@ export const SET_FILTER_BY_TAGS = 'SET_FILTER_BY_TAGS'
 export const DELETE_FILTER_BY_TAGS = 'DELETE_FILTER_BY_TAGS'
 export const RESET_FILTER_BY_TAGS = 'RESET_FILTER_BY_TAGS'
 export const SET_FILTER_BY_PRODUCT_TYPE = 'SET_FILTER_BY_PRODUCT_TYPE'
+export const SET_FILTER_BY_SELECTION = 'SET_FILTER_BY_SELECTION'
+export const RESET_FILTER_BY_SELECTION = 'RESET_FILTER_BY_SELECTION'
+export type SELECTION = 'rating' | 'price'
 
 export const MAX_ITEMS_PER_PAGE = 16
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
@@ -46,10 +49,19 @@ export interface SetCurrentPageAction {
 }
 
 export interface ResetCurrentPageAction {
-  type: typeof RESET_CURRENT_PAGE
+  type: typeof RESET_CURRENT_PAGE,
 }
 
 export type NumberPageActionType = ResetCurrentPageAction | SetCurrentPageAction
+
+export interface SetFilterBySelectionAction {
+  type: typeof SET_FILTER_BY_SELECTION,
+  selection: SELECTION
+}
+
+export interface ResetFilterBySelection {
+  type: typeof RESET_FILTER_BY_SELECTION
+}
 
 export interface SetFilterByProductTypeAction {
   type: typeof SET_FILTER_BY_PRODUCT_TYPE,
@@ -70,7 +82,7 @@ export interface SetFilterByTagsAction {
   selectedTags: TAG_LIST[]
 }
 
-export type FilterActionType = DeleteFilterByTagsAction | ResetFIlterByTagsAction | SetFilterByTagsAction | SetFilterByProductTypeAction
+export type FilterActionType = DeleteFilterByTagsAction | ResetFIlterByTagsAction | SetFilterByTagsAction | SetFilterByProductTypeAction | ResetFilterBySelection | SetFilterBySelectionAction
 
 export interface RequestItemsAction {
   type: typeof REQUEST_ITEMS,
@@ -85,7 +97,7 @@ export interface SuccessItemsAction {
 
 export interface FailureItemsAction {
   type: typeof FAILURE_ITEMS,
-  error: typeof Error,
+  error: TypeError,
   query: string
 }
 
