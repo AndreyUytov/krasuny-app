@@ -5,7 +5,8 @@ import {
   PAGEMAP,
   MAX_ITEMS_PER_PAGE,
   PRODUCT_TYPE,
-  TAG_LIST
+  TAG_LIST,
+  SELECTION
 } from './../../types'
 
 import { fetchItemsIfNeeded,
@@ -13,7 +14,8 @@ import { fetchItemsIfNeeded,
   resetFilterByTags,
   deleteFilterByTags,
   setFilterByProductType,
-  resetCurrentPage
+  resetCurrentPage,
+  setFilterBySelection
  } from './../../action'
 import TagPopup from './../popups/tag'
 import TagList from './tags-list'
@@ -51,12 +53,14 @@ interface IListItemsSection {
   itemsIsFetching: boolean,
   itemsIsFailure: boolean,
   err: TypeError | undefined,
+  selection: SELECTION | undefined
   fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
   setFilterByTags: typeof setFilterByTags,
   resetFilterByTags: typeof resetFilterByTags,
   deleteFilterByTags: typeof deleteFilterByTags,
   setFilterByProductType: typeof setFilterByProductType,
-  resetCurrentPage: typeof resetCurrentPage
+  resetCurrentPage: typeof resetCurrentPage,
+  setFilterBySelection: typeof setFilterBySelection
 }
 
 const ListItemsSection: React.FC<IListItemsSection> = (props) => {
@@ -98,7 +102,7 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
               <span className="visually-hidden">Добавить тэг</span>
             </button>
           </div>
-          <SelectFilterBlock />
+          <SelectFilterBlock {...props} />
         </div>
         <ul className="production-list-block__catalog-list">
           {

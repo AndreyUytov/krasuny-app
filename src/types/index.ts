@@ -13,7 +13,7 @@ export interface Item {
   id: number,
   brand: string,
   name: string,
-  price: string,
+  price: number,
   price_sign: string | number | null,
   currency: string | number | null,
   image_link: string,

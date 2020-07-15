@@ -20,12 +20,30 @@ import {
   FAILURE_ITEMS,
   Item,
   SET_FILTER_BY_PRODUCT_TYPE,
-  SetFilterByProductTypeAction
+  SetFilterByProductTypeAction,
+  SELECTION,
+  SetFilterBySelectionAction,
+  SET_FILTER_BY_SELECTION,
+  ResetFilterBySelection,
+  RESET_FILTER_BY_SELECTION
 } from './../types'
 
 import { ItemsByFiltersInterface } from './../reducers'
 
 import {itemsApi} from './../api/api'
+
+export function setFilterBySelection (selection: SELECTION): SetFilterBySelectionAction {
+  return {
+    type: SET_FILTER_BY_SELECTION,
+    selection
+  }
+}
+
+export function resetFilterBySelection (): ResetFilterBySelection {
+  return {
+    type: RESET_FILTER_BY_SELECTION
+  }
+}
 
 export function setCurrentPage (page: number): SetCurrentPageAction {
   return {

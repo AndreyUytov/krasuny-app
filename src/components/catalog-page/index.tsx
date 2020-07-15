@@ -14,7 +14,9 @@ import { fetchItemsIfNeeded,
          deleteFilterByTags,
          resetCurrentPage,
          setCurrentPage,
-         setFilterByProductType
+         setFilterByProductType,
+         setFilterBySelection,
+         resetFilterBySelection
       } from './../../action'
 
 const mapStateToProps = (state: RootState) => {
@@ -43,7 +45,9 @@ const mapDispatchToProps = {
   deleteFilterByTags,
   setCurrentPage,
   resetCurrentPage,
-  setFilterByProductType
+  setFilterByProductType,
+  setFilterBySelection,
+  resetFilterBySelection
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -54,23 +58,26 @@ type CatalogPageType = PropsFromRedux
 
 const CatalogPage:React.FC<CatalogPageType> = (props) => {
   let defaultItems = getAllItems(props.itemsId, props.allItems)
-  // let items = defaultItems.map((elem) => {
-  //   if (elem.rating === null) {
-  //    elem.rating = 0
-  //   }
-  //   return elem
-  // })
-  // useEffect(() => {
-  //   if (props.selection === 'rating') {
-  //     items.sort( (a, b) => a.rating - b.rating)
-  //   }
-  // })
+  let items = defaultItems.map((elem) => {
+    if (elem.rating === null) {
+     elem.rating = 0
+    }
+    return elem
+  })
+  useEffect(() => {
+    if (props.selection === 'rating') {
+      items.sort( (a, b) => a.rating - b.rating)
+    }
+    if (props.selection === 'price') {
+      items.sort((a, b) => a.price - b.price)
+    }
+  }, [props.selection])
   return (
     <main className = "page-main--catalog container">
       <MainNav links = {['Главная']} to = {['/']} {...props} />
       <FilterCatalogPage {...props}/>
-      <ListItemsSection {...props} items={defaultItems} />
-      {defaultItems.length ? <PaginationBlock {...props} items={defaultItems} /> : ''}
+      <ListItemsSection {...props} items={items} />
+      {items.length ? <PaginationBlock {...props} items={items} /> : ''}
     </main>
   )
 }
