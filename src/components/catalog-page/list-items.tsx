@@ -81,11 +81,17 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
   }, [fetchItemsIfNeeded, query])
 
   useEffect (() => {
+    if (props.selection === 'rating') {
+      items.sort( (a, b) => b.rating - a.rating)
+    }
+    if (props.selection === 'price') {
+      items.sort((a, b) => a.price - b.price)
+    }
     let startIndex = (page - 1) * MAX_ITEMS_PER_PAGE
     let endIndex = page * MAX_ITEMS_PER_PAGE
     let itemsByPage = items.slice(startIndex, endIndex)
     setCurrentItems(itemsByPage)
-  }, [page, items])
+  }, [page, items, props.selection])
 
     return (
       <section className = "production-list-block">

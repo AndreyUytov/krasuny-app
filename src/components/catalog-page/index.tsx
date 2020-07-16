@@ -64,14 +64,6 @@ const CatalogPage:React.FC<CatalogPageType> = (props) => {
     }
     return elem
   })
-  useEffect(() => {
-    if (props.selection === 'rating') {
-      items.sort( (a, b) => a.rating - b.rating)
-    }
-    if (props.selection === 'price') {
-      items.sort((a, b) => a.price - b.price)
-    }
-  }, [props.selection])
   return (
     <main className = "page-main--catalog container">
       <MainNav links = {['Главная']} to = {['/']} {...props} />

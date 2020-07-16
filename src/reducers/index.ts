@@ -102,7 +102,7 @@ interface FilterInterface {
   selectedSelection: SELECTION | undefined
 }
 
-function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush, selectedSelection: 'rating'},
+function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush, selectedSelection: undefined},
   action: FilterActionType
   ) {
     switch (action.type) {
