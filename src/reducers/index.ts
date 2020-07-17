@@ -19,7 +19,8 @@ import {
   DELETE_FILTER_BY_TAGS,
   SELECTION,
   SET_FILTER_BY_SELECTION,
-  RESET_FILTER_BY_SELECTION
+  RESET_FILTER_BY_SELECTION,
+  BrandsList
   } from './../types'
 import { indexById } from '../selectors'
 
@@ -99,10 +100,11 @@ function itemsId (
 interface FilterInterface {
   selectedTags: TAG_LIST[],
   selectedProductType: PRODUCT_TYPE,
-  selectedSelection: SELECTION | undefined
+  selectedSelection: SELECTION | undefined,
+  selectedBrand: BrandsList | undefined
 }
 
-function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush, selectedSelection: undefined},
+function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush, selectedSelection: undefined, selectedBrand: undefined},
   action: FilterActionType
   ) {
     switch (action.type) {

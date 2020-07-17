@@ -34,7 +34,8 @@ const mapStateToProps = (state: RootState) => {
     itemsId,
     allItems: state.allItems,
     page: state.pagination.page,
-    selection: state.filters.selectedSelection
+    selection: state.filters.selectedSelection,
+    brand: state.filters.selectedBrand
   }
 }
 

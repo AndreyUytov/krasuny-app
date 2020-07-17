@@ -6,7 +6,8 @@ import {
   MAX_ITEMS_PER_PAGE,
   PRODUCT_TYPE,
   TAG_LIST,
-  SELECTION
+  SELECTION,
+  BrandsList
 } from './../../types'
 
 import { fetchItemsIfNeeded,
@@ -53,7 +54,8 @@ interface IListItemsSection {
   itemsIsFetching: boolean,
   itemsIsFailure: boolean,
   err: TypeError | undefined,
-  selection: SELECTION | undefined
+  selection: SELECTION | undefined,
+  brand: BrandsList | undefined,
   fetchItemsIfNeeded: typeof fetchItemsIfNeeded,
   setFilterByTags: typeof setFilterByTags,
   resetFilterByTags: typeof resetFilterByTags,
