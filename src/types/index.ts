@@ -43,6 +43,8 @@ export const MAX_ITEMS_PER_PAGE = 16
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const RESET_CURRENT_PAGE = 'RESET_CURRENT_PAGE'
 
+export const MIN_DELTA_PRICE = 10
+
 export interface SetCurrentPageAction {
   type: typeof SET_CURRENT_PAGE,
   page: number
