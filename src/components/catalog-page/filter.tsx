@@ -8,13 +8,19 @@ interface IFilterCatalogPage {
 const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
 
   const [checkedBrand, setCheckedBrand] = useState<BrandsList | undefined>(brand)
-  const [minTooglePosition, setMinTooglePosition] = useState(10)
-  const [maxTooglePosition, setMaxTooglePosition] = useState(10)
-  const [valueMinPrice, setValueMinPrice] = useState(10)
-  const [valueMaxPrice, setValueMaxPrice] = useState(90)
+  const [minTooglePosition, setMinTooglePosition] = useState(0)
+  const [maxTooglePosition, setMaxTooglePosition] = useState(0)
+  const [valueMinPrice, setValueMinPrice] = useState(0)
+  const [valueMaxPrice, setValueMaxPrice] = useState(100)
 
   const onMinInputChange = (value: number) => {
-    if (value <= valueMaxPrice - MIN_DELTA_PRICE) {
+    if (value > 90) {
+      alert(`Минимальное значение не может быть больше 90`)
+      setMinTooglePosition(90)
+      setValueMinPrice(90)
+      setMaxTooglePosition(0)
+      setValueMaxPrice(100)
+    } else if (value <= valueMaxPrice - MIN_DELTA_PRICE) {
       setMinTooglePosition(value)
     } else if (value >= valueMaxPrice) {
       alert(`Минимальная цена не может быть больше или равной максимальной`)
@@ -30,7 +36,11 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
   }
 
   const onMaxInputChange = (value: number) => {
-    if (value >= valueMinPrice + MIN_DELTA_PRICE) {
+    if (value > 100) {
+      alert(`макисмальное значение не может быть больше 100`)
+      setMaxTooglePosition(0)
+      setValueMaxPrice(100)
+    } else if (value >= valueMinPrice + MIN_DELTA_PRICE) {
       setMaxTooglePosition(100 - value)
     } else if (value <= valueMinPrice) {
       alert (`Максимальная цена диапазона не может быть меньше или равной минимальной`)
@@ -45,6 +55,11 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
     }
   }
 
+  const onMinToogleMouseDown = (evt: React.DragEvent<HTMLDivElement>) => {
+    evt.currentTarget.style.left = evt.pageX + 'px'
+    console.log(evt.pageX)
+
+  }
 
   return (
     <section className = "filter-block">
@@ -59,8 +74,8 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
           <div className="wrapper-price-range">
             <div className="price-range__scale">
               <div className="price-range__bar" style={{left: `${minTooglePosition}%`, right: `${maxTooglePosition}%`}} >
-                <div className="price-range__toggle price-range__toggle--min"></div>
-                <div className="price-range__toggle price-range__toggle--max"></div>
+                <div className="price-range__toggle price-range__toggle--min" onMouseDown = {onMinToogleMouseDown} ></div>
+                <div className="price-range__toggle price-range__toggle--max" onMouseDown = {onMinToogleMouseDown}></div>
               </div>
             </div>
             <div className="wrapper-price-input">
