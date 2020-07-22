@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, SyntheticEvent, MouseEvent } from 'react'
 import { BrandsList, BRANDS, MIN_DELTA_PRICE } from '../../types'
 
 interface IFilterCatalogPage {
@@ -56,9 +56,19 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
   }
 
   const onMinToogleMouseDown = (evt: React.DragEvent<HTMLDivElement>) => {
-    evt.currentTarget.style.left = evt.pageX + 'px'
-    console.log(evt.pageX)
-
+    const toogle = evt.currentTarget
+    let startUserCursorPosition = evt.pageX
+    const moveAt = (evt: any) => {
+      let positionToogle = (evt.pageX - startUserCursorPosition) / 2.8
+      onMinInputChange(positionToogle)
+      setValueMinPrice(Math.round(positionToogle))
+      
+    }
+    document.addEventListener('mousemove', moveAt)
+    document.onmouseup = (evt) => {
+      document.removeEventListener('mousemove', moveAt)
+      toogle.onmouseup = null
+    }
   }
 
   return (
@@ -74,8 +84,8 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
           <div className="wrapper-price-range">
             <div className="price-range__scale">
               <div className="price-range__bar" style={{left: `${minTooglePosition}%`, right: `${maxTooglePosition}%`}} >
-                <div className="price-range__toggle price-range__toggle--min" onMouseDown = {onMinToogleMouseDown} ></div>
-                <div className="price-range__toggle price-range__toggle--max" onMouseDown = {onMinToogleMouseDown}></div>
+                <div className="price-range__toggle price-range__toggle--min" style={{left: `${minTooglePosition}%`}} onMouseDown = {onMinToogleMouseDown} ></div>
+                <div className="price-range__toggle price-range__toggle--max"  style={{right: `${maxTooglePosition}%`}}></div>
               </div>
             </div>
             <div className="wrapper-price-input">

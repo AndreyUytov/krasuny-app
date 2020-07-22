@@ -70,13 +70,11 @@
 
 .price-range__toggle--min {
     position: absolute;
-    left: 0%;
     transform: translate(-50%,-50%);
 }
 
 .price-range__toggle--max {
     position: absolute;
-    right: 0%;
     transform: translate(50%,-50%);
 }
 
@@ -89,7 +87,6 @@
     max-width: 100%;
 
     display: flex;
-    justify-content: space-between;
 
     border-radius: 5px;
 
