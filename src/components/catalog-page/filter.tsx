@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent, MouseEvent } from 'react'
+import React, { useState } from 'react'
 import { BrandsList, BRANDS, MIN_DELTA_PRICE } from '../../types'
 
 interface IFilterCatalogPage {
@@ -9,65 +9,31 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
 
   const [checkedBrand, setCheckedBrand] = useState<BrandsList | undefined>(brand)
   const [minTooglePosition, setMinTooglePosition] = useState(0)
-  const [maxTooglePosition, setMaxTooglePosition] = useState(0)
-  const [valueMinPrice, setValueMinPrice] = useState(0)
-  const [valueMaxPrice, setValueMaxPrice] = useState(100)
-
-  const onMinInputChange = (value: number) => {
-    if (value > 90) {
-      alert(`Минимальное значение не может быть больше 90`)
-      setMinTooglePosition(90)
-      setValueMinPrice(90)
-      setMaxTooglePosition(0)
-      setValueMaxPrice(100)
-    } else if (value <= valueMaxPrice - MIN_DELTA_PRICE) {
-      setMinTooglePosition(value)
-    } else if (value >= valueMaxPrice) {
-      alert(`Минимальная цена не может быть больше или равной максимальной`)
-      setMaxTooglePosition(100 - value)
-      setValueMaxPrice(value)
-      setMinTooglePosition(value - MIN_DELTA_PRICE)
-      setValueMinPrice(value - MIN_DELTA_PRICE)
-    } else {
-      alert(`Дельта диапозона цен должна быть не менее ${MIN_DELTA_PRICE} единиц`)
-      setMinTooglePosition(valueMaxPrice - MIN_DELTA_PRICE)
-      setValueMinPrice(valueMaxPrice - MIN_DELTA_PRICE)
-    }
-  }
-
-  const onMaxInputChange = (value: number) => {
-    if (value > 100) {
-      alert(`макисмальное значение не может быть больше 100`)
-      setMaxTooglePosition(0)
-      setValueMaxPrice(100)
-    } else if (value >= valueMinPrice + MIN_DELTA_PRICE) {
-      setMaxTooglePosition(100 - value)
-    } else if (value <= valueMinPrice) {
-      alert (`Максимальная цена диапазона не может быть меньше или равной минимальной`)
-      setMinTooglePosition(value)
-      setValueMinPrice(value)
-      setMaxTooglePosition(100 - (value + MIN_DELTA_PRICE))
-      setValueMaxPrice(value + MIN_DELTA_PRICE)
-    } else {
-      alert(`Дельта диапозона цен должна быть не менее ${MIN_DELTA_PRICE} единиц`)
-      setMaxTooglePosition(100 - (valueMinPrice + MIN_DELTA_PRICE))
-      setValueMaxPrice(valueMinPrice + MIN_DELTA_PRICE)
-    }
-  }
-
-  const onMinToogleMouseDown = (evt: React.DragEvent<HTMLDivElement>) => {
+  const [maxTooglePosition, setMaxTooglePosition] = useState(280)
+  
+  const onToogleMouseDown = (evt: React.MouseEvent<HTMLDivElement>, setTooglePosition: typeof setMinTooglePosition | typeof setMaxTooglePosition ) => {
     const toogle = evt.currentTarget
-    let startUserCursorPosition = evt.pageX
+    const startUserCursorPosition = evt.clientX
+    const startToogle = toogle.style.left
     const moveAt = (evt: any) => {
-      let positionToogle = (evt.pageX - startUserCursorPosition) / 2.8
-      onMinInputChange(positionToogle)
-      setValueMinPrice(Math.round(positionToogle))
-      
+      setTooglePosition(parseInt(startToogle) + (evt.clientX - startUserCursorPosition))
     }
     document.addEventListener('mousemove', moveAt)
-    document.onmouseup = (evt) => {
+    document.onmouseup = () => {
       document.removeEventListener('mousemove', moveAt)
       toogle.onmouseup = null
+    }
+  }
+
+  const checkMinTooglePosition = (value: number, setTooglePosition: typeof setMinTooglePosition) => {
+    if (value < 0) {
+      setTooglePosition(0)
+      alert(`Минимальное значение цены не может быть отрицательным`)
+    } else if (value > maxTooglePosition - MIN_DELTA_PRICE) {
+      setTooglePosition(maxTooglePosition - MIN_DELTA_PRICE)
+      alert(`Минимальная разница между максимальной и минимальной значениями цены не может быть меньше ${MIN_DELTA_PRICE}`)
+    } else {
+      setTooglePosition(value)
     }
   }
 
@@ -83,19 +49,18 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
           </div>
           <div className="wrapper-price-range">
             <div className="price-range__scale">
-              <div className="price-range__bar" style={{left: `${minTooglePosition}%`, right: `${maxTooglePosition}%`}} >
-                <div className="price-range__toggle price-range__toggle--min" style={{left: `${minTooglePosition}%`}} onMouseDown = {onMinToogleMouseDown} ></div>
-                <div className="price-range__toggle price-range__toggle--max"  style={{right: `${maxTooglePosition}%`}}></div>
-              </div>
+              <div className="price-range__bar" style={{width: `${maxTooglePosition - minTooglePosition}px`, left:`${minTooglePosition}px`}} ></div>
+              <div className="price-range__toggle price-range__toggle--min" style={{left: `${minTooglePosition}px`}} onMouseDown = {(evt)=> onToogleMouseDown(evt, setMinTooglePosition)} ></div>
+              <div className="price-range__toggle price-range__toggle--max"  style={{left: `${maxTooglePosition}px`}}  onMouseDown = {(evt) => onToogleMouseDown(evt, setMaxTooglePosition)}></div>
             </div>
             <div className="wrapper-price-input">
               <label className="filter-form__label">
                 <span className="visually-hidden">min price</span>
-                <input className="filter-form__input" type="text" value={valueMinPrice} onChange = {(evt) => {setValueMinPrice(+evt.currentTarget.value)}} onBlur = {(evt) => onMinInputChange(+evt.currentTarget.value)} />
+                <input className="filter-form__input" type="text" value={Math.round(minTooglePosition/2.8)} onChange = {(evt) => {setMinTooglePosition(+evt.currentTarget.value * 2.8)}} />
               </label>
               <label className="filter-form__label">
                 <span className="visually-hidden">max price</span>
-                <input className="filter-form__input" type="text" value={valueMaxPrice} onChange = {(evt) => setValueMaxPrice(+evt.currentTarget.value)} onBlur = {(evt) => onMaxInputChange(+evt.currentTarget.value)} />
+                <input className="filter-form__input" type="text" value={Math.round(maxTooglePosition/2.8)} onChange = {(evt) => setMaxTooglePosition(+evt.currentTarget.value * 2.8)} />
               </label>
             </div>
           </div>
@@ -103,6 +68,10 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
         
         <fieldset className="filter-form__fieldset filter-form__fieldset--brands">
           <legend className="filter-form__legend">Брэнд</legend>
+            <label key={'default'} className="filter-form__label filter-form__label--brands">
+              <input className="visually-hidden" type="radio" name="care-radio" onClick = {() => setCheckedBrand(undefined)} checked = {undefined === checkedBrand} />
+              <span className="filter-form__radio radio"></span> Все брэнды
+            </label>
           {BRANDS.map((elem, i) => {
             return (
               <label key={i} className="filter-form__label filter-form__label--brands">

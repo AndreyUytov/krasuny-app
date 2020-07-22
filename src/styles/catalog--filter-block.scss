@@ -75,13 +75,11 @@
 
 .price-range__toggle--max {
     position: absolute;
-    transform: translate(50%,-50%);
+    transform: translate(-50%,-50%);
 }
 
 .price-range__bar {
     position: absolute;
-    left: 50px;
-    right: 50px;
 
     height: 4px;
     max-width: 100%;
