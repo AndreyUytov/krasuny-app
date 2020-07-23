@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
-import { BrandsList, BRANDS, MIN_DELTA_PRICE, MAX_WIDTH_BAR_PRICE } from '../../types'
+import React, { useState, useEffect } from 'react'
+import { BrandsList, BRANDS, MIN_DELTA_PRICE, MAX_WIDTH_BAR_PRICE, PRODUCT_TYPE } from '../../types'
+import { setFilterByPriceAndBrand, resetFilterByPriceAndBrand, resetCurrentPage } from '../../action'
 
 interface IFilterCatalogPage {
-  brand: BrandsList | undefined
+  brand: BrandsList | undefined,
+  product_type: PRODUCT_TYPE,
+  setFilterByPriceAndBrand: typeof setFilterByPriceAndBrand,
+  resetFilterByPriceAndBrand: typeof resetFilterByPriceAndBrand,
+  resetCurrentPage: typeof resetCurrentPage
 }
 
-const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
+const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({resetCurrentPage, product_type, brand, setFilterByPriceAndBrand, resetFilterByPriceAndBrand}) => {
 
   const [checkedBrand, setCheckedBrand] = useState<BrandsList | undefined>(brand)
   const [minTooglePosition, setMinTooglePosition] = useState(0)
@@ -46,6 +51,17 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
       setMaxTooglePosition(value)
     }
   }
+
+  function resetFilters () {
+    resetFilterByPriceAndBrand();
+    setMinTooglePosition(0);
+    setMaxTooglePosition(280);
+    setCheckedBrand(undefined);
+  }
+
+  useEffect(() => {
+    resetFilters()
+  }, [product_type])
 
   return (
     <section className = "filter-block">
@@ -91,8 +107,12 @@ const FilterCatalogPage: React.FC<IFilterCatalogPage> = ({brand}) => {
             )
           })}
         </fieldset>
-        <button type="submit" className="filter-form__submit-btn btn-fon">Применить фильтры</button>
-        <button type="reset" className="filter-form__btn btn">Сбросить фильтры</button>
+        <button type="button" className="filter-form__submit-btn btn-fon"
+            onClick = {()=>{setFilterByPriceAndBrand(Math.round(minTooglePosition/2.8), Math.round(maxTooglePosition/2.8), checkedBrand); resetCurrentPage()}} 
+          >Применить фильтры</button>
+        <button type="reset" className="filter-form__btn btn"
+          onClick={resetFilters} 
+          >Сбросить фильтры</button>
       </form>
     </section>
   )

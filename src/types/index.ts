@@ -38,6 +38,8 @@ export const SET_FILTER_BY_PRODUCT_TYPE = 'SET_FILTER_BY_PRODUCT_TYPE'
 export const SET_FILTER_BY_SELECTION = 'SET_FILTER_BY_SELECTION'
 export const RESET_FILTER_BY_SELECTION = 'RESET_FILTER_BY_SELECTION'
 export type SELECTION = 'rating' | 'price'
+export const SET_FILTER_BY_PRICE_AND_BRAND = 'SET_FILTER_BY_PRICE_AND_BRAND'
+export const RESET_FILTER_BY_PRICE_AND_BRAND = 'RESET_FILTER_BY_PRICE_ANDBRAND'
 
 export const MAX_ITEMS_PER_PAGE = 16
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
@@ -56,6 +58,17 @@ export interface ResetCurrentPageAction {
 }
 
 export type NumberPageActionType = ResetCurrentPageAction | SetCurrentPageAction
+
+export interface SetFIlterByPriceAndBrand {
+  type: typeof SET_FILTER_BY_PRICE_AND_BRAND,
+  minPrice: number,
+  maxPrice: number,
+  brand: BrandsList | undefined
+}
+
+export interface ResetFilterByPriceAndBrand {
+  type: typeof RESET_FILTER_BY_PRICE_AND_BRAND
+}
 
 export interface SetFilterBySelectionAction {
   type: typeof SET_FILTER_BY_SELECTION,
@@ -85,7 +98,10 @@ export interface SetFilterByTagsAction {
   selectedTags: TAG_LIST[]
 }
 
-export type FilterActionType = DeleteFilterByTagsAction | ResetFIlterByTagsAction | SetFilterByTagsAction | SetFilterByProductTypeAction | ResetFilterBySelection | SetFilterBySelectionAction
+export type FilterActionType = DeleteFilterByTagsAction | ResetFIlterByTagsAction |
+                               SetFilterByTagsAction | SetFilterByProductTypeAction |
+                               ResetFilterBySelection | SetFilterBySelectionAction |
+                               SetFIlterByPriceAndBrand | ResetFilterByPriceAndBrand
 
 export interface RequestItemsAction {
   type: typeof REQUEST_ITEMS,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {connect, ConnectedProps} from 'react-redux'
 
 import MainNav from './../main-nav/'
@@ -16,13 +16,17 @@ import { fetchItemsIfNeeded,
          setCurrentPage,
          setFilterByProductType,
          setFilterBySelection,
-         resetFilterBySelection
+         resetFilterBySelection,
+         resetFilterByPriceAndBrand,
+         setFilterByPriceAndBrand
       } from './../../action'
 
 const mapStateToProps = (state: RootState) => {
   let product_type_query = `product_type=${state.filters.selectedProductType}`
   let product_tags_query = state.filters.selectedTags.length ? `&product_tags=${state.filters.selectedTags.join(',')}` : ''
-  let query = product_type_query + product_tags_query
+  let brand_query = state.filters.selectedBrand ? `&brand=${state.filters.selectedBrand}` : ``
+  let price_query = state.filters.selectedMinPrice ? `&price_greater_than=${state.filters.selectedMinPrice}&price_less_than=${state.filters.selectedMaxPrice}` : ``
+  let query = product_type_query + product_tags_query + brand_query + price_query
   const {itemsId, isFetching, isFailure, err} = state.itemsByFilters[query] || {itemsId: []}
   return {
     query,
@@ -35,7 +39,9 @@ const mapStateToProps = (state: RootState) => {
     allItems: state.allItems,
     page: state.pagination.page,
     selection: state.filters.selectedSelection,
-    brand: state.filters.selectedBrand
+    brand: state.filters.selectedBrand,
+    minPrice: state.filters.selectedMinPrice,
+    maxPrice: state.filters.selectedMaxPrice
   }
 }
 
@@ -48,7 +54,9 @@ const mapDispatchToProps = {
   resetCurrentPage,
   setFilterByProductType,
   setFilterBySelection,
-  resetFilterBySelection
+  resetFilterBySelection,
+  resetFilterByPriceAndBrand,
+  setFilterByPriceAndBrand
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

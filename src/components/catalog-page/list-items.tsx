@@ -74,9 +74,8 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
     useEffect (() => {
     if(product_type !== product_type_from_params) {
       setFilterByProductType(product_type_from_params)
-      console.log('From index')
     }
-  }, [product_type, product_type_from_params, setFilterByProductType])
+  }, [product_type, product_type_from_params])
 
   useEffect(() => {
     fetchItemsIfNeeded(query)
@@ -116,7 +115,7 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
           {
             itemsIsFetching ? <div>Данные загружаются ... </div> 
             : items.length ? renderItems(currentItems) 
-          : itemsIsFailure ? <div>Произошла ошибка "{err ? err.message : ''}"</div> 
+          : itemsIsFailure ? <div>Произошла ошибка "{err?.message}"</div> 
           : <div>По таким настройкам фильтра не найдено ни одного продукта</div>
           }
         </ul>

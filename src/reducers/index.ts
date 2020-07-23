@@ -20,7 +20,9 @@ import {
   SELECTION,
   SET_FILTER_BY_SELECTION,
   RESET_FILTER_BY_SELECTION,
-  BrandsList
+  BrandsList,
+  SET_FILTER_BY_PRICE_AND_BRAND,
+  RESET_FILTER_BY_PRICE_AND_BRAND
   } from './../types'
 import { indexById } from '../selectors'
 
@@ -101,10 +103,19 @@ interface FilterInterface {
   selectedTags: TAG_LIST[],
   selectedProductType: PRODUCT_TYPE,
   selectedSelection: SELECTION | undefined,
-  selectedBrand: BrandsList | undefined
+  selectedBrand: BrandsList | undefined,
+  selectedMinPrice: number | undefined,
+  selectedMaxPrice: number | undefined
 }
 
-function filters (state:FilterInterface = {selectedTags: [], selectedProductType: PRODUCT_TYPE.blush, selectedSelection: undefined, selectedBrand: undefined},
+function filters (state:FilterInterface = {
+  selectedTags: [],
+  selectedProductType: PRODUCT_TYPE.blush,
+  selectedSelection: undefined,
+  selectedBrand: undefined,
+  selectedMinPrice: undefined,
+  selectedMaxPrice: undefined
+},
   action: FilterActionType
   ) {
     switch (action.type) {
@@ -142,6 +153,20 @@ function filters (state:FilterInterface = {selectedTags: [], selectedProductType
         return {
           ...state,
           selectedSelection: undefined
+        }
+      case SET_FILTER_BY_PRICE_AND_BRAND: 
+        return {
+          ...state,
+          selectedMinPrice: action.minPrice,
+          selectedMaxPrice: action.maxPrice,
+          selectedBrand: action.brand
+        }
+      case RESET_FILTER_BY_PRICE_AND_BRAND:
+        return {
+          ...state,
+          selectedBrand: undefined,
+          selectedMaxPrice: undefined,
+          selectedMinPrice: undefined
         }
       default:
         return state

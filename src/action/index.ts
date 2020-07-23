@@ -25,12 +25,32 @@ import {
   SetFilterBySelectionAction,
   SET_FILTER_BY_SELECTION,
   ResetFilterBySelection,
-  RESET_FILTER_BY_SELECTION
+  RESET_FILTER_BY_SELECTION,
+  SetFIlterByPriceAndBrand,
+  SET_FILTER_BY_PRICE_AND_BRAND,
+  BrandsList,
+  ResetFilterByPriceAndBrand,
+  RESET_FILTER_BY_PRICE_AND_BRAND
 } from './../types'
 
 import { ItemsByFiltersInterface } from './../reducers'
 
 import {itemsApi} from './../api/api'
+
+export function setFilterByPriceAndBrand (minPrice: number, maxPrice: number, brand: BrandsList | undefined): SetFIlterByPriceAndBrand {
+  return {
+    type: SET_FILTER_BY_PRICE_AND_BRAND,
+    minPrice,
+    maxPrice,
+    brand
+  }
+}
+
+export function resetFilterByPriceAndBrand (): ResetFilterByPriceAndBrand {
+  return {
+    type: RESET_FILTER_BY_PRICE_AND_BRAND
+  }
+}
 
 export function setFilterBySelection (selection: SELECTION): SetFilterBySelectionAction {
   return {
