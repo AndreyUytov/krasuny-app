@@ -23,17 +23,31 @@ import TagList from './tags-list'
 import SelectFilterBlock from './filter-selection'
 
 function renderItems (items: Item[]) {
+  function renderRating (rating:number) {
+    let stars = []
+    if (rating === 0) {
+      stars = ['empty', 'empty', 'empty', 'empty', 'empty']
+    } else if (rating > 0 && rating < 1) {
+      stars = ['half', 'empty', 'empty', 'empty', 'empty']
+    }
+  }
   return items.map((elem) => {
     return (
       <li key = {elem.id}>
         <a className="production-list-block-card card card--hit">
           <img className="card__img"
             src={elem.image_link}
-            width="185" height="185"
+            width="185" height="165"
             alt="Изображение товара" />
           <div className="card-description__wrapper">
+            <div className="stars-rating">
+              <svg className="stars-rating__svg">
+                {/* {функция для отрисовки рейтинга}  */}
+              </svg>
+              - {elem.rating}
+            </div>
             <h3 className="card__title">
-              {elem.name.length > 25 ? `${elem.name.slice(0, 25)} ...` : elem.name}
+              {elem.name.length > 20 ? `${elem.name.slice(0, 17)} ...` : elem.name}
             </h3>
             <p className="card__price price">
               {elem.price} {elem.price_sign}
