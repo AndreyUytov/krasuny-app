@@ -23,14 +23,6 @@ import TagList from './tags-list'
 import SelectFilterBlock from './filter-selection'
 
 function renderItems (items: Item[]) {
-  function renderRating (rating:number) {
-    let stars = []
-    if (rating === 0) {
-      stars = ['empty', 'empty', 'empty', 'empty', 'empty']
-    } else if (rating > 0 && rating < 1) {
-      stars = ['half', 'empty', 'empty', 'empty', 'empty']
-    }
-  }
   return items.map((elem) => {
     return (
       <li key = {elem.id}>
@@ -41,10 +33,16 @@ function renderItems (items: Item[]) {
             alt="Изображение товара" />
           <div className="card-description__wrapper">
             <div className="stars-rating">
-              <svg className="stars-rating__svg">
-                {/* {функция для отрисовки рейтинга}  */}
+              <svg className="stars-rating__svg" width="120" height="24" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <use xlinkHref="#empty-star" />
+                  <use x="24px" xlinkHref="#empty-star" />
+                  <use x="48px" xlinkHref="#empty-star" />
+                  <use x="72px"xlinkHref="#empty-star" />
+                  <use x="96px" xlinkHref="#empty-star" />
+                  <rect width={elem.rating / 0.05 + '%'} height="100%" fill='#EC8453'  mask="url(#star-mask)"/>
+                </g>
               </svg>
-              - {elem.rating}
             </div>
             <h3 className="card__title">
               {elem.name.length > 20 ? `${elem.name.slice(0, 17)} ...` : elem.name}
