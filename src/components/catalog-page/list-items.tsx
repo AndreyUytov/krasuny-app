@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import {
   Item,
   PAGEMAP,
@@ -26,7 +26,7 @@ function renderItems (items: Item[]) {
   return items.map((elem) => {
     return (
       <li key = {elem.id}>
-        <a className="production-list-block-card card card--hit">
+        <Link to={'/items/'+ elem.id} className="production-list-block-card card card--hit">
           <img className="card__img"
             src={elem.image_link}
             width="185" height="165"
@@ -51,7 +51,7 @@ function renderItems (items: Item[]) {
               {elem.price} {elem.price_sign}
             </p>
           </div>
-        </a>
+        </Link>
       </li>
     )
   })

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import instaMock from './../../images/content/instagram-img.png'
+
 const Footer: React.FC = () => {
   return (
     <footer className="page-footer">
@@ -12,42 +14,42 @@ const Footer: React.FC = () => {
             <ul className="instagram-list">
               <li>
                 <a className="instagramm-list__item">
-                  <img src="./../images/content/instagram-img.png"
+                  <img src={instaMock}
                     width="71" height="71"
                   />
                 </a>
               </li>
               <li>
                 <a className="instagramm-list__item">
-                  <img src="./../images/content/instagram-img.png"
+                <img src={instaMock}
                     width="71" height="71"
                   />
                 </a>
               </li>
               <li>
                 <a className="instagramm-list__item">
-                  <img src="./../images/content/instagram-img.png"
+                <img src={instaMock}
                     width="71" height="71"
                   />
                 </a>
               </li>
               <li>
                 <a className="instagramm-list__item">
-                  <img src="./../images/content/instagram-img.png"
+                <img src={instaMock}
                     width="71" height="71"
                   />
                 </a>
               </li>
               <li>
                 <a className="instagramm-list__item">
-                  <img src="./../images/content/instagram-img.png"
+                <img src={instaMock}
                     width="71" height="71"
                   />
                 </a>
               </li>
               <li>
                 <a className="instagramm-list__item">
-                  <img src="./../images/content/instagram-img.png"
+                <img src={instaMock}
                     width="71" height="71"
                   />
                 </a>
