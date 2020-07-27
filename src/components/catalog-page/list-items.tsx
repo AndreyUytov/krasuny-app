@@ -22,11 +22,11 @@ import TagPopup from './../popups/tag'
 import TagList from './tags-list'
 import SelectFilterBlock from './filter-selection'
 
-function renderItems (items: Item[]) {
+function renderItems (items: Item[], product_type: PRODUCT_TYPE) {
   return items.map((elem) => {
     return (
       <li key = {elem.id}>
-        <Link to={'/items/'+ elem.id} className="production-list-block-card card card--hit">
+        <Link to={'/'+ PAGEMAP[product_type] + '/' + elem.id} className="production-list-block-card card card--hit">
           <img className="card__img"
             src={elem.image_link}
             width="185" height="165"
@@ -126,7 +126,7 @@ const ListItemsSection: React.FC<IListItemsSection> = (props) => {
         <ul className="production-list-block__catalog-list">
           {
             itemsIsFetching ? <div>Данные загружаются ... </div> 
-            : items.length ? renderItems(currentItems) 
+            : items.length ? renderItems(currentItems, product_type) 
           : itemsIsFailure ? <div>Произошла ошибка "{err?.message}"</div> 
           : <div>По таким настройкам фильтра не найдено ни одного продукта</div>
           }

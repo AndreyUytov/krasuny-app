@@ -1,18 +1,13 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 
-import {PAGEMAP, PRODUCT_TYPE} from './../../types'
-
 interface Props {
   links: string[],
   to: string[],
-  product_type: PRODUCT_TYPE
+  activeLink: string
 }
 
-const MainNav: React.FC<Props> = ({links, to, product_type}) => {
-
-  const convertLink = PAGEMAP[product_type]
-
+const MainNav: React.FC<Props> = ({links, to, activeLink}) => {
   return (
     <nav className="breadcrumbs-nav">
       <ul className="breadcrumbs-nav__list">
@@ -29,7 +24,7 @@ const MainNav: React.FC<Props> = ({links, to, product_type}) => {
         }
         <li key={10} >
           <span className="breadcrumbs-nav__link link link--active">
-            {convertLink}
+            {activeLink}
           </span>
         </li>
       </ul>

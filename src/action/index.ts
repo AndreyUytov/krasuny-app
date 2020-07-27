@@ -128,7 +128,7 @@ export function failureItems (error: TypeError, query: string): FailureItemsActi
   }
 }
 
-const fetchItems = (query: string): AppThunk => async dispatch => {
+export const fetchItems = (query: string): AppThunk => async dispatch => {
   dispatch(requestItems(query))
   try {
     const response = await fetch(itemsApi(query))

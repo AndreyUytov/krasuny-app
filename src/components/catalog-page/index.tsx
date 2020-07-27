@@ -20,6 +20,7 @@ import { fetchItemsIfNeeded,
          resetFilterByPriceAndBrand,
          setFilterByPriceAndBrand
       } from './../../action'
+import { PAGEMAP } from '../../types'
 
 const mapStateToProps = (state: RootState) => {
   let product_type_query = `product_type=${state.filters.selectedProductType}`
@@ -73,9 +74,12 @@ const CatalogPage:React.FC<CatalogPageType> = (props) => {
     }
     return elem
   })
+
+  let activeLink = PAGEMAP[props.product_type]
+  
   return (
     <main className = "page-main--catalog container">
-      <MainNav links = {['Главная']} to = {['/']} {...props} />
+      <MainNav links = {['Главная']} to = {['/']} activeLink = {activeLink} />
       <FilterCatalogPage {...props}/>
       <ListItemsSection {...props} items={items} />
       {items.length ? <PaginationBlock {...props} items={items} /> : ''}
