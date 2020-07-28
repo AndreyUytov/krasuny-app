@@ -12,7 +12,7 @@ const DescriptionBlock: React.FC<IDescriptionBlock> = (props) => {
         <li>
           <div className="info-marker">
           <span className="info-marker__text">
-            Закажите консультацию у специалиста, чтобы узнать подходить этот крем для вас!
+            Закажите консультацию у специалиста, чтобы узнать подходит ли этот крем для вас!
           </span>
           </div>
         <img src={props.item.image_link} 
@@ -42,7 +42,7 @@ const DescriptionBlock: React.FC<IDescriptionBlock> = (props) => {
                 Бренд
               </h4>
               <p className="application__mode-use">
-                {props.item.brand}
+                {props.item.brand.toUpperCase()}
               </p>
             </li>
             <li>
@@ -50,7 +50,7 @@ const DescriptionBlock: React.FC<IDescriptionBlock> = (props) => {
                 Тип продукта
               </h4>
               <p className="application__mode-use">
-                {props.item.product_type}
+                {props.item.product_type[0].toUpperCase() + props.item.product_type.slice(1)}
               </p>
             </li>
             <li>
@@ -58,18 +58,18 @@ const DescriptionBlock: React.FC<IDescriptionBlock> = (props) => {
                 Рейтинг
               </h4>
               <p className="application__mode-use">
-              <div className="stars-rating">
-              <svg className="stars-rating__svg" width="120" height="24" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g>
-                  <use xlinkHref="#empty-star" />
-                  <use x="24px" xlinkHref="#empty-star" />
-                  <use x="48px" xlinkHref="#empty-star" />
-                  <use x="72px"xlinkHref="#empty-star" />
-                  <use x="96px" xlinkHref="#empty-star" />
-                  <rect width={props.item.rating / 0.05 + '%'} height="100%" fill='#EC8453'  mask="url(#star-mask)"/>
-                </g>
-              </svg>
-            </div>
+                <span className="stars-rating">
+                  <svg className="stars-rating__svg" width="120" height="24" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                      <use xlinkHref="#empty-star" />
+                      <use x="24px" xlinkHref="#empty-star" />
+                      <use x="48px" xlinkHref="#empty-star" />
+                      <use x="72px"xlinkHref="#empty-star" />
+                      <use x="96px" xlinkHref="#empty-star" />
+                      <rect width={props.item.rating / 0.05 + '%'} height="100%" fill='#EC8453'  mask="url(#star-mask)"/>
+                    </g>
+                  </svg>
+                </span>
               </p>
             </li>
           </ol>

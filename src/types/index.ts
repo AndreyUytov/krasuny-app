@@ -69,6 +69,8 @@ export interface FailureItemAction {
   error: TypeError
 }
 
+export type FetchItemById = FailureItemAction | SuccessItemAction | RequestItemAction
+
 export interface SetCurrentPageAction {
   type: typeof SET_CURRENT_PAGE,
   page: number

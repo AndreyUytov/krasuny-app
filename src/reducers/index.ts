@@ -24,7 +24,10 @@ import {
   SET_FILTER_BY_PRICE_AND_BRAND,
   RESET_FILTER_BY_PRICE_AND_BRAND,
   SUCCESS_ITEM,
-  SuccessItemAction
+  SuccessItemAction,
+  REQUEST_ITEM,
+  FetchItemById,
+  FAILURE_ITEM
   } from './../types'
 import { indexById } from '../selectors'
 
@@ -52,15 +55,23 @@ interface AllItemsState {
   [propName: number]: Item
 }
 
-function allItems (state:AllItemsState = {}, action: SuccessItemsAction | SuccessItemAction) {
+function allItems (state:AllItemsState = {}, action: SuccessItemsAction | FetchItemById) {
   switch (action.type) {
     case SUCCESS_ITEMS:
       return {
         ...state, ...indexById(action.items)
       }
+    case REQUEST_ITEM:
+      return {
+        ...state, [action.id]: undefined
+      }
     case SUCCESS_ITEM:
       return {
-        ...state, [action.item.id]: action.item
+        ...state, [action.id]: action.item
+      }
+    case FAILURE_ITEM:
+      return {
+        ...state, [action.id]: action.error
       }
     default:
       return state

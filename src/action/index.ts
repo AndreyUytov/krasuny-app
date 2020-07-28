@@ -155,7 +155,7 @@ export function failureItem (error: TypeError, id: number): FailureItemAction {
     id,
     error
   }
-}
+} 
 
 export const fetchItem = (id: number): AppThunk => async dispatch => {
   dispatch(requestItem(id))

@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {useParams} from 'react-router-dom'
 import {connect, ConnectedProps} from 'react-redux'
 import { RootState } from '../../reducers'
 
 import MainNav from './../main-nav'
 import DescriptionBlock from './descr-block'
+import AsideOrderBlock from './aside-order-block'
 
 import { PAGEMAP } from '../../types'
 import {
   fetchItem
 } from './../../action'
+import { number } from 'prop-types'
 
 const mapStateToProps = (store: RootState) => {
   return {
@@ -35,15 +37,28 @@ const Card: React.FC<CardPageTypes> = (props) => {
     }
   }, [product_id, item])
 
+  const containerRef = useRef<HTMLDivElement>(null)
+   const [containerMargin, setcontainerMargin] = useState(0)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setcontainerMargin(parseInt(getComputedStyle(containerRef.current).marginRight))
+    }
+  }, [containerRef])
+
   return (
     <main className="page-main--card">
-      <div className="page-main-card__wrapper container">
-        {item ? 
-        <>
+      <div ref={containerRef} className="page-main-card__wrapper container">
+        {item === undefined ? 
+         <>Загружаю ...</> 
+         : item.id ? 
+         <>
           <MainNav links = {['Главная', PAGEMAP[props.product_type]]} to = {['/', `/catalog/${props.product_type}`]} activeLink={item.name}  />
           <DescriptionBlock item={item}/>
+          <AsideOrderBlock item={item} marginContainer={containerMargin} />
         </>
-        : <>Загружаю ...</>}
+        : <>{item.message}</> 
+        }
       </div>
     </main>
   )
