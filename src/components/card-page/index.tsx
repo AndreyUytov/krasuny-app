@@ -11,7 +11,6 @@ import { PAGEMAP } from '../../types'
 import {
   fetchItem
 } from './../../action'
-import { number } from 'prop-types'
 
 const mapStateToProps = (store: RootState) => {
   return {
@@ -44,7 +43,7 @@ const Card: React.FC<CardPageTypes> = (props) => {
     if (containerRef.current) {
       setcontainerMargin(parseInt(getComputedStyle(containerRef.current).marginRight))
     }
-  }, [containerRef])
+  }, [containerRef.current])
 
   return (
     <main className="page-main--card">

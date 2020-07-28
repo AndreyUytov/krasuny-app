@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import SelectionPopup from './../popups/selection'
 
-const RightBLock: React.FC = () => {
+const RightBLock: React.FC<{rightBlockFixed?: boolean}> = ({rightBlockFixed}) => {
   const [visibleSelectionPopup, setVisibleSelectionPopup] = useState(false)
   const hiddenSelectionPopup = (): void => {
     setVisibleSelectionPopup(false)
@@ -10,7 +10,7 @@ const RightBLock: React.FC = () => {
   return (
     <>
       <div className="header-right-block">
-        <nav className="header-right-block__site-nav">
+        <nav className="header-right-block__site-nav" style = {rightBlockFixed ? {position: 'fixed'} : {}} >
           <ul className="site-nav__list nav-list">
             <li>
               <a href="" className="site-nav__item site-nav__item--favorite">

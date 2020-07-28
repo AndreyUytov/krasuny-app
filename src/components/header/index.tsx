@@ -32,6 +32,9 @@ const MapDispatch = {
 }
 
 const connector = connect(null, MapDispatch)
-type PropsFromRedux = ConnectedProps<typeof connector>
+interface Props {
+  rightBlockFixed?: boolean
+}
+type PropsFromRedux = ConnectedProps<typeof connector> & Props
 
 export default connector (Header);
