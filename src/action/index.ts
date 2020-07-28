@@ -30,7 +30,13 @@ import {
   SET_FILTER_BY_PRICE_AND_BRAND,
   BrandsList,
   ResetFilterByPriceAndBrand,
-  RESET_FILTER_BY_PRICE_AND_BRAND
+  RESET_FILTER_BY_PRICE_AND_BRAND,
+  RequestItemAction,
+  REQUEST_ITEM,
+  SUCCESS_ITEM,
+  SuccessItemAction,
+  FailureItemAction,
+  FAILURE_ITEM
 } from './../types'
 
 import { ItemsByFiltersInterface } from './../reducers'
@@ -128,7 +134,43 @@ export function failureItems (error: TypeError, query: string): FailureItemsActi
   }
 }
 
-export const fetchItems = (query: string): AppThunk => async dispatch => {
+export function requestItem (id: number): RequestItemAction {
+  return {
+    type: REQUEST_ITEM,
+    id
+  }
+}
+
+export function successItem (item: Item, id: number): SuccessItemAction {
+  return {
+    type: SUCCESS_ITEM,
+    id,
+    item
+  }
+}
+
+export function failureItem (error: TypeError, id: number): FailureItemAction {
+  return {
+    type: FAILURE_ITEM,
+    id,
+    error
+  }
+}
+
+export const fetchItem = (id: number): AppThunk => async dispatch => {
+  dispatch(requestItem(id))
+  try {
+    const response = await fetch(itemsApi(`/${id}.json`))
+    const json = await response.json()
+    return dispatch(successItem(json, id))
+  }
+  catch (err) {
+    console.log(err)
+    return dispatch(failureItem(err, id))
+  }
+}
+
+const fetchItems = (query: string): AppThunk => async dispatch => {
   dispatch(requestItems(query))
   try {
     const response = await fetch(itemsApi(query))

@@ -27,7 +27,7 @@ const mapStateToProps = (state: RootState) => {
   let product_tags_query = state.filters.selectedTags.length ? `&product_tags=${state.filters.selectedTags.join(',')}` : ''
   let brand_query = state.filters.selectedBrand ? `&brand=${state.filters.selectedBrand}` : ``
   let price_query = state.filters.selectedMinPrice ? `&price_greater_than=${state.filters.selectedMinPrice}&price_less_than=${state.filters.selectedMaxPrice}` : ``
-  let query = product_type_query + product_tags_query + brand_query + price_query
+  let query = `.json?` + product_type_query + product_tags_query + brand_query + price_query
   const {itemsId, isFetching, isFailure, err} = state.itemsByFilters[query] || {itemsId: []}
   return {
     query,

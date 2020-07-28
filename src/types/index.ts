@@ -31,6 +31,10 @@ export const REQUEST_ITEMS = 'REQUEST_ITEMS'
 export const SUCCESS_ITEMS = 'SUCCESS_ITEMS'
 export const FAILURE_ITEMS = 'FAILURE_ITEMS'
 
+export const REQUEST_ITEM = 'REQUEST_ITEM'
+export const SUCCESS_ITEM = 'SUCCESS_ITEM'
+export const FAILURE_ITEM = 'FAILURE_ITEM'
+
 export const SET_FILTER_BY_TAGS = 'SET_FILTER_BY_TAGS'
 export const DELETE_FILTER_BY_TAGS = 'DELETE_FILTER_BY_TAGS'
 export const RESET_FILTER_BY_TAGS = 'RESET_FILTER_BY_TAGS'
@@ -47,6 +51,23 @@ export const RESET_CURRENT_PAGE = 'RESET_CURRENT_PAGE'
 
 export const MIN_DELTA_PRICE = 28
 export const MAX_WIDTH_BAR_PRICE = 280
+
+export interface RequestItemAction {
+  type: typeof REQUEST_ITEM,
+  id: number
+}
+
+export interface SuccessItemAction {
+  type: typeof SUCCESS_ITEM,
+  id: number,
+  item: Item
+}
+
+export interface FailureItemAction {
+  type: typeof FAILURE_ITEM,
+  id: number,
+  error: TypeError
+}
 
 export interface SetCurrentPageAction {
   type: typeof SET_CURRENT_PAGE,

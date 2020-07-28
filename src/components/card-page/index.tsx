@@ -8,7 +8,7 @@ import DescriptionBlock from './descr-block'
 
 import { PAGEMAP } from '../../types'
 import {
-  fetchItems
+  fetchItem
 } from './../../action'
 
 const mapStateToProps = (store: RootState) => {
@@ -19,7 +19,7 @@ const mapStateToProps = (store: RootState) => {
 }
 
 const mapDispatchToProps = {
-  fetchItems
+  fetchItem
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -28,11 +28,10 @@ type CardPageTypes = ConnectedProps<typeof connector>
 const Card: React.FC<CardPageTypes> = (props) => {
   const {product_id} = useParams()
   let item = props.allItems[+product_id] || undefined
-  const g = null
 
   useEffect(() => {
     if(!item) {
-      props.fetchItems(`products/${+product_id}.json`)
+      props.fetchItem(+product_id)
     }
   }, [product_id, item])
 
