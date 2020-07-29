@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
 
 import SelectionPopup from './../popups/selection'
+import { useRouteMatch } from 'react-router-dom';
 
-const RightBLock: React.FC<{rightBlockFixed?: boolean}> = ({rightBlockFixed}) => {
+const RightBLock: React.FC = () => {
   const [visibleSelectionPopup, setVisibleSelectionPopup] = useState(false)
   const hiddenSelectionPopup = (): void => {
     setVisibleSelectionPopup(false)
   }
+
+  let {path} = useRouteMatch()
   return (
     <>
       <div className="header-right-block">
-        <nav className="header-right-block__site-nav" style = {rightBlockFixed ? {position: 'fixed'} : {}} >
+        <nav className="header-right-block__site-nav" style = {/\/$/.test(path) ? {} : {position: 'fixed'}} >
           <ul className="site-nav__list nav-list">
             <li>
               <a href="" className="site-nav__item site-nav__item--favorite">

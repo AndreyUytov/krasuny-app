@@ -9,7 +9,7 @@ import Footer from './../components/footer'
 import CatalogPage from './../components/catalog-page'
 import Card from './../components/card-page'
 
-const Layout: React.FC<{rightBlockFixed?:boolean}> = ({children}) => {
+const Layout: React.FC = ({children}) => {
   return (
     <>
       <Header />
@@ -37,7 +37,7 @@ export default (
       </Layout>
     </Route>
     <Route path = '/:product_type/:product_id'>
-      <Layout rightBlockFixed={true}>
+      <Layout>
         <Card />
       </Layout>
     </Route>

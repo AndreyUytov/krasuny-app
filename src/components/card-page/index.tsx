@@ -37,13 +37,6 @@ const Card: React.FC<CardPageTypes> = (props) => {
   }, [product_id, item])
 
   const containerRef = useRef<HTMLDivElement>(null)
-   const [containerMargin, setcontainerMargin] = useState(0)
-
-  useEffect(() => {
-    if (containerRef.current) {
-      setcontainerMargin(parseInt(getComputedStyle(containerRef.current).marginRight))
-    }
-  }, [containerRef.current])
 
   return (
     <main className="page-main--card">
@@ -54,7 +47,7 @@ const Card: React.FC<CardPageTypes> = (props) => {
          <>
           <MainNav links = {['Главная', PAGEMAP[props.product_type]]} to = {['/', `/catalog/${props.product_type}`]} activeLink={item.name}  />
           <DescriptionBlock item={item}/>
-          <AsideOrderBlock item={item} marginContainer={containerMargin} />
+          <AsideOrderBlock item={item} сontainer={containerRef.current} />
         </>
         : <>{item.message}</> 
         }

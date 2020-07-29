@@ -15,9 +15,12 @@ const Header: React.FunctionComponent<PropsFromRedux> = (props) => {
     <header className={
       /\/$/.test(path) 
       ? "page-header page-header--fon"
-      : "page-header"
+      : "page-header z-index"
     }>
-      <section className="header-block header-block--index-page container">
+      <section className= {
+        /\/$/.test(path) ? "header-block header-block--index-page container"
+        : "header-block container"
+      }>
         {/poll/i.test(path) 
           ? <> <LeftBlockPoll {...props} /> <RightBLockPoll /> </>
           : <> <LeftBlock {...props} /> <RightBlock /> </>
@@ -32,9 +35,6 @@ const MapDispatch = {
 }
 
 const connector = connect(null, MapDispatch)
-interface Props {
-  rightBlockFixed?: boolean
-}
-type PropsFromRedux = ConnectedProps<typeof connector> & Props
+type PropsFromRedux = ConnectedProps<typeof connector>
 
 export default connector (Header);
