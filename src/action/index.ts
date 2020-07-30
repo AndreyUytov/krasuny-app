@@ -51,10 +51,11 @@ import { ItemsByFiltersInterface } from './../reducers'
 
 import {itemsApi} from './../api/api'
 
-export function addToBasket (id: number): AddToBasketAction {
+export function addToBasket (id: number, count: number): AddToBasketAction {
   return {
     type: ADD_TO_BASKET,
-    id
+    id, 
+    count
   }
 }
 

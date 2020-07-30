@@ -60,7 +60,8 @@ export const REMOVE_FROM_BASKET = 'REMOVE_FROM_BASKET'
 
 export interface AddToBasketAction {
   type: typeof ADD_TO_BASKET,
-  id: number
+  id: number,
+  count: number
 }
 
 export interface RemoveFromBasketAction {

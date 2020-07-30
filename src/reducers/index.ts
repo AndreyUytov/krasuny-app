@@ -75,7 +75,7 @@ function itemsByFavorites (state: number [] = [], action: FavoritesAction) {
 function itemsByBasket (state: {id: number, count: number}[] = [], action: BasketAction) {
   switch (action.type) {
     case ADD_TO_BASKET:
-      return [...state, action.id]
+      return [...state, {id: action.id, count: action.count} ]
     case REMOVE_FROM_BASKET:
       return state.reduce((result: {id: number, count: number}[], current) => {
         if(current.id !== action.id) {
@@ -83,6 +83,8 @@ function itemsByBasket (state: {id: number, count: number}[] = [], action: Baske
         }
         return result
       }, [])
+    default: 
+      return state
   }
 }
 

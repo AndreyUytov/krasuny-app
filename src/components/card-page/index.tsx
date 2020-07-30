@@ -11,21 +11,24 @@ import { PAGEMAP } from '../../types'
 import {
   fetchItem,
   addToFavorites,
-  removeFromFavorites
+  removeFromFavorites,
+  addToBasket
 } from './../../action'
 
 const mapStateToProps = (store: RootState) => {
   return {
     allItems: store.allItems,
     product_type: store.filters.selectedProductType,
-    favoritesItems: store.itemsByFavorites
+    favoritesItems: store.itemsByFavorites,
+    basketItems: store.itemsByBasket
   }
 }
 
 const mapDispatchToProps = {
   fetchItem,
   addToFavorites,
-  removeFromFavorites
+  removeFromFavorites,
+  addToBasket
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

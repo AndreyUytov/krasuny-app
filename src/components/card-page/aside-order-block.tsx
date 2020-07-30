@@ -3,17 +3,20 @@ import React from 'react'
 import { Item } from '../../types'
 import {
   addToFavorites,
-  removeFromFavorites
+  removeFromFavorites,
+  addToBasket
 } from './../../action'
 
 import OrderCardControlls from './order-card-controlls'
 
 import brandLogo from './../../images/content/brand-logo.png'
 interface IAsideOrderBlock {
+  basketItems: {id: number, count: number} [],
   favoritesItems: number[]
   item: Item,
   addToFavorites: typeof addToFavorites,
-  removeFromFavorites: typeof removeFromFavorites
+  removeFromFavorites: typeof removeFromFavorites,
+  addToBasket: typeof addToBasket
 }
 
 const AsideOrderBlock: React.FC<IAsideOrderBlock> = (props) => {  
