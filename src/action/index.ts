@@ -40,12 +40,30 @@ import {
   AddToFavoritesAction,
   ADD_TO_FAVORITES,
   RemoveFromFavoritesAction,
-  REMOVE_FROM_FAVORITES
+  REMOVE_FROM_FAVORITES,
+  AddToBasketAction,
+  ADD_TO_BASKET,
+  RemoveFromBasketAction,
+  REMOVE_FROM_BASKET
 } from './../types'
 
 import { ItemsByFiltersInterface } from './../reducers'
 
 import {itemsApi} from './../api/api'
+
+export function addToBasket (id: number): AddToBasketAction {
+  return {
+    type: ADD_TO_BASKET,
+    id
+  }
+}
+
+export function removeFromBasket (id: number): RemoveFromBasketAction {
+  return {
+    type: REMOVE_FROM_BASKET,
+    id
+  }
+}
 
 export function addToFavorites (id: number): AddToFavoritesAction {
   return {

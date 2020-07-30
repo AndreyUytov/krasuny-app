@@ -55,6 +55,21 @@ export const MAX_WIDTH_BAR_PRICE = 280
 export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES'
 export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES'
 
+export const ADD_TO_BASKET = 'ADD_TO_BASKET'
+export const REMOVE_FROM_BASKET = 'REMOVE_FROM_BASKET'
+
+export interface AddToBasketAction {
+  type: typeof ADD_TO_BASKET,
+  id: number
+}
+
+export interface RemoveFromBasketAction {
+  type: typeof REMOVE_FROM_BASKET,
+  id: number
+}
+
+export type BasketAction = RemoveFromBasketAction | AddToBasketAction
+
 export interface AddToFavoritesAction {
   type: typeof ADD_TO_FAVORITES,
   id: number
@@ -66,6 +81,8 @@ export interface RemoveFromFavoritesAction {
 }
 
 export type FavoritesAction = RemoveFromFavoritesAction | AddToFavoritesAction
+
+
 
 export interface RequestItemAction {
   type: typeof REQUEST_ITEM,

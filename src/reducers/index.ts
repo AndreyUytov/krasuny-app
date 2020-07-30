@@ -29,7 +29,10 @@ import {
   FAILURE_ITEM,
   FavoritesAction,
   ADD_TO_FAVORITES,
-  REMOVE_FROM_FAVORITES
+  REMOVE_FROM_FAVORITES,
+  BasketAction,
+  ADD_TO_BASKET,
+  REMOVE_FROM_BASKET
   } from './../types'
 import { indexById } from '../selectors'
 
@@ -66,6 +69,20 @@ function itemsByFavorites (state: number [] = [], action: FavoritesAction) {
       }, [])
     default:
       return state
+  }
+}
+
+function itemsByBasket (state: {id: number, count: number}[] = [], action: BasketAction) {
+  switch (action.type) {
+    case ADD_TO_BASKET:
+      return [...state, action.id]
+    case REMOVE_FROM_BASKET:
+      return state.reduce((result: {id: number, count: number}[], current) => {
+        if(current.id !== action.id) {
+          result.push(current)
+        }
+        return result
+      }, [])
   }
 }
 
@@ -234,7 +251,8 @@ const rootReducer = combineReducers({
   pagination,
   allItems,
   itemsByFilters,
-  itemsByFavorites
+  itemsByFavorites,
+  itemsByBasket
 })
 
 export type RootState = ReturnType<typeof rootReducer>
