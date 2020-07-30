@@ -7,7 +7,7 @@ import MainNav from './../main-nav'
 import DescriptionBlock from './descr-block'
 import AsideOrderBlock from './aside-order-block'
 
-import { PAGEMAP } from '../../types'
+import { PAGEMAP, Item } from '../../types'
 import {
   fetchItem,
   addToFavorites,
@@ -36,7 +36,7 @@ type CardPageTypes = ConnectedProps<typeof connector>
 
 const Card: React.FC<CardPageTypes> = (props) => {
   const {product_id} = useParams()
-  let item = props.allItems[+product_id] || undefined
+  let item: Item = props.allItems[+product_id] || undefined
 
   useEffect(() => {
     if(!item) {
@@ -51,7 +51,7 @@ const Card: React.FC<CardPageTypes> = (props) => {
          <>Загружаю ...</> 
          : item.id ? 
          <>
-          <MainNav links = {['Главная', PAGEMAP[props.product_type]]} to = {['/', `/catalog/${props.product_type}`]} activeLink={item.name}  />
+          <MainNav links = {['Главная', PAGEMAP[item.product_type]]} to = {['/', `/catalog/${props.product_type}`]} activeLink={item.name}  />
           <DescriptionBlock item={item} />
           <AsideOrderBlock item={item} {...props} />
         </>
