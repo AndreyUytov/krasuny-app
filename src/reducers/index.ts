@@ -24,10 +24,12 @@ import {
   SET_FILTER_BY_PRICE_AND_BRAND,
   RESET_FILTER_BY_PRICE_AND_BRAND,
   SUCCESS_ITEM,
-  SuccessItemAction,
   REQUEST_ITEM,
   FetchItemById,
-  FAILURE_ITEM
+  FAILURE_ITEM,
+  FavoritesAction,
+  ADD_TO_FAVORITES,
+  REMOVE_FROM_FAVORITES
   } from './../types'
 import { indexById } from '../selectors'
 
@@ -50,6 +52,22 @@ function itemsByFilters (
         return state
     }
   }
+
+function itemsByFavorites (state: number [] = [], action: FavoritesAction) {
+  switch (action.type) {
+    case ADD_TO_FAVORITES:
+      return [...state, action.id]
+    case REMOVE_FROM_FAVORITES:
+      return state.reduce((result: number [], current) => {
+        if (current !== action.id) {
+          result.push(current)
+        } 
+        return result
+      }, [])
+    default:
+      return state
+  }
+}
 
 interface AllItemsState {
   [propName: number]: Item
@@ -215,7 +233,8 @@ const rootReducer = combineReducers({
   filters,
   pagination,
   allItems,
-  itemsByFilters
+  itemsByFilters,
+  itemsByFavorites
 })
 
 export type RootState = ReturnType<typeof rootReducer>

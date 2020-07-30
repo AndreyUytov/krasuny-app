@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import {useParams} from 'react-router-dom'
 import {connect, ConnectedProps} from 'react-redux'
 import { RootState } from '../../reducers'
@@ -9,18 +9,23 @@ import AsideOrderBlock from './aside-order-block'
 
 import { PAGEMAP } from '../../types'
 import {
-  fetchItem
+  fetchItem,
+  addToFavorites,
+  removeFromFavorites
 } from './../../action'
 
 const mapStateToProps = (store: RootState) => {
   return {
     allItems: store.allItems,
-    product_type: store.filters.selectedProductType
+    product_type: store.filters.selectedProductType,
+    favoritesItems: store.itemsByFavorites
   }
 }
 
 const mapDispatchToProps = {
-  fetchItem
+  fetchItem,
+  addToFavorites,
+  removeFromFavorites
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -36,18 +41,16 @@ const Card: React.FC<CardPageTypes> = (props) => {
     }
   }, [product_id, item])
 
-  const containerRef = useRef<HTMLDivElement>(null)
-
   return (
     <main className="page-main--card">
-      <div ref={containerRef} className="page-main-card__wrapper container">
+      <div className="page-main-card__wrapper container">
         {item === undefined ? 
          <>Загружаю ...</> 
          : item.id ? 
          <>
           <MainNav links = {['Главная', PAGEMAP[props.product_type]]} to = {['/', `/catalog/${props.product_type}`]} activeLink={item.name}  />
-          <DescriptionBlock item={item}/>
-          <AsideOrderBlock item={item} сontainer={containerRef.current} />
+          <DescriptionBlock item={item} />
+          <AsideOrderBlock item={item} {...props} />
         </>
         : <>{item.message}</> 
         }

@@ -52,6 +52,21 @@ export const RESET_CURRENT_PAGE = 'RESET_CURRENT_PAGE'
 export const MIN_DELTA_PRICE = 28
 export const MAX_WIDTH_BAR_PRICE = 280
 
+export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES'
+export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES'
+
+export interface AddToFavoritesAction {
+  type: typeof ADD_TO_FAVORITES,
+  id: number
+}
+
+export interface RemoveFromFavoritesAction {
+  type: typeof REMOVE_FROM_FAVORITES,
+  id: number
+}
+
+export type FavoritesAction = RemoveFromFavoritesAction | AddToFavoritesAction
+
 export interface RequestItemAction {
   type: typeof REQUEST_ITEM,
   id: number

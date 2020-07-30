@@ -1,20 +1,25 @@
 import React from 'react'
 
 import { Item } from '../../types'
+import {
+  addToFavorites,
+  removeFromFavorites
+} from './../../action'
 
 import OrderCardControlls from './order-card-controlls'
 
 import brandLogo from './../../images/content/brand-logo.png'
 interface IAsideOrderBlock {
+  favoritesItems: number[]
   item: Item,
-  сontainer: any
+  addToFavorites: typeof addToFavorites,
+  removeFromFavorites: typeof removeFromFavorites
 }
 
-const AsideOrderBlock: React.FC<IAsideOrderBlock> = (props) => {
-  let marginContainer = parseInt(getComputedStyle(props.сontainer).marginRight)
+const AsideOrderBlock: React.FC<IAsideOrderBlock> = (props) => {  
   return (
     <section className="aside-order-block">
-        <div className="sticky-block" style = {{width: 450 + marginContainer + 'px' }}>
+        <div className="sticky-block" style = {{width: 450 + (document.documentElement.clientWidth - 1160)/2 + 'px' }}>
           <div className="inner-wrapper__sticky">
             <div className="order-card__top-row">
               <div className="order-card__ishere-marker">В наличии</div>
@@ -31,7 +36,7 @@ const AsideOrderBlock: React.FC<IAsideOrderBlock> = (props) => {
             </div>
             <h3 className="order-card__title">{props.item.name}</h3>
             <p className="order-card__price"> {props.item.price} {props.item.price_sign} </p>
-            <OrderCardControlls />
+            <OrderCardControlls {...props} />
             <div className="order-card__tags">
               <h4 className="tags__title">Состав</h4>
               <ul className="tags__list">

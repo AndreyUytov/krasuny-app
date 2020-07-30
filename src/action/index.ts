@@ -36,12 +36,30 @@ import {
   SUCCESS_ITEM,
   SuccessItemAction,
   FailureItemAction,
-  FAILURE_ITEM
+  FAILURE_ITEM,
+  AddToFavoritesAction,
+  ADD_TO_FAVORITES,
+  RemoveFromFavoritesAction,
+  REMOVE_FROM_FAVORITES
 } from './../types'
 
 import { ItemsByFiltersInterface } from './../reducers'
 
 import {itemsApi} from './../api/api'
+
+export function addToFavorites (id: number): AddToFavoritesAction {
+  return {
+    type: ADD_TO_FAVORITES,
+    id
+  }
+}
+
+export function removeFromFavorites (id: number): RemoveFromFavoritesAction {
+  return {
+    type: REMOVE_FROM_FAVORITES,
+    id
+  }
+}
 
 export function setFilterByPriceAndBrand (minPrice: number, maxPrice: number, brand: BrandsList | undefined): SetFIlterByPriceAndBrand {
   return {
