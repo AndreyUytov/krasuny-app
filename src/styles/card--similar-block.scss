@@ -1,14 +1,13 @@
 .similar-block {
     position: relative;
     margin-bottom: 80px;
+    overflow: hidden;
 }
 
 .similar-block__slider {
     @include ul-reset();
-    
     display: flex;
 
-    overflow: hidden;
 }
 
 .similar-block__slider .popullar-card {
@@ -35,6 +34,6 @@
 }
 
 .slider-next-snap {
-    right: -23px;
+    right: 0px;
     background-image: url(../images/fon/next-snap.svg);
 }

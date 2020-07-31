@@ -45,16 +45,24 @@ export type SELECTION = 'rating' | 'price'
 export const SET_FILTER_BY_PRICE_AND_BRAND = 'SET_FILTER_BY_PRICE_AND_BRAND'
 export const RESET_FILTER_BY_PRICE_AND_BRAND = 'RESET_FILTER_BY_PRICE_ANDBRAND'
 
+//  Максимальное количество карточек на странице
 export const MAX_ITEMS_PER_PAGE = 16
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const RESET_CURRENT_PAGE = 'RESET_CURRENT_PAGE'
 
+// Константы для ширины элемента карусели и количества видимых элементов
+export const WIDTH_CARUSEL_ITEM = 290
+export const VISUAL_COUNT_CARUSEL_ITEM = 4
+
+// константы для ползунков фильтра цены на странице каталога
 export const MIN_DELTA_PRICE = 28
 export const MAX_WIDTH_BAR_PRICE = 280
 
+// константы для кнопки добавить в избранное
 export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES'
 export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES'
 
+// для кнопки добавить в корзину
 export const ADD_TO_BASKET = 'ADD_TO_BASKET'
 export const REMOVE_FROM_BASKET = 'REMOVE_FROM_BASKET'
 

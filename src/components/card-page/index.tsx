@@ -6,6 +6,7 @@ import { RootState } from '../../reducers'
 import MainNav from './../main-nav'
 import DescriptionBlock from './descr-block'
 import AsideOrderBlock from './aside-order-block'
+import SimilarListBlock from './similar-block-list'
 
 import { PAGEMAP, Item } from '../../types'
 import {
@@ -54,6 +55,7 @@ const Card: React.FC<CardPageTypes> = (props) => {
           <MainNav links = {['Главная', PAGEMAP[item.product_type]]} to = {['/', `/catalog/${props.product_type}`]} activeLink={item.name}  />
           <DescriptionBlock item={item} />
           <AsideOrderBlock item={item} {...props} />
+          <SimilarListBlock />
         </>
         : <>{item.message}</> 
         }
