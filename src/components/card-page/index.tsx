@@ -13,7 +13,8 @@ import {
   fetchItem,
   addToFavorites,
   removeFromFavorites,
-  addToBasket
+  addToBasket,
+  fetchItemsIfNeeded
 } from './../../action'
 
 const mapStateToProps = (store: RootState) => {
@@ -21,7 +22,8 @@ const mapStateToProps = (store: RootState) => {
     allItems: store.allItems,
     product_type: store.filters.selectedProductType,
     favoritesItems: store.itemsByFavorites,
-    basketItems: store.itemsByBasket
+    basketItems: store.itemsByBasket,
+    itemsByFilters: store.itemsByFilters
   }
 }
 
@@ -29,7 +31,8 @@ const mapDispatchToProps = {
   fetchItem,
   addToFavorites,
   removeFromFavorites,
-  addToBasket
+  addToBasket,
+  fetchItemsIfNeeded
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -45,6 +48,12 @@ const Card: React.FC<CardPageTypes> = (props) => {
     }
   }, [product_id, item])
 
+  useEffect(() => {
+    if(item?.rating === null) {
+      item.rating = 0
+    }
+  })
+
   return (
     <main className="page-main--card">
       <div className="page-main-card__wrapper container">
@@ -55,7 +64,7 @@ const Card: React.FC<CardPageTypes> = (props) => {
           <MainNav links = {['Главная', PAGEMAP[item.product_type]]} to = {['/', `/catalog/${props.product_type}`]} activeLink={item.name}  />
           <DescriptionBlock item={item} />
           <AsideOrderBlock item={item} {...props} />
-          <SimilarListBlock />
+          <SimilarListBlock item={item}  {...props}  />
         </>
         : <>{item.message}</> 
         }

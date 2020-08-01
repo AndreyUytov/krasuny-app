@@ -1,10 +1,33 @@
-import React, { useState} from 'react'
-import { WIDTH_CARUSEL_ITEM, VISUAL_COUNT_CARUSEL_ITEM } from '../../types'
+import React, { useState, useEffect} from 'react'
 
-const SimilarList: React.FC = () => {
+import { WIDTH_CARUSEL_ITEM, VISUAL_COUNT_CARUSEL_ITEM, Item, PRODUCT_TYPE } from '../../types'
+import { fetchItemsIfNeeded } from '../../action'
+import { ItemsByFiltersInterface } from '../../reducers'
+import { getAllItems } from '../../selectors'
+import { Link } from 'react-router-dom'
+
+const SimilarList: React.FC<{fetchItemsIfNeeded: typeof fetchItemsIfNeeded, item: Item, itemsByFilters: ItemsByFiltersInterface, allItems: any}> = 
+      ({fetchItemsIfNeeded, item, itemsByFilters, allItems}) => {
 
   const [sliderPosition, setSliderPosition] = useState(0)
-  const caruselLength = 10
+  const [similarItems, setSimilarItems] = useState<Item[]>([])
+  
+  const caruselLength = similarItems.length
+
+  useEffect(() => {
+    let priceQuery = `&price_greater_than=0`
+    let ratingQuery = item.rating + 1 <= 4.9 ? `&rating_greater_than=${item.rating + 1}` : `&rating_less_than${item.rating}` 
+    let query = `.json?product_type=${item.product_type}` + priceQuery + ratingQuery
+    let {itemsId, isFetching, isFailure, err} = itemsByFilters[query] || {itemsId: []}
+    fetchItemsIfNeeded(query)
+    let fetchingSimilarItems = getAllItems(itemsId, allItems).map((elem) => {
+      if (elem.rating === null) {
+        elem.rating = 0
+       }
+       return elem
+    })
+    setSimilarItems(fetchingSimilarItems)
+  }, [allItems, item])
 
   const onPrevClickCarusel = () => {
     let shift = sliderPosition + WIDTH_CARUSEL_ITEM * VISUAL_COUNT_CARUSEL_ITEM
@@ -18,166 +41,28 @@ const SimilarList: React.FC = () => {
   return (
     <section className="similar-block container">
       <ul className="similar-block__slider" style = {{marginLeft: sliderPosition + 'px'}} >
-        <li>
-          <a className="popullar-card card">
-            <img className="card__img"
-             src="./../images/content/popular-product-card.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                Piruvic40 solution Medicare Proffessional
-               </h3>
-               <p className="card__price price">
-                1 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card card--hit">
-            <img className="card__img"
-             src="./../images/content/popular-product-card2.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                Dr.Hedison Premium Skin Care Returning Eye Patch.
-               </h3>
-               <p className="card__price price">
-                2 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card card--present">
-            <img className="card__img"
-             src="./../images/content/popular-product-card3.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                Carboxy CO2 Lamic Cosmetici
-               </h3>
-               <p className="card__price price">
-                3 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card card--hit">
-            <img className="card__img"
-             src="./../images/content/popular-product-card4.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                ТСА 10% DAY Peel 10% ТСА Dermagenetic
-               </h3>
-               <p className="card__price price">
-                4 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card card--new">
-            <img className="card__img"
-             src="./../images/content/popular-product-card5.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                lios SPF 50 3in1 UVA/UVB Dermagenetic
-               </h3>
-               <p className="card__price price">
-                5 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card card--new">
-            <img className="card__img"
-             src="./../images/content/popular-product-card6.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                MELANOSTOP CREAM Bellеzza
-               </h3>
-               <p className="card__price price price--discount">
-                6 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card">
-            <img className="card__img"
-             src="./../images/content/popular-product-card.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                Piruvic40 solution Medicare Proffessional
-               </h3>
-               <p className="card__price price">
-                7 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card">
-            <img className="card__img"
-             src="./../images/content/popular-product-card.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                Piruvic40 solution Medicare Proffessional
-               </h3>
-               <p className="card__price price">
-                8 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card">
-            <img className="card__img"
-             src="./../images/content/popular-product-card.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                Piruvic40 solution Medicare Proffessional
-               </h3>
-               <p className="card__price price">
-                9 грн.
-               </p>
-             </div>
-          </a>
-        </li>
-        <li>
-          <a className="popullar-card card">
-            <img className="card__img"
-             src="./../images/content/popular-product-card.png" 
-             width="275" height="275"
-             alt="card pictur" />
-             <div className="card-description__wrapper">
-               <h3 className="card__title">
-                Piruvic40 solution Medicare Proffessional
-               </h3>
-               <p className="card__price price">
-                10 грн.
-               </p>
-             </div>
-          </a>
-        </li>
+        {
+          similarItems.map((elem) => {
+            return (
+              <li key={elem.id} >
+                <Link to = {`/${PRODUCT_TYPE[elem.product_type]}/${elem.id}`} className="popullar-card card">
+                  <img className="popullar-card_img card__img"
+                  src={elem.image_link} 
+                  width="275" height="275"
+                  alt="card pictur" />
+                  <div className="card-description__wrapper">
+                    <h3 className="card__title">
+                      {elem.name.length > 20 ? `${elem.name.slice(0, 17)} ...` : elem.name}
+                    </h3>
+                    <p className="card__price price">
+                      {elem.price} {elem.price_sign}
+                    </p>
+                  </div>
+                </Link>
+              </li>
+            )
+          })
+        }
       </ul>
       <button className="slider-snap slider-prev-snap snap" type="button" onClick={onPrevClickCarusel}>
         <span className="visually-hidden">назад</span>

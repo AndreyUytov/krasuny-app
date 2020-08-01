@@ -13,6 +13,9 @@
 .similar-block__slider .popullar-card {
     width: 275px;
     height: 411px;
+    & .popullar-card_img {
+        max-height: 275px;
+    }
 }
 
 .slider-snap {
