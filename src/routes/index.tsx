@@ -8,6 +8,7 @@ import Header from './../components/header'
 import Footer from './../components/footer'
 import CatalogPage from './../components/catalog-page'
 import Card from './../components/card-page'
+import FavoritePage from './../components/favorite-page'
 
 const Layout: React.FC = ({children}) => {
   return (
@@ -39,6 +40,11 @@ export default (
     <Route path = '/:product_type/:product_id'>
       <Layout>
         <Card />
+      </Layout>
+    </Route>
+    <Route path= '/favorite'>
+      <Layout>
+        <FavoritePage />
       </Layout>
     </Route>
     

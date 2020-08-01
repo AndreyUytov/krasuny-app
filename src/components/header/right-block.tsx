@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import SelectionPopup from './../popups/selection'
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, Link } from 'react-router-dom';
 
 const RightBLock: React.FC = () => {
   const [visibleSelectionPopup, setVisibleSelectionPopup] = useState(false)
@@ -16,14 +16,14 @@ const RightBLock: React.FC = () => {
         <nav className="header-right-block__site-nav" style = {/\/$/.test(path) ? {} : {position: 'fixed'}} >
           <ul className="site-nav__list nav-list">
             <li>
-              <a href="" className="site-nav__item site-nav__item--favorite">
+              <Link to='/favorite' className="site-nav__item site-nav__item--favorite">
                 <span className="visually-hidden">Избранное</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="" className="site-nav__item site-nav__item--login">
+              <Link to='/login' className="site-nav__item site-nav__item--login">
                 <span className="visually-hidden">Личный кабинет</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a href="" className="site-nav__item site-nav__item--basket">
