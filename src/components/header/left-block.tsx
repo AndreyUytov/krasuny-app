@@ -5,6 +5,7 @@ import SearchForm from './search-form'
 import logo from './../../images/content/KRASUNYA.png'
 
 import {resetCurrentPage} from './../../action'
+import { Link } from 'react-router-dom'
 
 const LeftBlock: React.FC<{resetCurrentPage: typeof resetCurrentPage}> = (props) => {
 
@@ -26,8 +27,10 @@ const LeftBlock: React.FC<{resetCurrentPage: typeof resetCurrentPage}> = (props)
       <div className="header-left-block__wrapper">
         <div className="header-left-block">
           <div className="header-left-block__inner-wrapper">
-            <img className="header-left-block__logo" src={logo} width="140" height="18"
-              alt="logo-krasunya"/>
+            <Link to='/'>
+              <img className="header-left-block__logo" src={logo} width="140" height="18"
+                alt="logo-krasunya"/>
+            </Link>
             {visibleForm
                 ? <SearchForm onCloseSnap = {hiddenForm} visibleForm={visibleForm}/>
                 : <>

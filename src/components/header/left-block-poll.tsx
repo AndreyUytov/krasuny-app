@@ -4,6 +4,7 @@ import MenuPopup from './../popups/menu'
 import logo from './../../images/content/KRASUNYA.png'
 
 import {resetCurrentPage} from './../../action'
+import { Link } from 'react-router-dom'
 
 const LeftBlockPoll: React.FC<{resetCurrentPage: typeof resetCurrentPage}> = (props) => {
 
@@ -16,8 +17,10 @@ const LeftBlockPoll: React.FC<{resetCurrentPage: typeof resetCurrentPage}> = (pr
       <div className="header-left-block__wrapper">
         <div className="header-left-block">
           <div className="header-left-block__inner-wrapper">
+          <Link to='/'>
             <img className="header-left-block__logo" src={logo} width="140" height="18"
               alt="logo-krasunya"/>
+          </Link>
             <button className="header-left-block__catalog-snap snap" type="button"
               onClick = {() => setVisibleMenuPopup(true)}>
               Каталог косметики
