@@ -2,7 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { PRODUCT_TYPE, Item } from '../../types'
 
-const Banner: React.FC<{bannersItems: Item[]}> = ({bannersItems}) => {
+import bigBanner from './../../images/content/banner-big-img.png'
+import smallBanner from './../../images/content/banner-small-img.png'
+
+const Banner: React.FC<{bannerItems: Item[]}> = ({bannerItems}) => {
   return (
     <section className="banner-block container">
       <div className="banner-block__left-section">
@@ -18,21 +21,21 @@ const Banner: React.FC<{bannersItems: Item[]}> = ({bannersItems}) => {
         <ul className="banner-products__list">
           <li className="banner-products__list-item">
             <figure>
-              <Link to = {`/${PRODUCT_TYPE[bannersItems[0].product_type]}/${bannersItems[0].id}`} className="banner-img banner-img--z-index">
-                <img src={bannersItems[0].image_link}
-                width="178" height="473" alt="product-banner imagination"/>
+              <Link to = {`/${PRODUCT_TYPE[bannerItems[0].product_type]}/${bannerItems[0].id}`} className="banner-img banner-img--z-index">
+                <img src={bigBanner}
+                width="210" height="243" alt="product-banner imagination"/>
               </Link>
               <figcaption className="first-figcaption">
                 <div className="small-card">
                   <img className="small-card__img" 
-                  src={bannersItems[0].image_link}
+                  src={bannerItems[0].image_link}
                   alt="small product card imagine" width="63" height="63" />
                   <div className="small-card-description__wrapper">
                     <h3 className="small-card__title">
-                    {bannersItems[0].name}
+                    {bannerItems[0].name}
                     </h3>
                     <span className="small-card__price price price--discount">
-                    {bannersItems[0].price} {bannersItems[0].price_sign}
+                    {bannerItems[0].price} {bannerItems[0].price_sign}
                     </span>
                   </div>
                 </div>
@@ -41,21 +44,21 @@ const Banner: React.FC<{bannersItems: Item[]}> = ({bannersItems}) => {
           </li>
           <li className="banner-products__list-item">
             <figure>
-              <Link to = {`/${PRODUCT_TYPE[bannersItems[1].product_type]}/${bannersItems[2].id}`} className="banner-img">
-              <img src={bannersItems[1].image_link}
-              width="144" height="386" alt="product-banner imagination" />
+              <Link to = {`/${PRODUCT_TYPE[bannerItems[1].product_type]}/${bannerItems[1].id}`} className="banner-img banner-img--z-index">
+                <img src={smallBanner}
+                width="210" height="243" alt="product-banner imagination"/>
               </Link>
-              <figcaption className="two-figcaption">
+              <figcaption className="first-figcaption">
                 <div className="small-card">
                   <img className="small-card__img" 
-                  src={bannersItems[1].image_link}
+                  src={bannerItems[1].image_link}
                   alt="small product card imagine" width="63" height="63" />
                   <div className="small-card-description__wrapper">
                     <h3 className="small-card__title">
-                    {bannersItems[1].name}
+                    {bannerItems[1].name}
                     </h3>
                     <span className="small-card__price price price--discount">
-                    {bannersItems[1].price} {bannersItems[1].price_sign}
+                    {bannerItems[1].price} {bannerItems[1].price_sign}
                     </span>
                   </div>
                 </div>

@@ -9,6 +9,7 @@ import Footer from './../components/footer'
 import CatalogPage from './../components/catalog-page'
 import Card from './../components/card-page'
 import FavoritePage from './../components/favorite-page'
+import IndexPage from './../components/index-page'
 
 const Layout: React.FC = ({children}) => {
   return (
@@ -24,7 +25,7 @@ export default (
   <Switch>
     <Route exact path = '/'>
       <Layout>
-        Главная страница
+        <IndexPage />
       </Layout>
     </Route>
     <Route path = '/poll'>
