@@ -14,7 +14,7 @@ const MenuPopup = ({hiddenMenuPopup, resetCurrentPage}: Props) => {
   return (
     <div className="menu-popup" onClick = {hiddenMenuPopup}>
       <nav className="menu-popup__nav">
-        <ul className="menu-popup__nav-list">
+        <ul className="menu-popup__nav-list" onClick = {() => document.documentElement.scrollTop = 0}>
           <li className="menu-popup__nav-item" onClick={resetCurrentPage}>
             <Link to={`/catalog/${PRODUCT_TYPE.blush}`} >
               {PAGEMAP.blush}
