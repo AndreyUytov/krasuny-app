@@ -38,16 +38,17 @@ export default (
         <CatalogPage />
       </Layout>
     </Route>
+    <Route path= '/lk'>
+      <Layout>
+        <Route path = '/lk/favorite'>
+          <FavoritePage />
+        </Route>
+      </Layout>
+    </Route>
     <Route path = '/:product_type/:product_id'>
       <Layout>
         <Card />
       </Layout>
-    </Route>
-    <Route path= '/favorite'>
-      <Layout>
-        <FavoritePage />
-      </Layout>
-    </Route>
-    
+    </Route>    
   </Switch>
 )

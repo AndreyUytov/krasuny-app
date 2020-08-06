@@ -16,12 +16,12 @@ const RightBLock: React.FC = () => {
         <nav className="header-right-block__site-nav" style = {/\/$/.test(path) ? {} : {position: 'fixed'}} >
           <ul className="site-nav__list nav-list">
             <li>
-              <Link to='/favorite' className="site-nav__item site-nav__item--favorite">
+              <Link to='/lk/favorite' className="site-nav__item site-nav__item--favorite">
                 <span className="visually-hidden">Избранное</span>
               </Link>
             </li>
             <li>
-              <Link to='/login' className="site-nav__item site-nav__item--login">
+              <Link to='/lk/login' className="site-nav__item site-nav__item--login">
                 <span className="visually-hidden">Личный кабинет</span>
               </Link>
             </li>
