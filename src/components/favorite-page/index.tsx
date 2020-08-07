@@ -6,6 +6,7 @@ import {getAllItems} from './../../selectors'
 
 import MainNav from './../main-nav'
 import FavoritesList from './favorite-list'
+import ProfileAsideBlock from './../utility-components/profile-aside-block'
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -23,6 +24,7 @@ const FavoritePage: React.FC<PropsFromRedux> = ({items, allItems}) => {
   return (
     <main className='page-main--login-profile container'>
       <MainNav links={['Главная']} to={['/']} activeLink={'Избранное'} />
+      <ProfileAsideBlock />
       {
       favoriteItems.length ? <FavoritesList items = {favoriteItems} /> 
       : <section className="profile-block-main">
