@@ -9,7 +9,7 @@ export default function App (): React.ReactElement {
   return (
     <>
      <Provider store={store}>
-        <Router>
+        <Router basename="/krasuny-app">
             {routes}
         </Router>
       </Provider> 
