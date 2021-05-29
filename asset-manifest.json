@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/krasuny-app/static/css/main.cb3e7d76.chunk.css",
-    "main.js": "/krasuny-app/static/js/main.8418e7c1.chunk.js",
-    "main.js.map": "/krasuny-app/static/js/main.8418e7c1.chunk.js.map",
+    "main.js": "/krasuny-app/static/js/main.4f6e8137.chunk.js",
+    "main.js.map": "/krasuny-app/static/js/main.4f6e8137.chunk.js.map",
     "runtime-main.js": "/krasuny-app/static/js/runtime-main.a3990148.js",
     "runtime-main.js.map": "/krasuny-app/static/js/runtime-main.a3990148.js.map",
     "static/js/2.ce088e30.chunk.js": "/krasuny-app/static/js/2.ce088e30.chunk.js",
     "static/js/2.ce088e30.chunk.js.map": "/krasuny-app/static/js/2.ce088e30.chunk.js.map",
     "index.html": "/krasuny-app/index.html",
-    "precache-manifest.0e2fe8d70cec17598e1f1cf8d2d9e57e.js": "/krasuny-app/precache-manifest.0e2fe8d70cec17598e1f1cf8d2d9e57e.js",
+    "precache-manifest.f412f90ad7cd75a03e109e268aec998c.js": "/krasuny-app/precache-manifest.f412f90ad7cd75a03e109e268aec998c.js",
     "service-worker.js": "/krasuny-app/service-worker.js",
     "static/css/main.cb3e7d76.chunk.css.map": "/krasuny-app/static/css/main.cb3e7d76.chunk.css.map",
     "static/js/2.ce088e30.chunk.js.LICENSE.txt": "/krasuny-app/static/js/2.ce088e30.chunk.js.LICENSE.txt",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.a3990148.js",
     "static/js/2.ce088e30.chunk.js",
     "static/css/main.cb3e7d76.chunk.css",
-    "static/js/main.8418e7c1.chunk.js"
+    "static/js/main.4f6e8137.chunk.js"
   ]
 }
