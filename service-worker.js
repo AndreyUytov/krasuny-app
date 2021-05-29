@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/krasuny-app/precache-manifest.a5fa18f2569ee4582ca75cfdc8f5a5c5.js"
+  "/krasuny-app/precache-manifest.0e2fe8d70cec17598e1f1cf8d2d9e57e.js"
 );
 
 self.addEventListener('message', (event) => {

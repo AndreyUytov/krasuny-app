@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bf18662791ce106d41952a006c1bc1f0",
+    "revision": "b61550d26b538a002a1fa2f0e23a5b5f",
     "url": "/krasuny-app/index.html"
   },
   {
-    "revision": "0732038efc5e9f4e38cc",
+    "revision": "db9a44ef927b59db752b",
     "url": "/krasuny-app/static/css/main.cb3e7d76.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/krasuny-app/static/js/2.ce088e30.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0732038efc5e9f4e38cc",
-    "url": "/krasuny-app/static/js/main.c2c70aa5.chunk.js"
+    "revision": "db9a44ef927b59db752b",
+    "url": "/krasuny-app/static/js/main.8418e7c1.chunk.js"
   },
   {
     "revision": "77cfcb50a237bf3974c6",
